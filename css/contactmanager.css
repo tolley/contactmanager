@@ -1,0 +1,15 @@
+.contact_list {
+	width: 300px;
+	padding: 0px;
+	margin: 0px;
+}
+
+.contact_list li {
+	list-style: none;
+	border: solid 1px #EEE;
+	margin: 2px 0px 2px 0px;
+}
+
+.propername {
+	text-transform: capitalize;
+}
