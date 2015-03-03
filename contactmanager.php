@@ -14,18 +14,12 @@
 
 <body ng-controller="contactListCtrl">
 
-<ul class="contact_list">
-	<li class="contact" ng-repeat="contact in contacts">
-		<div>
-			<span class="propername">{{contact.firstname + ' ' + contact.lastname}}</span><br />
-			<span class="propername">{{contact.street}}</span><br />
-			<span class="propername">{{contact.street2}}</span><br ng-if="contact.street2" />
-			<span class="propername">{{contact.city + ' ' + contact.state.toUpperCase() + '. ' + contact.zip}}</span><br />
-			<span class="propername">{{contact.street}}</span><br />
-			<span>{{contact.phone}}</span>
-		</div><br />
-	</li>
-</ul>
+<b>Display: </b>
+<select ng-model="template" ng-options="t.name for t in templates">
+</select>
+<br />
+
+<ng-include src="template.url"></ng-include>
 
 </body>
 
