@@ -1,4 +1,4 @@
-<table class="contacts_table">
+<table class="contacts_table" >
 <tbody>
 	<tr>
 		<th>First Name</th>
@@ -7,17 +7,17 @@
 		<th>Street</th>
 		<th>Street2</th>
 		<th>City</th>
-		<th><State/th>
+		<th>State</th>
 		<th>Zip</th>
 	</tr>
-	<tr ng-repeat="contact in contacts">
+	<tr ng-repeat="contact in contacts | filter:filter_text">
 		<td class="propername">{{contact.firstname}}</td>
 		<td class="propername">{{contact.lastname}}</td>
 		<td>{{contact.phone}}</td>
 		<td class="propername">{{contact.street}}</td>
 		<td class="propername">{{contact.street2}}</td>
 		<td class="propername">{{contact.city}}</td>
-		<td class="propername">{{contact.state}}</td>
+		<td class="propername">{{contact.state.toUpperCase()}}</td>
 		<td class="propername">{{contact.zip}}</td>
 	</tr>
 </tbody>

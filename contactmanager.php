@@ -14,9 +14,25 @@
 
 <body ng-controller="contactListCtrl">
 
-<b>Display: </b>
-<select ng-model="template" ng-options="t.name for t in templates">
-</select>
+<header>
+	Create, edit, and manage your contact information
+
+	<span class="display_options">
+		<b>Display: </b>
+		<select ng-model="template" ng-options="t.name for t in templates">
+		</select>
+	</span>
+
+	<span class="search">
+		<input placeholder="Enter filter" type="search" ng-model="filter_text" />
+
+		<button ng-click="clearFilter()">
+			Clear
+		</button>
+	</span>
+	<br />
+</header>
+
 <br />
 
 <ng-include src="template.url"></ng-include>

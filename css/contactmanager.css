@@ -1,7 +1,10 @@
 .contact_list {
-	width: 300px;
 	padding: 0px;
-	margin: 0px;
+	margin: 10px 0px 0px 0px;
+}
+
+.contact_list li div {
+	display: inline;
 }
 
 .contact_list li {
@@ -10,6 +13,51 @@
 	margin: 2px 0px 2px 0px;
 }
 
+.contact_list .contact {
+	width: 300px;
+	overflow: hidden;
+}
+
+/*.contact_list li:nth-child(1n+0) {
+	float: left;
+}
+
+.contact_list li:nth-child(2n+0) {
+	float: right;
+	color: #F00;
+}
+
+.contact_list li:nth-child(3n+0) {
+	float: right;
+	clear: right;
+}
+*/
+
+header {
+	margin-bottom: 10px;
+}
+
+header span.search {
+	float: right;
+}
+
+.display_options {
+	margin-left: 100px;
+}
+
 .propername {
 	text-transform: capitalize;
+}
+
+.contacts_table {
+	width: 100%;
+}
+
+.contacts_table th {
+	text-align: left;
+	background-color: #EEE;
+}
+
+.contacts_table td {
+	border-bottom: solid 1px #EEE;
 }
