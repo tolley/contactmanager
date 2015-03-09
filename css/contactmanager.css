@@ -61,3 +61,23 @@ header span.search {
 .contacts_table td {
 	border-bottom: solid 1px #EEE;
 }
+
+/* Begin New Contact styles */
+div#contact_new {
+	border: solid 1px #000;
+	width: 300px;
+}
+
+div#contact_new div.contact_field {
+	width: 100%;
+	margin: 5px 3px 5px 3px;
+}
+
+div#contact_new div.contact_field input, div#contact_new div.contact_field select {
+	width: 96%;
+}
+
+div#contact_new div.center {
+	text-align: center;
+}
+/* End New Contact styles */

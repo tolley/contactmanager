@@ -1,0 +1,59 @@
+<header>
+	<h2>Add a new contact</h2>
+</header>
+<div id="contact_new">
+	<div class="contact_field">
+		<input type="text" placeholder="First Name" ng-model="newcontact.firstname" />
+		<br />
+	</div>
+
+	<div class="contact_field">
+		<input type="text" placeholder="Last Name" ng-model="newcontact.lastname" />
+		<br />
+	</div>
+
+	<!--
+	<div class="contact_field">
+		<input type="email" placeholder="Email Address" ng-model="newcontact.email" />
+		<br />
+	</div>	
+	-->
+
+	<div class="contact_field">
+		<input type="text" placeholder="Phone Number" ng-model="newcontact.phone" />
+		<br />
+	</div>
+
+	<div class="contact_field">
+		<input type="text" placeholder="Street Address" ng-model="newcontact.street" />
+		<br />
+	</div>
+
+	<div class="contact_field">
+		<input type="text" placeholder="Apartment/Building Number" ng-model="newcontact.street2" />
+		<br />
+	</div>
+
+	<div class="contact_field">
+		<input type="text" placeholder="City" ng-model="newcontact.city" />
+		<br />
+	</div>
+
+	<div class="contact_field">
+		<select ng-model="newcontact.state" ng-options="state.value as state.name for state in states">
+			<option value="">Select State</option>
+		</select>
+		<br />
+	</div>
+
+	<div class="contact_field">
+		<input type="text" placeholder="Zip Code" ng-model="newcontact.zip" />
+		<br />
+	</div>
+
+	<div class="contact_field center">
+		<button ng-click="createContact()">
+			Add Contact
+		</button>
+	</div>
+</div>

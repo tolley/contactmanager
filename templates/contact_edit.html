@@ -1,0 +1,39 @@
+<label for="firstname">First Name:</label>
+<input type="text" name="firstname" ng-model="newcontact.firstname" />
+<br />
+
+<label>Last Name:</label>
+<input type="text" ng-model="newcontact.lastname" />
+<br />
+
+<label>Phone Number:</label>
+<input type="text" ng-model="newcontact.phone" />
+<br />
+
+<label>Street Address:</label>
+<input type="text" ng-model="newcontact.street" />
+<br />
+
+<label>Apartment/Building (optional):</label>
+<input type="text" ng-model="newcontact.street2" />
+<br />
+
+<label>City:</label>
+<input type="text" ng-model="newcontact.city" />
+<br />
+
+<label>State:</label>
+<select ng-model="newcontact.state">
+	<option value="">
+		Select One
+	</option>
+</select>
+<br />
+
+<label>Zip Code:</label>
+<input type="text" ng-model="newcontact.zip" />
+<br />
+
+<button ng-click="createContact()">
+	Add Contact
+</button>
