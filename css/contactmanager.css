@@ -1,21 +1,15 @@
-.contact_list {
-	padding: 0px;
-	margin: 10px 0px 0px 0px;
-}
-
-.contact_list li div {
-	display: inline;
-}
-
-.contact_list li {
-	list-style: none;
+div.contact {
+	margin: 5px;
 	border: solid 1px #EEE;
-	margin: 2px 0px 2px 0px;
+	width: 300px;
+	height: 115px;
+	overflow: auto;
+	float: left;
 }
 
-.contact_list .contact {
-	width: 300px;
-	overflow: hidden;
+div.contact:hover {
+	border: solid 1px #000;
+	cursor: pointer;
 }
 
 /*.contact_list li:nth-child(1n+0) {
@@ -60,6 +54,10 @@ header span.search {
 
 .contacts_table td {
 	border-bottom: solid 1px #EEE;
+}
+
+.contacts_table td:hover {
+	cursor: pointer;
 }
 
 /* Begin New Contact styles */
