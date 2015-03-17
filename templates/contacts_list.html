@@ -1,5 +1,5 @@
 <div class="contact_list">
-	<div class="contact" ng-repeat="contact in contacts | filter:filter_text">
+	<div class="contact" ng-repeat="contact in contacts | filter:filter_text | orderBy:order_by">
 		<span class="propername">{{contact.firstname + ' ' + contact.lastname}}</span><br />
 		<span><a href="mailto:{{contact.email}}">{{contact.email}}</a></span><br />
 		<span class="propername">{{contact.street}}</span><br />

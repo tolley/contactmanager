@@ -1,17 +1,45 @@
-<table class="contacts_table" >
+<table class="contacts_table">
 <tbody>
 	<tr>
-		<th>First Name</th>
-		<th>Last Name</th>
+		<th>
+			First Name
+			<!-- ng-class="{ active: order.firstname }"-->
+			<a href="" 
+				ng-class="{ active: order.firstname, '': ! order.firstname }"
+				ng-click="sort( 'firstname' )">
+					<span ng-class="{ order_by_active: order.firstname, order_by_inactive: ! order.firstname }">
+						&#9650;
+					</span>
+			</a>
+		</th>
+		<th>
+			Last Name
+			<a href="" 
+				ng-class="{ active: order.lastname, '': ! order.lastname }"
+				ng-click="sort( 'lastname' )">
+					<span ng-class="{ order_by_active: order.lastname, order_by_inactive: ! order.lastname }">
+						&#9650;
+					</span>
+			</a>
+		</th>
 		<th>Phone</th>
-		<th>Email Address</th>
+		<th>
+			Email Address
+			<a href="" 
+				ng-class="{ active: order.email, '': ! order.email }"
+				ng-click="sort( 'email' )">
+					<span ng-class="{ order_by_active: order.email, order_by_inactive: ! order.email }">
+						&#9650;
+					</span>
+			</a>
+		</th>
 		<th>Street</th>
 		<th>Street2</th>
 		<th>City</th>
 		<th>State</th>
 		<th>Zip</th>
 	</tr>
-	<tr ng-repeat="contact in contacts | filter:filter_text">
+	<tr ng-repeat="contact in contacts | filter:filter_text | orderBy:order_by">
 		<td class="propername">{{contact.firstname}}</td>
 		<td class="propername">{{contact.lastname}}</td>
 		<td>{{contact.phone}}</td>

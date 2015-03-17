@@ -79,3 +79,21 @@ div#contact_new div.center {
 	text-align: center;
 }
 /* End New Contact styles */
+
+.contacts_table a {
+	text-decoration: none;
+}
+
+.contacts_table a.active {
+}
+
+.contacts_table span.order_by_inactive {
+	color: #aaa;
+}
+
+.contacts_table span.order_by_active {
+	color: #000;
+}
+
+/* up arrow: &#9650; */
+/* down arrow: &#9660' */

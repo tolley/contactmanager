@@ -24,7 +24,7 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location )
 				,{ name: 'table', url: 'templates/contacts_table.html' } ];
 
 			// The currently selected template
-			$scope.template = $scope.templates[0];
+			$scope.template = $scope.templates[1];
 
 			// Load the contact list from the server
 			$http.get( 'data/contacts.php' ).success( function( data )
@@ -44,6 +44,16 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location )
 
 			// The text used to filter the contact results
 			$scope.filter_text = '';
+
+			// An array to keep track of the current order by
+			$scope.order = {
+				'firstname': true,
+				'lastname': false,
+				'email': false
+			};
+
+			// The default order by column
+			$scope.order_by = 'firstname';
 		}
 	}();
 
@@ -74,6 +84,21 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location )
 	$scope.cancelCreateContact = function()
 	{
 		$location.path( '' );
+	}
+
+	$scope.sort = function( field )
+	{
+		// Update the order by property which the template uses to order the contacts
+		$scope.order_by = field;
+
+		// Update the flags that allow our template to use the correct styles
+		for( var fieldName in $scope.order )
+		{
+			$scope.order[fieldName] = false;
+		}
+
+		// Make sure the selected field is set to true
+		$scope.order[field] = true;
 	}
 } );
 
