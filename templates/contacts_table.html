@@ -3,9 +3,8 @@
 	<tr>
 		<th>
 			First Name
-			<!-- ng-class="{ active: order.firstname }"-->
 			<a href="" 
-				ng-class="{ active: order.firstname, '': ! order.firstname }"
+				ng-class="{ active: order.firstname }"
 				ng-click="sort( 'firstname' )">
 					<span ng-class="{ order_by_active: order.firstname, order_by_inactive: ! order.firstname }">
 						&#9650;
@@ -15,7 +14,7 @@
 		<th>
 			Last Name
 			<a href="" 
-				ng-class="{ active: order.lastname, '': ! order.lastname }"
+				ng-class="{ active: order.lastname }"
 				ng-click="sort( 'lastname' )">
 					<span ng-class="{ order_by_active: order.lastname, order_by_inactive: ! order.lastname }">
 						&#9650;
@@ -26,7 +25,7 @@
 		<th>
 			Email Address
 			<a href="" 
-				ng-class="{ active: order.email, '': ! order.email }"
+				ng-class="{ active: order.email }"
 				ng-click="sort( 'email' )">
 					<span ng-class="{ order_by_active: order.email, order_by_inactive: ! order.email }">
 						&#9650;
