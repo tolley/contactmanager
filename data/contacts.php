@@ -62,7 +62,7 @@ $contacts[] = array(
 	'email' => 'bluthm@tolley.com',
 	'street' => '1 hilltop dr',
 	'street2' => '',
-	'city' => 'sunnydale',
+	'city' => 'sunnyvale',
 	'state' => 'ca',
 	'zip' => '90210',
 );
@@ -75,7 +75,7 @@ $contacts[] = array(
 	'email' => 'lindsayb@tolley.com',
 	'street' => '1 hilltop dr.',
 	'street2' => '',
-	'city' => 'sunnydale',
+	'city' => 'sunnyvale',
 	'state' => 'ca',
 	'zip' => '90210',
 );
