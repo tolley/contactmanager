@@ -54,6 +54,9 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location )
 
 			// The default order by column
 			$scope.order_by = 'firstname';
+
+			// Keeps track of whether or not to reverse the order of the contacts
+			$scope.order_by_reverse = false;
 		}
 	}();
 
@@ -86,10 +89,22 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location )
 		$location.path( '' );
 	}
 
-	$scope.sort = function( field )
+	$scope.onSort = function( field )
 	{
-		// Update the order by property which the template uses to order the contacts
-		$scope.order_by = field;
+		// If field is already the order by field
+		if( $scope.order_by === field )
+		{
+			// We need to reverse the direction
+			$scope.order_by_reverse = ! $scope.order_by_reverse;
+		}
+		else
+		{
+			// Make sure order_by_reverse is true (each column needs to always start in a given direction)
+			$scope.order_by_reverse = false;
+
+			// Update the order by property which the template uses to order the contacts
+			$scope.order_by = field;
+		}
 
 		// Update the flags that allow our template to use the correct styles
 		for( var fieldName in $scope.order )

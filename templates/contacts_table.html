@@ -4,10 +4,10 @@
 		<th>
 			First Name
 			<a href="" 
-				ng-class="{ active: order.firstname }"
-				ng-click="sort( 'firstname' )">
-					<span ng-class="{ order_by_active: order.firstname, order_by_inactive: ! order.firstname }">
-						&#9650;
+				ng-class="{ active: order.firstname, reverse: order.firstname && order_by_reverse }"
+				ng-click="onSort( 'firstname' )">
+					<span ng-class="{ order_by_active: order.firstname, order_by_inactive: ! order.firstname, asc: ! order_by_reverse || ! order.firstname, desc: order.firstname && order_by_reverse }">
+						&nbsp;
 					</span>
 			</a>
 		</th>
@@ -15,9 +15,9 @@
 			Last Name
 			<a href="" 
 				ng-class="{ active: order.lastname }"
-				ng-click="sort( 'lastname' )">
-					<span ng-class="{ order_by_active: order.lastname, order_by_inactive: ! order.lastname }">
-						&#9650;
+				ng-click="onSort( 'lastname' )">
+					<span ng-class="{ order_by_active: order.lastname, order_by_inactive: ! order.lastname, asc: ! order_by_reverse || ! order.lastname, desc: order.lastname && order_by_reverse }">
+						&nbsp;
 					</span>
 			</a>
 		</th>
@@ -26,9 +26,9 @@
 			Email Address
 			<a href="" 
 				ng-class="{ active: order.email }"
-				ng-click="sort( 'email' )">
-					<span ng-class="{ order_by_active: order.email, order_by_inactive: ! order.email }">
-						&#9650;
+				ng-click="onSort( 'email' )">
+					<span ng-class="{ order_by_active: order.email, order_by_inactive: ! order.email, asc: ! order_by_reverse || ! order.email, desc: order.email && order_by_reverse }">
+						&nbsp;
 					</span>
 			</a>
 		</th>
@@ -38,7 +38,7 @@
 		<th>State</th>
 		<th>Zip</th>
 	</tr>
-	<tr ng-repeat="contact in contacts | filter:filter_text | orderBy:order_by">
+	<tr ng-repeat="contact in contacts | filter: filter_text | orderBy: order_by: order_by_reverse">
 		<td class="propername">{{contact.firstname}}</td>
 		<td class="propername">{{contact.lastname}}</td>
 		<td>{{contact.phone}}</td>

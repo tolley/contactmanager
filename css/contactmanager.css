@@ -95,5 +95,10 @@ div#contact_new div.center {
 	color: #000;
 }
 
-/* up arrow: &#9650; */
-/* down arrow: &#9660' */
+.contacts_table span.asc::before {
+	content: '\25B2';
+}
+
+.contacts_table span.desc::before {
+	content: '\25BC';
+}
