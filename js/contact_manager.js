@@ -24,7 +24,7 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location )
 				,{ name: 'table', url: 'templates/contacts_table.html' } ];
 
 			// The currently selected template
-			$scope.template = $scope.templates[1];
+			$scope.template = $scope.templates[0];
 
 			// Load the contact list from the server
 			$http.get( 'data/contacts.php' ).success( function( data )
@@ -91,19 +91,28 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location )
 
 	$scope.onSort = function( field )
 	{
-		// If field is already the order by field
-		if( $scope.order_by === field )
+		// If a field was passed in
+		if( field && field.length > 0 )
 		{
-			// We need to reverse the direction
-			$scope.order_by_reverse = ! $scope.order_by_reverse;
+			// If field is already the order by field
+			if( $scope.order_by === field )
+			{
+				// We need to reverse the direction
+				$scope.order_by_reverse = ! $scope.order_by_reverse;
+			}
+			else
+			{
+				// Make sure order_by_reverse is true (each column needs to always start in a given direction)
+				$scope.order_by_reverse = false;
+
+				// Update the order by property which the template uses to order the contacts
+				$scope.order_by = field;
+			}
 		}
 		else
 		{
-			// Make sure order_by_reverse is true (each column needs to always start in a given direction)
-			$scope.order_by_reverse = false;
-
-			// Update the order by property which the template uses to order the contacts
-			$scope.order_by = field;
+			// Otherwise, it means that the order_by variable was updated directly from the UI
+			field = $scope.order_by;
 		}
 
 		// Update the flags that allow our template to use the correct styles

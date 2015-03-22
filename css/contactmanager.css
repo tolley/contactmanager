@@ -95,10 +95,14 @@ div#contact_new div.center {
 	color: #000;
 }
 
-.contacts_table span.asc::before {
+#list_sorter {
+	cursor: pointer;
+}
+
+span.asc::before {
 	content: '\25B2';
 }
 
-.contacts_table span.desc::before {
+span.desc::before {
 	content: '\25BC';
 }
