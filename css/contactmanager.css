@@ -60,6 +60,13 @@ header span.search {
 	cursor: pointer;
 }
 
+.deletelink {
+	float: right;
+	color: #00F;
+	cursor: pointer;
+	font-size: 12px;
+}
+
 /* Begin New Contact styles */
 div#contact_new {
 	border: solid 1px #000;

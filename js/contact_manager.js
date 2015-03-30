@@ -87,7 +87,7 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location )
 	$scope.cancelCreateContact = function()
 	{
 		$location.path( '' );
-	}
+	};
 
 	$scope.onSort = function( field )
 	{
@@ -123,7 +123,28 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location )
 
 		// Make sure the selected field is set to true
 		$scope.order[field] = true;
-	}
+	};
+
+	// Called when the delete contact link is clicked
+	$scope.deleteContact = function( id )
+	{
+		if( ! id )
+			return false;
+
+		if( confirm( "Are you sure you want to delete this contact?") )
+		{
+			// Find the selected contact and remove it from the array of contacts
+			for( var n in $scope.contacts )
+			{
+				if( $scope.contacts[n].id === id )
+				{
+					$scope.contacts.splice( n, 1 );
+					return true;
+				}
+
+			}
+		}
+	};
 } );
 
 // Create the routes for this app

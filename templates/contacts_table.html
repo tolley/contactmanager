@@ -37,6 +37,7 @@
 		<th>City</th>
 		<th>State</th>
 		<th>Zip</th>
+		<th>&nbsp;</th>
 	</tr>
 	<tr ng-repeat="contact in contacts | filter: filter_text | orderBy: order_by: order_by_reverse">
 		<td class="propername">{{contact.firstname}}</td>
@@ -48,6 +49,11 @@
 		<td class="propername">{{contact.city}}</td>
 		<td class="propername">{{contact.state.toUpperCase()}}</td>
 		<td class="propername">{{contact.zip}}</td>
+		<td>
+			<a class="deletelink" ng-click="deleteContact( contact.id )">
+				delete
+			</a>
+		</td>
 	</tr>
 </tbody>
 </table>

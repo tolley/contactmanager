@@ -14,6 +14,10 @@
 
 	</header>
 	<div class="contact" ng-repeat="contact in contacts | filter:filter_text | orderBy: order_by: order_by_reverse">
+		<a class="deletelink" ng-click="deleteContact( contact.id )">
+			delete
+		</a>
+
 		<span class="propername">{{contact.firstname + ' ' + contact.lastname}}</span><br />
 		<span><a href="mailto:{{contact.email}}">{{contact.email}}</a></span><br />
 		<span class="propername">{{contact.street}}</span><br />
