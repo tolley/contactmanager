@@ -1,3 +1,11 @@
+<select ng-model="actions.selected" ng-options="action.value as action.name for action in actions.selectableActions">
+	<option value="">Select One</option>
+</select>
+
+<button ng-click="performSelectedAction( 'here we are' )">
+	Go
+</button>
+
 <table class="contacts_table">
 <tbody>
 	<tr>
@@ -39,7 +47,8 @@
 		<th>Zip</th>
 		<th>&nbsp;</th>
 	</tr>
-	<tr ng-repeat="contact in contacts | filter: filter_text | orderBy: order_by: order_by_reverse">
+	<tr ng-repeat="contact in contacts | filter: filter_text | orderBy: order_by: order_by_reverse"
+		ng-class="{selectedContact: selectedContacts.indexOf( contact.id ) > -1 }">
 		<td class="propername">{{contact.firstname}}</td>
 		<td class="propername">{{contact.lastname}}</td>
 		<td>{{contact.phone}}</td>
@@ -50,9 +59,9 @@
 		<td class="propername">{{contact.state.toUpperCase()}}</td>
 		<td class="propername">{{contact.zip}}</td>
 		<td>
-			<a class="deletelink" ng-click="deleteContact( contact.id )">
-				delete
-			</a>
+			<input type="checkbox" value="contact.id" 
+					ng-checked="selectedContacts.indexOf( contact.id ) > -1"
+					ng-click="toggleSelectContact( contact );" />
 		</td>
 	</tr>
 </tbody>

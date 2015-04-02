@@ -14,7 +14,7 @@
 
 	</header>
 	<div class="contact" ng-repeat="contact in contacts | filter:filter_text | orderBy: order_by: order_by_reverse">
-		<a class="deletelink" ng-click="deleteContact( contact.id )">
+		<a class="deletelink" ng-click="deleteContact( contact )">
 			delete
 		</a>
 

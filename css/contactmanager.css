@@ -60,6 +60,10 @@ header span.search {
 	cursor: pointer;
 }
 
+.contacts_table .selectedContact {
+	background-color: #EEE;
+}
+
 .deletelink {
 	float: right;
 	color: #00F;

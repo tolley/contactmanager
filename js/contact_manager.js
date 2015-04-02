@@ -24,7 +24,7 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location )
 				,{ name: 'table', url: 'templates/contacts_table.html' } ];
 
 			// The currently selected template
-			$scope.template = $scope.templates[0];
+			$scope.template = $scope.templates[1];
 
 			// Load the contact list from the server
 			$http.get( 'data/contacts.php' ).success( function( data )
@@ -35,6 +35,9 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location )
 				// plus one (so we don't need a backend and so the code will be easily used with a backend)
 				$scope.contact_id_generator = $scope.contacts.length;
 			} );
+
+			// An array that will hold any selected contacts from the list view
+			$scope.selectedContacts = [];
 
 			// Load the list of states from the server
 			$http.get( 'data/states.php' ).success( function( data )
@@ -57,6 +60,15 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location )
 
 			// Keeps track of whether or not to reverse the order of the contacts
 			$scope.order_by_reverse = false;
+
+			// An object that will keep track of the available actions and which one is selected 
+			// for the table view to use
+			$scope.actions = {
+				selectableActions: [
+					{ value: 'delete', name: 'Delete' },
+					{ value: 'edit', name: 'Edit' } ],
+				selected: ''
+			};
 		}
 	}();
 
@@ -64,7 +76,7 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location )
 	$scope.clearFilter = function()
 	{
 		$scope.filter_text = '';
-	};
+	}
 
 	// An object to store the new contact data
 	$scope.newcontact = {};
@@ -81,13 +93,13 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location )
 
 		// Send the user to the contact list page
 		$location.path( '' );
-	};
+	}
 
 	// Called to cancel the adding of a new contact
 	$scope.cancelCreateContact = function()
 	{
 		$location.path( '' );
-	};
+	}
 
 	$scope.onSort = function( field )
 	{
@@ -123,10 +135,10 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location )
 
 		// Make sure the selected field is set to true
 		$scope.order[field] = true;
-	};
+	}
 
 	// Called when the delete contact link is clicked
-	$scope.deleteContact = function( id )
+	$scope.deleteContact = function( contact )
 	{
 		if( ! id )
 			return false;
@@ -136,7 +148,7 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location )
 			// Find the selected contact and remove it from the array of contacts
 			for( var n in $scope.contacts )
 			{
-				if( $scope.contacts[n].id === id )
+				if( $scope.contacts[n].id === contact.id )
 				{
 					$scope.contacts.splice( n, 1 );
 					return true;
@@ -144,7 +156,70 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location )
 
 			}
 		}
-	};
+	}
+
+	// Called when a contact is selected or deselected in the table view
+	$scope.toggleSelectContact = function( contact )
+	{
+		var index = $scope.selectedContacts.indexOf( contact.id );
+
+		// If the contact is already selected
+		if( index > -1 )
+		{
+			// Remove the selected contact from the list
+			$scope.selectedContacts.splice( index, 1 );
+		}
+		else
+		{
+			// Otherwise, add the selected contact to the list
+			$scope.selectedContacts.push( contact.id );
+		}
+	}
+
+	// Called when the user clicks on the go button on the table view
+	$scope.performSelectedAction = function( str )
+	{
+		// Switch based on the selected action
+		switch( $scope.actions.selected )
+		{
+			case 'delete':
+				// If there are no selected contacts
+				if( $scope.selectedContacts.length === 0 )
+					return;
+
+				// Make the user confirm that they want to delete the selected contacts
+				if( confirm( 'Are you sure you want to delete the selected contacts?' ) )
+				{
+					// Foreach selected contact, delete it
+					for( var n in $scope.selectedContacts )
+					{
+						// Find the index of the nth contact
+						var index = false;
+						for( var i in $scope.contacts )
+						{
+							if( $scope.contacts[i].id === $scope.selectedContacts[n] )
+							{
+								index = i;
+							}
+						}
+
+						// If we found our contact, remove it
+						if( index )
+						{
+							$scope.contacts.splice( index, 1 );
+						}
+					}
+
+					// Set the selected contacts to an empty array
+					$scope.selectedContacts = [];
+				}
+				break;
+
+			case 'edit':
+				alert( 'To Do' );
+				break;
+		}
+	}
 } );
 
 // Create the routes for this app
