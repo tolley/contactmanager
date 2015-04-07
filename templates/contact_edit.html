@@ -1,39 +1,35 @@
-<label for="firstname">First Name:</label>
-<input type="text" name="firstname" ng-model="newcontact.firstname" />
-<br />
+<div class="contact_edit" ng-repeat="contact in contactsUnderEdit">
+	First Name:
+	<input type="text" ng-model="contact.firstname" value="contact.firstname" />
+	<br />
 
-<label>Last Name:</label>
-<input type="text" ng-model="newcontact.lastname" />
-<br />
+	Last Name:
+	<input type="text" ng-model="contact.lastname" value="contact.lastname" />
+	<br />
 
-<label>Phone Number:</label>
-<input type="text" ng-model="newcontact.phone" />
-<br />
+	Email Address:
+	<input type="text" ng-model="contact.email" value="contact.email" />
+	<br />
 
-<label>Street Address:</label>
-<input type="text" ng-model="newcontact.street" />
-<br />
+	Phone:
+	<input type="text" ng-model="contact.phone" value="contact.phone"/>
+	<br />
 
-<label>Apartment/Building (optional):</label>
-<input type="text" ng-model="newcontact.street2" />
-<br />
+	Street Address:
+	<input type="text" ng-model="contact.street" value="contact.street" />
+	<br />
 
-<label>City:</label>
-<input type="text" ng-model="newcontact.city" />
-<br />
+	Street2:
+	<input type="text" ng-model="contact.street2" value="contact.street2" />
+	<br />
 
-<label>State:</label>
-<select ng-model="newcontact.state">
-	<option value="">
-		Select One
-	</option>
-</select>
-<br />
+	City: 
+	<input type="text" ng-model="contact.city" value="contact.city" />
+	<br />
+</div>
 
-<label>Zip Code:</label>
-<input type="text" ng-model="newcontact.zip" />
-<br />
-
-<button ng-click="createContact()">
-	Add Contact
+<button ng-click="saveEdits()">
+	Save
 </button>
+
+<br />

@@ -24,7 +24,7 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location )
 				,{ name: 'table', url: 'templates/contacts_table.html' } ];
 
 			// The currently selected template
-			$scope.template = $scope.templates[1];
+			$scope.template = $scope.templates[0];
 
 			// Load the contact list from the server
 			$http.get( 'data/contacts.php' ).success( function( data )
@@ -69,6 +69,15 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location )
 					{ value: 'edit', name: 'Edit' } ],
 				selected: ''
 			};
+
+			// An array to keep track of which contacts are being edited.
+			$scope.contactsUnderEdit = [];
+		}
+
+		// If we are not editing a contact, make sure the contactsUnderEdit array is empty
+		if( $location.path() !== '/edit' && $scope.contactsUnderEdit.length > 0 )
+		{
+			$scope.contactsUnderEdit.splice( 0, $scope.contactsUnderEdit.length );
 		}
 	}();
 
@@ -140,7 +149,7 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location )
 	// Called when the delete contact link is clicked
 	$scope.deleteContact = function( contact )
 	{
-		if( ! id )
+		if( ! contact )
 			return false;
 
 		if( confirm( "Are you sure you want to delete this contact?") )
@@ -156,6 +165,49 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location )
 
 			}
 		}
+	}
+
+	// Called when the user clicks on the edit link
+	$scope.editContact = function( contact )
+	{
+		if( ! contact )
+			return false;
+
+		// Add the contact to the list of contacts that we are editing
+		if( $scope.contactsUnderEdit.length > 0 )
+		{
+			// Make sure there aren't already any contacts being edited
+			$scope.contactsUnderEdit.splice( 0, $scope.contactsUnderEdit.length );
+		}
+
+		// The the contact to the list so it will be reflected in the view
+		$scope.contactsUnderEdit.push( contact );
+
+		// Send the user to the edit page
+		$location.path( '/edit' );
+	}
+
+	// Called when the user clicks save on the edit contacts section
+	$scope.saveEdits = function()
+	{
+		// Foreach contact in the contactsUnderEdit array, move them back into the 
+		// array of contacts
+		for( var n in $scope.contactsUnderEdit )
+		{
+			// Find the contact in the array of all contacts
+			for( var i in $scope.contacts )
+			{
+				// If we found the contact, overwrite it with the edits
+				if( $scope.contacts[i].id === $scope.contactsUnderEdit[n].id )
+				{
+					$scope.contacts[i] = $scope.contactsUnderEdit[n];
+				}
+			}
+		}
+
+		// Clear out contactsUnderEdit and send the user back to the homepage
+		$scope.contactsUnderEdit.splice( 0, $scope.contactsUnderEdit.length );
+		$location.path( '/' );
 	}
 
 	// Called when a contact is selected or deselected in the table view
@@ -177,23 +229,23 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location )
 	}
 
 	// Called when the user clicks on the go button on the table view
-	$scope.performSelectedAction = function( str )
+	$scope.performSelectedAction = function()
 	{
+		// If there are no selected contacts
+		if( $scope.selectedContacts.length === 0 )
+			return;
+
 		// Switch based on the selected action
 		switch( $scope.actions.selected )
 		{
 			case 'delete':
-				// If there are no selected contacts
-				if( $scope.selectedContacts.length === 0 )
-					return;
-
 				// Make the user confirm that they want to delete the selected contacts
 				if( confirm( 'Are you sure you want to delete the selected contacts?' ) )
 				{
 					// Foreach selected contact, delete it
 					for( var n in $scope.selectedContacts )
 					{
-						// Find the index of the nth contact
+						// Find the index of the nth selected contact
 						var index = false;
 						for( var i in $scope.contacts )
 						{
@@ -216,7 +268,27 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location )
 				break;
 
 			case 'edit':
-				alert( 'To Do' );
+				// Foreach of the selected contacts, add the contact details to the list of contacts
+				// being edited
+				for( var n in $scope.selectedContacts )
+				{
+					// Find each of the selected contacts in the list of contacts
+					for( var i in $scope.contacts )
+					{
+						if( $scope.contacts[i].id === $scope.selectedContacts[n] )
+						{
+							// Add the selected contact to the list of contacts being edited
+							$scope.contactsUnderEdit.push( $scope.contacts[i] );
+						}
+					}
+				}
+
+				// If there are contacts to be edited, send the user to the edit page
+				if( $scope.contactsUnderEdit.length > 0 )
+				{
+					$location.path( '/edit' );
+					return;
+				}
 				break;
 		}
 	}
@@ -227,6 +299,11 @@ myApp.config( function( $routeProvider )
 {
 	$routeProvider.when( '/new', {
 		templateUrl: 'templates/contact_new.html',
+		controller: 'contactListCtrl'
+	} );
+
+	$routeProvider.when( '/edit', {
+		templateUrl: 'templates/contact_edit.html',
 		controller: 'contactListCtrl'
 	} );
 

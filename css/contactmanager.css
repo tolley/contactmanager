@@ -64,11 +64,12 @@ header span.search {
 	background-color: #EEE;
 }
 
-.deletelink {
+.crud_link {
 	float: right;
 	color: #00F;
 	cursor: pointer;
 	font-size: 12px;
+	clear: none;
 }
 
 /* Begin New Contact styles */
@@ -116,4 +117,8 @@ span.asc::before {
 
 span.desc::before {
 	content: '\25BC';
+}
+
+br.no_clear {
+	clear: none;
 }
