@@ -2,7 +2,7 @@ div.contact {
 	margin: 5px;
 	border: solid 1px #EEE;
 	width: 300px;
-	height: 115px;
+	height: 125px;
 	overflow: auto;
 	float: left;
 }
@@ -11,21 +11,6 @@ div.contact:hover {
 	border: solid 1px #000;
 	cursor: pointer;
 }
-
-/*.contact_list li:nth-child(1n+0) {
-	float: left;
-}
-
-.contact_list li:nth-child(2n+0) {
-	float: right;
-	color: #F00;
-}
-
-.contact_list li:nth-child(3n+0) {
-	float: right;
-	clear: right;
-}
-*/
 
 header {
 	margin-bottom: 10px;
@@ -64,11 +49,15 @@ header span.search {
 	background-color: #EEE;
 }
 
-.crud_link {
+.crud_links {
+	float: right;
+}
+
+.crud_links a {
 	float: right;
 	color: #00F;
 	cursor: pointer;
-	font-size: 12px;
+	font-size: 10px;
 	clear: none;
 }
 
@@ -90,6 +79,30 @@ div#contact_new div.contact_field input, div#contact_new div.contact_field selec
 div#contact_new div.center {
 	text-align: center;
 }
+/* End New Contact styles */
+
+/* Begin edit contact styles */
+
+div.contact_edit {
+	border: solid 1px #000;
+	width: 300px;
+	margin: 2px 0px 2px 0px;
+}
+
+div.contact_edit label {
+	float: left;
+	width: 110px;
+}
+
+div.contact_edit select,
+div.contact_edit input {
+	float: right;
+}
+
+div.contact_edit br {
+	clear: both;
+}
+
 /* End New Contact styles */
 
 .contacts_table a {

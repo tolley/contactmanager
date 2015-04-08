@@ -205,8 +205,9 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location )
 			}
 		}
 
-		// Clear out contactsUnderEdit and send the user back to the homepage
+		// Clear out contactsUnderEdit and selectedContacts and send the user back to the homepage
 		$scope.contactsUnderEdit.splice( 0, $scope.contactsUnderEdit.length );
+		$scope.selectedContacts.splice( 0, $scope.selectedContacts.length );
 		$location.path( '/' );
 	}
 

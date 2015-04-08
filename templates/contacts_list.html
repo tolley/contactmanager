@@ -14,13 +14,15 @@
 
 	</header>
 	<div class="contact" ng-repeat="contact in contacts | filter:filter_text | orderBy: order_by: order_by_reverse">
-		<a class="crud_link" ng-click="deleteContact( contact )">
-			delete
-		</a>
-		<br class="noclear" />
-		<a class="crud_link" ng-click="editContact( contact )">
-			edit
-		</a>
+		<div class="crud_links">
+			<a ng-click="deleteContact( contact )">
+				delete
+			</a>
+			<br class="noclear" />
+			<a ng-click="editContact( contact )">
+				edit
+			</a>
+		</div>
 
 		<span class="propername">{{contact.firstname + ' ' + contact.lastname}}</span><br />
 		<span><a href="mailto:{{contact.email}}">{{contact.email}}</a></span><br />
