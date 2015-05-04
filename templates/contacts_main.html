@@ -1,24 +1,104 @@
 <header>
-	Create, edit, and manage your contact information
-
-	<span class="display_options">
-		<b>Display: </b>
-		<select ng-model="template" ng-options="t.name for t in templates">
-		</select>
-	</span>
-
-	<a href="#/new">
-		Add Contact
-	</a>
-
-	<span class="search">
-		<input placeholder="Enter filter" type="search" ng-model="filter_text" />
-
-		<button ng-click="clearFilter()">
-			Clear
+	<div class="navbar navbar-default navbar-fixed-top hidden-lg hidden-md hidden-sm" role="navigation">
+		<span>
+			{{header_message}}
+		</span>
+		<button type="button" class="navbar-toggle" ng-click="mobile_menu_visible = ! mobile_menu_visible">
+			<span class="sr-only">Toggle Navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
 		</button>
+
+		<ul class="mobile-menu hidden-lg hidden-md" ng-show="mobile_menu_visible">
+			<li>
+				<a href="#/new">
+					Add Contact
+				</a>
+			</li>
+			<li>
+				<span class="display_options">
+					Display:
+					<select ng-model="template" ng-options="t.name for t in templates" ng-change="mobile_menu_visible = false">
+					</select>
+				</span>
+			</li>
+			<li ng-show="template.name == 'list'">
+				Order By:
+				<select ng-show="template.name == 'list'" ng-model="order_by" ng-change="onSort()">
+					<option ng-repeat="(key, value) in order" value="{{key}}" ng-selected="key == order_by">
+						{{key}}
+					</option>
+				</select>
+				<span ng-class="{ asc: ! order_by_reverse, desc: order_by_reverse }" id="list_sorter"
+						ng-click="order_by_reverse = !order_by_reverse">
+					&nbsp;
+				</span>
+			</li>
+			<li>
+				<input placeholder="Enter filter" type="search" ng-model="filter_text" />
+
+				<button ng-click="clearFilter()">
+					Clear
+				</button>
+			</li>
+			<li ng-show="template.name == 'table'">
+				<select ng-model="actions.selected" ng-options="action.value as action.name for action in actions.selectableActions">
+					<option value="">Select One</option>
+				</select>
+
+				<button ng-show="template.name == 'table'" ng-click="performSelectedAction()">
+					Go
+				</button>
+			</li>
+		</ul>
+	</div>
+	<br class="hidden-lg hidden-md" />
+
+	<span class="hidden-xs full-menu">
+		<span>
+			Create, edit, and manage your contact information
+		</span>
+
+		<span class="display_options">
+			<b>Display: </b>
+			<select ng-model="template" ng-options="t.name for t in templates">
+			</select>
+		</span>
+
+		<a href="#/new">
+			Add Contact
+		</a>
+
+		<span class="search">
+			<input placeholder="Enter filter" type="search" ng-model="filter_text" />
+
+			<button ng-click="clearFilter()">
+				Clear
+			</button>
+		</span>
+		<br />
+
+		<select ng-show="template.name == 'table'" ng-model="actions.selected" ng-options="action.value as action.name for action in actions.selectableActions">
+			<option value="">Select One</option>
+		</select>
+
+		<button ng-show="template.name == 'table'" ng-click="performSelectedAction()">
+			Go
+		</button>
+
+		<b ng-show="template.name == 'list'">Order By:</b>
+		<select ng-show="template.name == 'list'" ng-model="order_by" ng-change="onSort()">
+			<option ng-repeat="(key, value) in order" value="{{key}}" ng-selected="key == order_by">
+				{{key}}
+			</option>
+		</select>
+
+		<span ng-show="template.name == 'list'" ng-class="{ asc: ! order_by_reverse, desc: order_by_reverse }" id="list_sorter"
+				ng-click="order_by_reverse = !order_by_reverse">
+			&nbsp;
+		</span>
 	</span>
-	<br />
 </header>
 
 <br />

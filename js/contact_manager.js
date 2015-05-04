@@ -6,6 +6,16 @@ var myApp = angular.module( 'contactListApp', ['ngRoute'] );
 // Add our controller to our module
 myApp.controller( 'contactListCtrl', function( $scope, $http, $location )
 {
+	// The header template for all pages
+	$scope.header_template_url = "/templates/contacts_header.html";
+
+	// A flag to keep track of whether the menu is open or closed
+	// Note: This menu is only for mobile mode
+	$scope.mobile_menu_visible = false;
+
+	// The message that will display above each page
+	$scope.header_message = 'Create, edit, and manage your contact information';
+
 	// A function called to load the relevant data onto the scope.  It only executes once
 	var initializeData = function()
 	{

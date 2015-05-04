@@ -1,18 +1,4 @@
 <div class="contact_list">
-	<header>
-		<b>Order By:</b>
-		<select ng-model="order_by" ng-change="onSort()">
-			<option ng-repeat="(key, value) in order" value="{{key}}" ng-selected="key == order_by">
-				{{key}}
-			</option>
-		</select>
-
-		<span ng-class="{ asc: ! order_by_reverse, desc: order_by_reverse }" id="list_sorter"
-				ng-click="order_by_reverse = !order_by_reverse">
-			&nbsp;
-		</span>
-
-	</header>
 	<div class="contact" ng-repeat="contact in contacts | filter:filter_text | orderBy: order_by: order_by_reverse">
 		<div class="crud_links">
 			<a ng-click="deleteContact( contact )">

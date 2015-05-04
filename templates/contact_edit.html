@@ -1,3 +1,6 @@
+<header>
+	{{header_message}}
+</header>
 <div class="contact_edit" ng-repeat="contact in contactsUnderEdit">
 	<label>First Name:</label>
 	<input type="text" ng-model="contact.firstname" value="contact.firstname" />
@@ -28,8 +31,10 @@
 	<br />
 
 	<label>State:</label>
-	<select ng-model="contact.state" ng-options="state.value as state.name for state in states">
-		<option value="">Select State</option>
+	<select ng-model="contact.state">
+		<option ng-repeat="stateObj in states" value="{{stateObj.value}}" ng-selected="stateObj.value == contact.state.toUpperCase()">
+			{{stateObj.name}}
+		</option>
 	</select>
 	<br />
 </div>

@@ -17,8 +17,8 @@
 
 <body ng-controller="contactListCtrl">
 
-<div ng-view>
-</div>
+	<div ng-view>
+	</div>
 
 </body>
 

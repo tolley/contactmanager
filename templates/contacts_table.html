@@ -1,68 +1,62 @@
-<select ng-model="actions.selected" ng-options="action.value as action.name for action in actions.selectableActions">
-	<option value="">Select One</option>
-</select>
-
-<button ng-click="performSelectedAction( 'here we are' )">
-	Go
-</button>
-
 <table class="contacts_table">
-<tbody>
-	<tr>
-		<th>
-			First Name
-			<a href="" 
-				ng-class="{ active: order.firstname, reverse: order.firstname && order_by_reverse }"
-				ng-click="onSort( 'firstname' )">
-					<span ng-class="{ order_by_active: order.firstname, order_by_inactive: ! order.firstname, asc: ! order_by_reverse || ! order.						firstname, desc: order.firstname && order_by_reverse }">
-						&nbsp;
-					</span>
-			</a>
-		</th>
-		<th>
-			Last Name
-			<a href="" 
-				ng-class="{ active: order.lastname }"
-				ng-click="onSort( 'lastname' )">
-					<span ng-class="{ order_by_active: order.lastname, order_by_inactive: ! order.lastname, asc: ! order_by_reverse || ! order.lastname, 					desc: order.lastname && order_by_reverse }">
-						&nbsp;
-					</span>
-			</a>
-		</th>
-		<th>Phone</th>
-		<th>
-			Email Address
-			<a href="" 
-				ng-class="{ active: order.email }"
-				ng-click="onSort( 'email' )">
-					<span ng-class="{ order_by_active: order.email, order_by_inactive: ! order.email, asc: ! order_by_reverse || ! order.email, desc: 					order.email && order_by_reverse }">
-						&nbsp;
-					</span>
-			</a>
-		</th>
-		<th>Street</th>
-		<th>Street2</th>
-		<th>City</th>
-		<th>State</th>
-		<th>Zip</th>
-		<th>&nbsp;</th>
-	</tr>
-	<tr ng-repeat="contact in contacts | filter: filter_text | orderBy: order_by: order_by_reverse"
-		ng-class="{selectedContact: selectedContacts.indexOf( contact.id ) > -1 }">
-		<td class="propername">{{contact.firstname}}</td>
-		<td class="propername">{{contact.lastname}}</td>
-		<td>{{contact.phone}}</td>
-		<td><a href="mail:to{{contact.email}}">{{contact.email}}</a></td>
-		<td class="propername">{{contact.street}}</td>
-		<td class="propername">{{contact.street2}}</td>
-		<td class="propername">{{contact.city}}</td>
-		<td class="propername">{{contact.state.toUpperCase()}}</td>
-		<td class="propername">{{contact.zip}}</td>
-		<td>
-			<input type="checkbox" value="contact.id" 
-					ng-checked="selectedContacts.indexOf( contact.id ) > -1"
-					ng-click="toggleSelectContact( contact );" />
-		</td>
-	</tr>
-</tbody>
+	<tbody class="container">
+		<tr class="row">
+			<th class="col-md-2">
+				First Name
+				<a href="" 
+					ng-class="{ active: order.firstname, reverse: order.firstname && order_by_reverse }"
+					ng-click="onSort( 'firstname' )">
+						<span ng-class="{ order_by_active: order.firstname, order_by_inactive: ! order.firstname, asc: ! order_by_reverse || ! order.firstname, desc: order.firstname && order_by_reverse }">
+							&nbsp;
+						</span>
+				</a>
+			</th>
+			<th class="col-md-1">
+				Last Name
+				<a href="" 
+					ng-class="{ active: order.lastname }"
+					ng-click="onSort( 'lastname' )">
+						<span ng-class="{ order_by_active: order.lastname, order_by_inactive: ! order.lastname, asc: ! order_by_reverse || ! order.lastname, desc: order.lastname && order_by_reverse }">
+							&nbsp;
+						</span>
+				</a>
+			</th>
+
+			<th class="col-md-1">Phone</th>
+
+			<th class="col-md-1">
+				Email Address
+				<a href="" 
+					ng-class="{ active: order.email }"
+					ng-click="onSort( 'email' )">
+						<span ng-class="{ order_by_active: order.email, order_by_inactive: ! order.email, asc: ! order_by_reverse || ! order.email, desc: order.email && order_by_reverse }">
+							&nbsp;
+						</span>
+				</a>
+			</th>
+			<th class="col-md-2">Street</th>
+			<th class="col-md-1">Street2</th>
+			<th class="col-md-1">City</th>
+			<th class="col-md-1">State</th>
+			<th class="col-md-1">Zip</th>
+			<th class="col-md-1">&nbsp;</th>
+		</tr>
+		<tr class="row" ng-repeat="contact in contacts | filter: filter_text | orderBy: order_by: order_by_reverse"
+			ng-class="{selectedContact: selectedContacts.indexOf( contact.id ) > -1 }">
+			<td class="propername col-md-2">{{contact.firstname}}</td>
+			<td class="propername col-md-1">{{contact.lastname}}</td>
+			<td class="col-md-1">{{contact.phone}}</td>
+			<td class="col-md-1"><a href="mail:to{{contact.email}}">{{contact.email}}</a></td>
+			<td class="propername col-md-2">{{contact.street}}</td>
+			<td class="propername col-md-1">{{contact.street2}}</td>
+			<td class="propername col-md-1">{{contact.city}}</td>
+			<td class="propername col-md-1">{{contact.state.toUpperCase()}}</td>
+			<td class="propername col-md-1">{{contact.zip}}</td>
+			<td class="col-md-1">
+				<input type="checkbox" value="contact.id" 
+						ng-checked="selectedContacts.indexOf( contact.id ) > -1"
+						ng-click="toggleSelectContact( contact );" />
+			</td>
+		</tr>
+	</tbody>
 </table>
