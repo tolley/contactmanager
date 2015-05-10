@@ -15,7 +15,7 @@
 	<link rel="stylesheet" type="text/css" href="css/contactmanager.css" media="screen, projection">
 </head>
 
-<body ng-controller="contactListCtrl">
+<body ng-controller="contactListCtrl" data-ng-init="initializeData()">
 
 	<div ng-view>
 	</div>
