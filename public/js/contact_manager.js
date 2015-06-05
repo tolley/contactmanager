@@ -4,8 +4,7 @@
 var myApp = angular.module( 'contactListApp', ['ngRoute'] );
 
 // Add our controller to our module
-myApp.controller( 'contactListCtrl', function( $scope, $http, $location )
-{
+myApp.controller( 'contactListCtrl', function( $scope, $http, $location ) {
 	// The header template for all pages
 	$scope.header_template_url = "/templates/contacts_header.html";
 
@@ -35,7 +34,7 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location )
 		$scope.template = $scope.templates[0];
 
 		// Load the contact list from the server
-		$http.get( 'data/contacts.php' ).success( function( data )
+		$http.get( 'data/contacts.json' ).success( function( data )
 		{
 			$scope.contacts = data;
 
