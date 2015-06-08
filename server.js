@@ -1,10 +1,8 @@
 // Requires
 var express			= require( 'express' )
 	,bodyParser		= require( 'body-parser' )
-	,config			= require( './config')()
+	,config			= require( './config')
 	,mongoose		= require( 'mongoose' )
-	,userModel		= require( './models/user.js' )
-	,userCtrl		= require( './controllers/userController.js' )
 	,cookieParser	= require( 'cookie-parser' );
 
 // Initialize that object that will connect to the mongo database
@@ -21,20 +19,29 @@ app.use( bodyParser.urlencoded( { extended: false } ) );
 app.use( bodyParser.json( {} ) );
 app.use( cookieParser( config.signedCookieSecret, {} ) );
 
+// Include/initialize our user controller
+require( './controllers/userController.js' ).controller( app );
+
 mongoose.connect( 'mongodb://' + config.mongo.host + ':' + config.mongo.port + '/contactmanager' );
 
-// Create our routes and define the methods that will handle them
-// Set up a route to handle signup requests
-app.post( '/signup.html', function( req, res ) {
-	console.log( 'in server.js, req.body = ', req.body );
-	userCtrl.createNewUser( req, res );
-} );
-
-app.post( '/signin.html', function( req, res ) {
-	userCtrl.signin( req, res );
-} );
-
 // Set up the http server so that it listen for requests
-app.listen( config.port, function() {
-	console.log( 'Webserver running on port ' + config.port );
+app.listen( config.server.port, function() {
+	console.log( 'Webserver running on port ' + config.server.port );
+} );
+
+// Test cookies
+app.get( '/cookietest', function( req, res ) {
+	if( req.signedCookies['test'] )
+	{
+		console.log( 'cookie found: ' , req.signedCookies['test'] );
+	}
+	else
+	{
+		res.cookie( 'test', 'testing', {maxAge: 99999, signed: true} );
+		console.log( 'setting cookie test' );
+	}
+
+	res.send( 'check the console and look for the test cookie');
+
+	res.end();
 } );

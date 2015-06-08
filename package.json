@@ -8,7 +8,8 @@
 		"mongodb": "*",
 		"mongoose": "*",
 		"cookie-parser": "*",
-		"body-parser": "*"
+		"body-parser": "*",
+		"crypto": "*"
   }
 }
 

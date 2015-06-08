@@ -26,7 +26,7 @@ userSchema.path( 'name' ).validate( function( value ) {
 	config.nameMaxLength + ' characters long' );
 
 // Create a method to hash the password
-userSchema.methods.hashPlainTextPassword = function( password )
+userSchema.statics.hashPlainTextPassword = function( password )
 {
 	return Sha1.hash( config.hashkey + password );
 }
@@ -39,7 +39,7 @@ userSchema.pre( 'save', function( next ) {
 	this.last_update = new Date();
 
 	// Hash the password
-	this.password = Sha1.hash( config.hashkey + this.password );
+	this.password = Sha1.hash( config.crypto.key + this.password );
 
 	// Delete repeat_password if it's there
 	if( this.repeat_password )
