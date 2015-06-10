@@ -3,7 +3,9 @@ var config = require( '../config' );
 // Get our required objects
 var mongoose = require( 'mongoose' )
 	,Sha1 = require( '../modules/sha1.js' )
-	,config = require( '../config' );
+	,config = require( '../config' )
+	,userModel	= require( '../models/user.js' )
+	,cryptoFuncs = require( '../modules/cryptoFuncs.js' );
 
 // Create our user schema
 var userSchema = new mongoose.Schema( {
@@ -28,7 +30,7 @@ userSchema.path( 'name' ).validate( function( value ) {
 // Create a method to hash the password
 userSchema.statics.hashPlainTextPassword = function( password )
 {
-	return Sha1.hash( config.hashkey + password );
+	return Sha1.hash( config.passwordHashKey + password );
 }
 
 // Plug into the pre save event so that we can hash the password and
@@ -39,7 +41,7 @@ userSchema.pre( 'save', function( next ) {
 	this.last_update = new Date();
 
 	// Hash the password
-	this.password = Sha1.hash( config.crypto.key + this.password );
+	this.password = userSchema.statics.hashPlainTextPassword( this.password );
 
 	// Delete repeat_password if it's there
 	if( this.repeat_password )

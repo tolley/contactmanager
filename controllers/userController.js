@@ -1,7 +1,7 @@
 // Our requires
 var config 		= require( '../config' )
 	,userModel	= require( '../models/user.js' )
-	,cryptoFuncs = require( '../modules/cryptoFuncs.js' );		
+	,cryptoFuncs = require( '../modules/cryptoFuncs.js' );
 
 module.exports.controller = function( app ) {
 	// Handles signup requests
@@ -20,7 +20,6 @@ module.exports.controller = function( app ) {
 		newUser.save( function( err ) {
 			if( err )
 			{
-				console.log( err );
 				// Check to see if we got the duplicate user error
 				if( err.errmsg.indexOf( 'duplicate key' ) !== 0 )
 				{
@@ -90,15 +89,12 @@ module.exports.controller = function( app ) {
 			userModel.findOne( findData, function( err, user ) {
 				if( err )
 				{
-					console.log( 'Signin errored with ', err );
+					console.log( 'Signin errored ', err );
 				}
 				else if( user )
 				{
-					console.log( 'sending cookie headers' );
 					res.cookie( 'user', cryptoFuncs.encrypt( user.id ), { signed: true } );
 				}
-
-				res.send( 'Check the cookies' );
 
 				res.end();
 			} );

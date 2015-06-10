@@ -11,7 +11,7 @@ module.exports = {
 	},
 
 	// The user password hash key
-	hashkey: 'lovesexsecretgod',
+	passwordHashKey: 'lovesexsecretgod',
 
 	// The key for signed cookies
 	signedCookieSecret: 'whynot',
