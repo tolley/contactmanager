@@ -23,6 +23,14 @@ module.exports = function() {
 					}
 				} )
 			}
+			else
+			{
+				next();
+			}
+		}
+		else
+		{
+			next();
 		}
 	}
 }
