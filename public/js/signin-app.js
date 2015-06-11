@@ -5,6 +5,15 @@ var myApp = angular.module( 'signInApp', [] );
 
 // Create the controller for our signin app
 myApp.controller( 'signinController', function( $scope, $http, $location ) {
+	// If the user is already logged in, send them to the contact manager main page
+	$http.get( '/user/isloggedin' )
+		.success( function( data, status, header, config ) {
+			if( data.isLoggedIn === 'true' )
+			{
+				goToMainPage();
+			}
+		} );
+
 	// Used to display any errors encountered
 	$scope.errorMessage = '';
 
@@ -37,10 +46,7 @@ myApp.controller( 'signinController', function( $scope, $http, $location ) {
 
 	// Called when the user clicks Create Account
 	$scope.doCreateUser = function() {
-		// Clear any leftover messages
-		$scope.errorMessage = '';
-		$scope.statusMessage = '';
-
+		clearMessages();
 
 		// Make sure the user entered a username
 		if( ! $scope.newuser.name || $scope.newuser.name.length == 0  )
@@ -84,7 +90,7 @@ myApp.controller( 'signinController', function( $scope, $http, $location ) {
 		}
 
 		// Send our create user data to the server
-		$http.post( '/signup.html', $scope.newuser )
+		$http.post( '/login', $scope.newuser )
 			.success( function( data, status, headers, config ){
 				// Show any error or status messages that exist
 				if( data.statusMessage )
@@ -106,9 +112,7 @@ myApp.controller( 'signinController', function( $scope, $http, $location ) {
 
 	// Called when the user wants to signin
 	$scope.doSignin = function() {
-		// Clear any leftover error messages
-		$scope.errorMessage = '';
-		$scope.statusMessage = '';
+		clearMessages();
 
 		// Make sure the user has entered both a username and a password
 		if( ! $scope.login.name || $scope.login.name.length == 0  )
@@ -124,13 +128,32 @@ myApp.controller( 'signinController', function( $scope, $http, $location ) {
 		}
 
 		// Send our login data to the server to log the user in
-		$http.post( '/signin.html', $scope.login )
+		$http.post( '/login', $scope.login )
 			.success( function( data, status, headers, config ){
 				if( data.statusMessage )
 					$scope.statusMessage = data.statusMessage;
+
+				if( data.errorMessage )
+					$scope.errorMessage = data.errorMessage;
+
+				if( data.login === 'successful' )
+					goToMainPage();
 			} )
 			.error( function( data, status, headers, config ){
-				console.log( 'Login Error!' );
+				if( data.errorMessage )
+					$scope.errorMessage = data.errorMessage;
 			} );
 	};
+
+	// Clears the messages from the scope
+	function clearMessages() {
+		$scope.errorMessage = '';
+		$scope.statusMessage = '';
+	}
+
+	// Sends the user to the main page
+	function goToMainPage()
+	{
+		window.location = '/contactmanager.html';
+	}
 } );

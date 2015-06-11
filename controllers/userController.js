@@ -5,9 +5,7 @@ var config 		= require( '../config' )
 
 module.exports.controller = function( app ) {
 	// Handles signup requests
-	app.post( '/signup.html', function( req, res ) {
-		console.log( 'creating user with ', req.body );
-
+	app.post( '/signup', function( req, res ) {
 		// An object to store our result messages (errors)
 		var results = {
 			errors: []
@@ -62,7 +60,7 @@ module.exports.controller = function( app ) {
 	} );
 
 	// Handles signin requests
-	app.post( '/signin.html', function( req, res ) {
+	app.post( '/login', function( req, res ) {
 		// An object to hold any errors we need to show the user
 		var errors = [];
 
@@ -89,14 +87,23 @@ module.exports.controller = function( app ) {
 			userModel.findOne( findData, function( err, user ) {
 				if( err )
 				{
-					console.log( 'Signin errored ', err );
+					// Let the user know the login failed
+					errors.push( 'Unable to login, please try again' );
+					res.setHeader( 'Content-Type', 'application/json' );
+					res.json( errors );
+					res.end();
 				}
 				else if( user )
 				{
+					// Set the logged in cookie and redirect the user to contact manager main page
 					res.cookie( 'user', cryptoFuncs.encrypt( user.id ), { signed: true } );
-				}
+					res.json( {
+						login: 'successful',
+						statusMessage: 'Login successful, please wait while you are redirected'
+					} );
 
-				res.end();
+					res.end();
+				}
 			} );
 		}
 		else
@@ -106,5 +113,25 @@ module.exports.controller = function( app ) {
 			res.json( errors );
 			res.end();
 		}
+	} );
+
+	// Lets the front end check to see if a user is logged in or not
+	app.get( '/user/isloggedin', function( req, res ) {
+		if( req.loggedUser )
+		{
+			var returnData = {
+				isLoggedIn: 'true'
+			};
+		}
+		else
+		{
+			var returnData = {
+				isLoggedIn: 'false'
+			};
+		}
+
+		res.setHeader( 'Content-Type', 'application/json' );
+		res.json( returnData );
+		res.end();
 	} );
 }

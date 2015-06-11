@@ -47,7 +47,7 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location ) {
 		$scope.selectedContacts = [];
 
 		// Load the list of states from the server
-		$http.get( 'data/states.php' ).success( function( data )
+		$http.get( 'data/states.json' ).success( function( data )
 		{
 			$scope.states = data;
 		} );

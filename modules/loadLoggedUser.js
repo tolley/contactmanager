@@ -1,7 +1,7 @@
 // Some middleware that will try to load the logged in user's data
 // and attach it to the request object
 var cryptoFuncs = require( '../modules/cryptoFuncs.js' )
-	,userModel	= require( '../models/user.js' )
+	,userModel	= require( '../models/user.js' );
 
 module.exports = function() {
 	return function( req, res, next ) {

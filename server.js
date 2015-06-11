@@ -31,12 +31,3 @@ mongoose.connect( 'mongodb://' + config.mongo.host + ':' + config.mongo.port + '
 app.listen( config.server.port, function() {
 	console.log( 'Webserver running on port ' + config.server.port );
 } );
-
-var userModel = require( './models/user.js' );
-
-app.get( '/testLogin', function( req, res ) {
-	userModel.getLoggedInUser( req, res, function( req, res ) {
-		console.log( 'in server.js, req.loggedUser = ', req.loggedUser );
-		res.end();
-	} );
-} );
