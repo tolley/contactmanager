@@ -3,7 +3,7 @@ var express			= require( 'express' )
 	,bodyParser		= require( 'body-parser' )
 	,config			= require( './config')
 	,cookieParser	= require( 'cookie-parser' )
-	,loadLoggedUser	= require( './modules/loadLoggedUser' )
+	,verifyUser		= require( './modules/verifyUserLoggedIn' )
 	,mongoose		= require( 'mongoose' );
 
 // Initialize that object that will connect to the mongo database
@@ -19,10 +19,11 @@ app.use( express.static( './public' ) );
 app.use( bodyParser.urlencoded( { extended: false } ) );
 app.use( bodyParser.json( {} ) );
 app.use( cookieParser( config.signedCookieSecret, {} ) );
-app.use( loadLoggedUser() );
+app.use( '/contacts', verifyUser() );
 
-// Include/initialize our user controller
+// Include/initialize our controllers
 require( './controllers/userController.js' ).controller( app );
+require( './controllers/contactController.js' ).controller( app );
 
 // Connect to the DB
 mongoose.connect( 'mongodb://' + config.mongo.host + ':' + config.mongo.port + '/contactmanager' );

@@ -1,5 +1,3 @@
-var config = require( '../config' );
-
 // Get our required objects
 var mongoose = require( 'mongoose' )
 	,Sha1 = require( '../modules/sha1.js' )
@@ -11,7 +9,6 @@ var mongoose = require( 'mongoose' )
 var userSchema = new mongoose.Schema( {
 	name: { type: String, required: true, unique: true },
 	password: { type: String, required: true },
-	create_date: Date,
 	last_update: Date
 } );
 
@@ -36,8 +33,7 @@ userSchema.statics.hashPlainTextPassword = function( password )
 // Plug into the pre save event so that we can hash the password and
 // set create_date and last_update
 userSchema.pre( 'save', function( next ) {
-	// Set the create_date and last_update to now
-	this.create_date = new Date();
+	// Set the last_update to now
 	this.last_update = new Date();
 
 	// Hash the password

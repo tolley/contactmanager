@@ -90,7 +90,7 @@ myApp.controller( 'signinController', function( $scope, $http, $location ) {
 		}
 
 		// Send our create user data to the server
-		$http.post( '/login', $scope.newuser )
+		$http.post( '/signup', $scope.newuser )
 			.success( function( data, status, headers, config ){
 				// Show any error or status messages that exist
 				if( data.statusMessage )

@@ -53,9 +53,9 @@
 			<td class="propername col-md-1">{{contact.state.toUpperCase()}}</td>
 			<td class="propername col-md-1">{{contact.zip}}</td>
 			<td class="col-md-1">
-				<input type="checkbox" value="contact.id" 
-						ng-checked="selectedContacts.indexOf( contact.id ) > -1"
-						ng-click="toggleSelectContact( contact );" />
+				<input type="checkbox" ng-model="contact.selected" 
+						ng-init="contact.selected = false"
+						ng-checked="contact.selected" />
 			</td>
 		</tr>
 	</tbody>

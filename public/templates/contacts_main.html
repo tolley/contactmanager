@@ -43,7 +43,8 @@
 				</button>
 			</li>
 			<li ng-show="template.name == 'table'">
-				<select ng-model="actions.selected" ng-options="action.value as action.name for action in actions.selectableActions">
+				<select ng-model="actions.selected" 
+						ng-options="action.value as action.name for action in actions.selectableActions">
 					<option value="">Select One</option>
 				</select>
 

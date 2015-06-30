@@ -1,7 +1,14 @@
 // Some middleware that will try to load the logged in user's data
-// and attach it to the request object
+// and attach it to the request object.  If no user is logged in, some
+// json data is sent to the user informing them of such and the request is ended
 var cryptoFuncs = require( '../modules/cryptoFuncs.js' )
 	,userModel	= require( '../models/user.js' );
+
+function noUserFound( res ) {
+	res.setHeader( 'Content-Type', 'application/json' );
+	res.json( { login_error: true } );
+	res.end();
+}
 
 module.exports = function() {
 	return function( req, res, next ) {
@@ -25,12 +32,12 @@ module.exports = function() {
 			}
 			else
 			{
-				next();
+				noUserFound( res );
 			}
 		}
 		else
 		{
-			next();
+			noUserFound( res );
 		}
 	}
 }

@@ -1,9 +1,17 @@
 // Our requires
-var config 		= require( '../config' )
-	,userModel	= require( '../models/user.js' )
-	,cryptoFuncs = require( '../modules/cryptoFuncs.js' );
+var config 			= require( '../config' )
+	,cryptoFuncs	= require( '../modules/cryptoFuncs.js' )
+	,userModel		= require( '../models/user.js' );
 
 module.exports.controller = function( app ) {
+	// Outputs the results to browser and ends the request
+	function outputResults( res, data )
+	{
+		res.setHeader( 'Content-Type', 'application/json' );
+		res.json( data );
+		res.end();
+	}
+
 	// Handles signup requests
 	app.post( '/signup', function( req, res ) {
 		// An object to store our result messages (errors)
@@ -31,31 +39,44 @@ module.exports.controller = function( app ) {
 			}
 			else
 			{
-				results.newuser = newUser;
-			}
+				contactModels = require( '../models/contact.js' );
 
-			// If there are no errors and if a user object exists
-			if( results.errors.length == 0 && results.newuser )
-			{
-				var returnData = {
-					statusMessage: 'User successfully created, please login'
-				};
-			}
-			else
-			{
-				var errorMessages = '';
-				for( var i in results.errors )
-					errorMessages += results.errors[i] + ' ';
+				var contactListModel = contactModels.contactListModel;
 
-				var returnData = {
-					errorMessage: errorMessages
-				};
-			}
+				// Create a contact list for the new user so it will be ready to add
+				// contacts to.
+				var contactList = new contactListModel( { 
+						ownerId: newUser.id, 
+						contacts: []
+				} );
 
-			// Send the results to the browser
-			res.setHeader( 'Content-Type', 'application/json' );
-			res.json( returnData );
-			res.end();
+				contactListModel.create( contactList, function( err, contactList ) {
+					if( err )
+					{
+						results.errors.push( 'Error creating contact list' );
+					}
+
+					// If there are no errors and if a user object exists
+					if( results.errors.length == 0 )
+					{
+						var returnData = {
+							statusMessage: 'User successfully created, please login'
+						};
+					}
+					else
+					{
+						var errorMessages = '';
+						for( var i in results.errors )
+							errorMessages += results.errors[i] + ' ';
+
+						var returnData = {
+							errorMessage: errorMessages
+						};
+					}
+
+					outputResults( res, returnData );
+				} );
+			}
 		} );
 	} );
 
@@ -89,29 +110,23 @@ module.exports.controller = function( app ) {
 				{
 					// Let the user know the login failed
 					errors.push( 'Unable to login, please try again' );
-					res.setHeader( 'Content-Type', 'application/json' );
-					res.json( errors );
-					res.end();
+					outputResults( res, errors );
 				}
 				else if( user )
 				{
 					// Set the logged in cookie and redirect the user to contact manager main page
 					res.cookie( 'user', cryptoFuncs.encrypt( user.id ), { signed: true } );
-					res.json( {
+					outputResults( res, {
 						login: 'successful',
 						statusMessage: 'Login successful, please wait while you are redirected'
 					} );
-
-					res.end();
 				}
 			} );
 		}
 		else
 		{
 			// Send the errors to the user
-			res.setHeader( 'Content-Type', 'application/json' );
-			res.json( errors );
-			res.end();
+			outputResults( res, errors );
 		}
 	} );
 
@@ -130,8 +145,6 @@ module.exports.controller = function( app ) {
 			};
 		}
 
-		res.setHeader( 'Content-Type', 'application/json' );
-		res.json( returnData );
-		res.end();
+		outputResults( res, returnData );
 	} );
 }

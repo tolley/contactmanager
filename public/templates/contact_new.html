@@ -2,61 +2,71 @@
 	{{header_message}}
 	<h2>Add a new contact</h2>
 </header>
-<div id="contact_new">
+<form id="contact_new" name="newContactForm" ng-submit="createContact( newContactForm.$valid )" novalidate>
 	<div class="contact_field">
-		<input type="text" placeholder="First Name" ng-model="newcontact.firstname" />
+		<input type="text" placeholder="First Name" name="firstname" ng-model="newcontact.firstname" required
+			ng-maxlength="10" />
+		<br />
+	</div>
+	<p ng-show="newContactForm.firstname.$invalid && ! newContactForm.firstname.$pristine"
+				class="" >
+		You must enter a first name and it can be no longer than 500 characters (counting spaces)
+	</p>
+
+	<div class="contact_field">
+		<input type="text" placeholder="Last Name" name="lastname" ng-model="newcontact.lastname" />
 		<br />
 	</div>
 
 	<div class="contact_field">
-		<input type="text" placeholder="Last Name" ng-model="newcontact.lastname" />
+		<input type="email" placeholder="Email Address" name="email" ng-model="newcontact.email" 
+				ng-pattern="/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i" />
+		<br />
+	</div>
+	<p ng-show="newContactForm.email.$invalid && ! newContactForm.email.$pristine"
+				class="" >
+		You must enter a valid email address
+	</p>
+
+	<div class="contact_field">
+		<input type="text" placeholder="Phone Number" name="phone" ng-model="newcontact.phone" />
 		<br />
 	</div>
 
 	<div class="contact_field">
-		<input type="email" placeholder="Email Address" ng-model="newcontact.email" />
+		<input type="text" placeholder="Street Address" name="street" ng-model="newcontact.street" />
 		<br />
 	</div>
 
 	<div class="contact_field">
-		<input type="text" placeholder="Phone Number" ng-model="newcontact.phone" />
+		<input type="text" placeholder="Apartment/Building Number" name="street2" ng-model="newcontact.street2" />
 		<br />
 	</div>
 
 	<div class="contact_field">
-		<input type="text" placeholder="Street Address" ng-model="newcontact.street" />
+		<input type="text" placeholder="City" name="city" ng-model="newcontact.city" />
 		<br />
 	</div>
 
 	<div class="contact_field">
-		<input type="text" placeholder="Apartment/Building Number" ng-model="newcontact.street2" />
-		<br />
-	</div>
-
-	<div class="contact_field">
-		<input type="text" placeholder="City" ng-model="newcontact.city" />
-		<br />
-	</div>
-
-	<div class="contact_field">
-		<select ng-model="newcontact.state" ng-options="state.value as state.name for state in states">
+		<select ng-model="newcontact.state" name="state" 
+				ng-options="state.value as state.name for state in states">
 			<option value="">Select State</option>
 		</select>
 		<br />
 	</div>
 
 	<div class="contact_field">
-		<input type="text" placeholder="Zip Code" ng-model="newcontact.zip" />
+		<input type="text" placeholder="Zip Code" name="zip" ng-model="newcontact.zip" />
 		<br />
 	</div>
 
-	<div class="contact_field center">
-		<button ng-click="createContact()">
-			Add Contact
-		</button>
+	<p ng-show="save_failed">
+		Failed to save new contact
+	</p>
 
-		<button ng-click="cancelCreateContact()">
-			Cancel
-		</button>
-	</div>
-</div>
+	<button type="submit" class="btn btn-primary" ng-disabled="newContactForm.$invalid" 
+		ng-click="newContactForm.save_failed = false">
+		Submit
+	</button>
+</form>
