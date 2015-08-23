@@ -4,11 +4,13 @@ div.contact {
 	width: 300px;
 	height: 125px;
 	overflow: auto;
+	padding: 2px;
 	float: left;
 }
 
 div.contact:hover {
 	border: solid 1px #000;
+	box-shadow: 4px 4px 3px #AAA;
 	cursor: pointer;
 }
 
@@ -21,7 +23,27 @@ header {
 }
 
 .full-menu .display_options {
-	margin-left: 100px;
+	width: 300px;
+}
+
+.full-menu .order-by {
+	font-weight: bold;
+}
+
+.full-menu .display_option select {
+	width: 100px;
+	border: solid 1px #0F0;
+}
+
+.full-menu .display_options option {
+	font-size: 18px;
+}
+
+span.full-menu div, 
+span.full-menu span,
+span.full-menu a,
+span.full-menu button {
+	margin: 0px  5px 0px 5px;
 }
 
 .propername {
@@ -44,7 +66,7 @@ header {
 	cursor: pointer;
 }
 
-.contacts_table .selectedContact {
+.contacts_table tr.selectedContact {
 	background-color: #EEE;
 }
 
@@ -54,7 +76,7 @@ header {
 
 .crud_links a {
 	float: right;
-	color: #00F;
+	color: #337ab7;
 	cursor: pointer;
 	font-size: 10px;
 	clear: none;
@@ -97,21 +119,29 @@ div#contact_new div.center {
 div.contact_edit {
 	border: solid 1px #000;
 	width: 300px;
-	margin: 2px 0px 2px 0px;
+	margin: 2px;
+	max-width: 468px;
+	min-width: 363px;
 }
 
 div.contact_edit label {
-	float: left;
-	width: 110px;
+	width: 30%;
+	margin-left: 2px;
 }
 
-div.contact_edit select,
-div.contact_edit input {
+div.contact_edit div.form-field-container {
+	width: 68%;
 	float: right;
+	margin: 2px;
 }
 
 div.contact_edit br {
 	clear: both;
+}
+
+button#save-button,
+button#create-contact {
+	margin-left: 10px;
 }
 
 /* End New Contact styles */
@@ -136,13 +166,85 @@ div.contact_edit br {
 }
 
 span.asc::before {
+	margin-top: 6px;
 	content: '\25B2';
+	color: #337ab7;
 }
 
 span.desc::before {
+	margin-top: 6px;
 	content: '\25BC';
+	color: #337ab7;
 }
 
 br.no_clear {
 	clear: none;
+}
+
+.responseMessage {
+	color: #337ab7;
+	width: 100%;
+	text-align: center;
+}
+
+.navbar div.message {
+	max-width: 75%;
+	float: left;
+}
+
+@media (max-width: 480px) {
+	table.contacts_table {
+		font-size: 10px;
+	}
+}
+
+#contact_new .contact_field {
+	height: 30px;
+	margin-right: 5px;
+	margin-left: 5px;
+	max-width: 300px;
+}
+
+.navbar-toggle {
+	float: right;
+}
+
+.template_switcher_container {
+	width: 100px;
+	float: right;
+}
+
+.order_by_container {
+	width: 110px;
+	float: right;
+}
+
+ul.mobile-menu li.tall {
+	height: 36px;
+}
+
+.mobile-menu .search-container {
+	width: 90%;
+	float: left;
+}
+
+span.clear-search {
+	font-size: 20px;
+	color: #337ab7;
+	float: right;
+	cursor: pointer;
+	margin-top: 6px;
+}
+
+.full-menu div.action-container {
+	width: 150px;
+}
+
+ul.mobile-menu div.action-container {
+	width: 83%;
+	float: left;
+}
+
+ul.mobile-menu button.action-button {
+	float: right;
 }

@@ -5,8 +5,6 @@ var myApp = angular.module( 'contactListApp', ['ngRoute'] );
 
 // Add our controller to our module
 myApp.controller( 'contactListCtrl', function( $scope, $http, $location ) {
-	$scope.tolley = '12345';
-
 	// The header template for all pages
 	$scope.header_template_url = "/templates/contacts_header.html";
 
@@ -83,8 +81,7 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location ) {
 	$scope.newcontact = {};
 
 	// Called to add a new contact
-	$scope.createContact = function( isValid )
-	{
+	$scope.createContact = function( isValid ) {
 		// If the form inputs pass our validation
 		if( isValid )
 		{
@@ -112,9 +109,18 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location ) {
 					}
 				} )
 				.error( function( data, status, headers, config ) {
-					$scope.header_message = 'Error saving contact'
 				} );
 		}
+	}
+
+	// Called when the user clicks on Cancel on the Add New Contact page
+	$scope.cancelCreateContact = function() {
+		// Remove the details of the new contact from the new contact object
+		// so we can reuse it
+		$scope.newcontact = {};
+
+		// Send the user back to the listing page
+		$location.path( '' );
 	}
 
 	// Called to cancel the adding of a new contact
@@ -214,7 +220,10 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location ) {
 		// Send each of the contacts that have been edited to the server to be saved
 		$http.put( '/contacts/save', $scope.contactsUnderEdit )
 			.success( function( data, status, headers, config ) {
-				if( data.status == 'success' )
+				// Send the reponse data to the generic method that will handle it
+				$scope.handleJSONResponse( data );
+
+				if( data.status === 'success' )
 				{
 					// Send the user back to the list page and reload all the contact data
 					$http.get( '/contacts/all' )
@@ -226,6 +235,14 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location ) {
 							} );
 				}
 			} );
+	}
+
+	// Called when the user clicks Cancel while editing contacts
+	$scope.cancelEdit = function() {
+		// Empty the list of contacts that are being edited
+		$scope.contactsUnderEdit.splice( 0, $scope.contactsUnderEdit.length );
+
+		$location.path( '' );
 	}
 
 	// Called when the user clicks on the go button on the table view
@@ -295,12 +312,10 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location ) {
 			window.location.href = '/signin.html';
 		}
 
-		// Do something with the message
-/*		{
-			status: 'success',
-			message: 'Contact successfully created'
+		if( data.statusMessage && data.statusMessage.length > 0 ) {
+			console.log( data.statusMessage );
+			$scope.responseMessage = data.statusMessage;
 		}
-*/
 
 		// If we have a contact list, place it on the scope for the user to 
 		// interact with
