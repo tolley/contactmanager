@@ -154,11 +154,11 @@ button#create-contact {
 }
 
 .contacts_table span.order_by_inactive {
-	color: #aaa;
+	color: #555;
 }
 
 .contacts_table span.order_by_active {
-	color: #000;
+	color: #337ab7;;
 }
 
 #list_sorter {
@@ -168,13 +168,11 @@ button#create-contact {
 span.asc::before {
 	margin-top: 6px;
 	content: '\25B2';
-	color: #337ab7;
 }
 
 span.desc::before {
 	margin-top: 6px;
 	content: '\25BC';
-	color: #337ab7;
 }
 
 br.no_clear {
@@ -185,6 +183,10 @@ br.no_clear {
 	color: #337ab7;
 	width: 100%;
 	text-align: center;
+}
+
+.navbar (max-width: 480px) {
+	color: #555; /* tolley */
 }
 
 .navbar div.message {

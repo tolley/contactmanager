@@ -20,8 +20,8 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location ) {
 	$scope.initializeData = function() {
 		// The templates available to our app
 		$scope.templates = [
-			{ name: 'list', url: 'templates/contacts_list.html' }
-			,{ name: 'table', url: 'templates/contacts_table.html' }
+			{ name: 'list', url: 'templates/contacts_list.html' },
+			{ name: 'table', url: 'templates/contacts_table.html' }
 		];
 
 		// An array to hold all of the contacts that are pulled from the server
@@ -45,11 +45,20 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location ) {
 		// The text used to filter the contact results
 		$scope.filter_text = '';
 
-		// An array to keep track of the current order by
-		$scope.order = {
-			'firstname': true,
-			'lastname': false,
-			'email': false
+		// An array to keep track of the current order by states
+		$scope.order_bys = {
+			'firstname': {
+				active: false,
+				dir: 'desc'
+			},
+			'lastname': {
+				active: true,
+				dir: 'asc'
+			},
+			'email': {
+				active: false,
+				dir: 'desc'
+			}
 		};
 
 		// The default order by column
@@ -69,13 +78,13 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location ) {
 
 		// An array to keep track of which contacts are being edited.
 		$scope.contactsUnderEdit = [];
-	}
+	};
 
 	// The method called when the filter "clear" button is clicked
 	$scope.clearFilter = function()
 	{
 		$scope.filter_text = '';
-	}
+	};
 
 	// An object to store the new contact data
 	$scope.newcontact = {};
@@ -111,7 +120,7 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location ) {
 				.error( function( data, status, headers, config ) {
 				} );
 		}
-	}
+	};
 
 	// Called when the user clicks on Cancel on the Add New Contact page
 	$scope.cancelCreateContact = function() {
@@ -121,50 +130,35 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location ) {
 
 		// Send the user back to the listing page
 		$location.path( '' );
-	}
+	};
 
 	// Called to cancel the adding of a new contact
 	$scope.cancelCreateContact = function()
 	{
 		$scope.newcontact = {};
 		$location.path( '' );
-	}
+	};
 
 	$scope.onSort = function( field )
 	{
-		// If a field was passed in
-		if( field && field.length > 0 )
-		{
-			// If field is already the order by field
-			if( $scope.order_by === field )
-			{
-				// We need to reverse the direction
-				$scope.order_by_reverse = ! $scope.order_by_reverse;
-			}
-			else
-			{
-				// Make sure order_by_reverse is true (each column needs to always start in a given direction)
-				$scope.order_by_reverse = false;
-
-				// Update the order by property which the template uses to order the contacts
-				$scope.order_by = field;
-			}
-		}
-		else
-		{
-			// Otherwise, it means that the order_by variable was updated directly from the UI
-			field = $scope.order_by;
+		// If the field wasn't passed in, use the current order by field name
+		if( ! field || field.length === 0 ) {
+			var field = $scope.order_by;
 		}
 
-		// Update the flags that allow our template to use the correct styles
-		for( var fieldName in $scope.order )
-		{
-			$scope.order[fieldName] = false;
+		// Deactive the previously active order by
+		for( var n in $scope.order_bys ) {
+			$scope.order_bys[n].active = false;
 		}
 
-		// Make sure the selected field is set to true
-		$scope.order[field] = true;
-	}
+		// Activate the new order by and reverse it's direction
+		$scope.order_bys[field].active = true;
+		$scope.order_bys[field].dir = ( $scope.order_bys[field].dir == 'desc' )? 'asc': 'desc';
+
+		// Update the name of the current order by field and reversed flag
+		$scope.order_by = field;
+		$scope.order_by_reverse = $scope.order_bys[field].dir == 'desc';
+	};
 
 	// Called when the delete contact link is clicked
 	$scope.deleteContact = function( contact )
@@ -193,7 +187,7 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location ) {
 					$scope.handleJSONResponse( data );
 				} );
 		}
-	} 
+	};
 
 	// Called when the user clicks on the edit link
 	$scope.editContact = function( contact )
@@ -212,7 +206,7 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location ) {
 
 		// Send the user to the edit page
 		$location.path( '/edit' );
-	}
+	};
 
 	// Called when the user clicks save on the edit contacts section
 	$scope.saveEdits = function()
@@ -235,7 +229,7 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location ) {
 							} );
 				}
 			} );
-	}
+	};
 
 	// Called when the user clicks Cancel while editing contacts
 	$scope.cancelEdit = function() {
@@ -243,7 +237,7 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location ) {
 		$scope.contactsUnderEdit.splice( 0, $scope.contactsUnderEdit.length );
 
 		$location.path( '' );
-	}
+	};
 
 	// Called when the user clicks on the go button on the table view
 	$scope.performSelectedAction = function()
@@ -303,7 +297,7 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location ) {
 				}
 				break;
 		}
-	}
+	};
 
 	// Handles the response from one of the requests to the contacts API
 	$scope.handleJSONResponse = function( data ) {
@@ -331,7 +325,7 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location ) {
 				$scope.contacts.push( data.contacts[n] );
 			}
 		}
-	}
+	};
 
 	// Removes all fields from a contact that we don't want to send to the
 	// server
@@ -339,7 +333,7 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location ) {
 	{
 		delete contact.selected;
 		return contact;
-	}
+	};
 } );
 
 // Create the routes for this app

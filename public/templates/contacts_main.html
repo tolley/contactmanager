@@ -29,11 +29,10 @@
 				</span>
 			</li>
 			<li ng-show="template.name == 'list'" class="tall">
-				Order By
 				<div class="order_by_container">
 					<select ng-show="template.name == 'list'" ng-model="order_by" ng-change="onSort()"
 							class="form-control">
-						<option ng-repeat="(key, value) in order" value="{{key}}" ng-selected="key == order_by">
+						<option ng-repeat="(key, value) in order_bys" value="{{key}}" ng-selected="key == order_by">
 							{{key}}
 						</option>
 					</select>
@@ -108,7 +107,7 @@
 
 		<span class="order-by" ng-show="template.name == 'list'">Order By:</span>
 		<select ng-show="template.name == 'list'" ng-model="order_by" ng-change="onSort()">
-			<option ng-repeat="(key, value) in order" value="{{key}}" ng-selected="key == order_by">
+			<option ng-repeat="(key, value) in order_bys" value="{{key}}" ng-selected="key == order_by">
 				{{key}}
 			</option>
 		</select>

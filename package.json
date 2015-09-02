@@ -1,15 +1,22 @@
 {
-	"name": "contact-manager",
-	"description": "Manage your contact information",
-	"version": "0.0.1",
-	"private": true,
-	"dependencies": {
-		"express": "3.x",
-		"mongodb": "*",
-		"mongoose": "*",
-		"cookie-parser": "*",
-		"body-parser": "*",
-		"crypto": "*"
+  "name": "contact-manager",
+  "description": "Manage your contact information",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "3.x",
+    "mongodb": "*",
+    "mongoose": "*",
+    "cookie-parser": "*",
+    "body-parser": "*",
+    "crypto": "*",
+    "grunt": "*",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-clean": "~0.6.0",
+    "grunt-contrib-cssmin": "*"
+  },
+  "devDependencies": {
+    "grunt-contrib-cssmin": "~0.13.0"
   }
 }
-

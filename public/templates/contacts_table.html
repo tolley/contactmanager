@@ -4,9 +4,14 @@
 			<th class="col-md-2">
 				First Name
 				<a href="" 
-					ng-class="{ active: order.firstname, reverse: order.firstname && order_by_reverse }"
+					ng-class="{ active: order_bys.firstname.active, reverse: order_bys.firstname.dir == 'asc' }"
 					ng-click="onSort( 'firstname' )">
-						<span ng-class="{ order_by_active: order.firstname, order_by_inactive: ! order.firstname, asc: ! order_by_reverse || ! order.firstname, desc: order.firstname && order_by_reverse }">
+						<span ng-class="{ 
+							order_by_active: order_bys.firstname.active, 
+							order_by_inactive: ! order_bys.firstname.active, 
+							asc: order_bys.firstname.dir == 'asc', 
+							desc: order_bys.firstname.dir == 'desc' 
+						}">
 							&nbsp;
 						</span>
 				</a>
@@ -14,9 +19,14 @@
 			<th class="col-md-1">
 				Last Name
 				<a href="" 
-					ng-class="{ active: order.lastname }"
+					ng-class="{ active: order_bys.lastname.active, reverse: order_bys.lastname.dir == 'asc' }"
 					ng-click="onSort( 'lastname' )">
-						<span ng-class="{ order_by_active: order.lastname, order_by_inactive: ! order.lastname, asc: ! order_by_reverse || ! order.lastname, desc: order.lastname && order_by_reverse }">
+						<span ng-class="{ 
+							order_by_active: order_bys.lastname.active, 
+							order_by_inactive: ! order_bys.lastname.active, 
+							asc: order_bys.lastname.dir == 'asc', 
+							desc: order_bys.lastname.dir == 'desc' 
+						}">
 							&nbsp;
 						</span>
 				</a>
@@ -27,9 +37,14 @@
 			<th class="col-md-1">
 				Email Address
 				<a href="" 
-					ng-class="{ active: order.email }"
+					ng-class="{ active: order_bys.email.active, reverse: order_bys.email.dir == 'asc' }"
 					ng-click="onSort( 'email' )">
-						<span ng-class="{ order_by_active: order.email, order_by_inactive: ! order.email, asc: ! order_by_reverse || ! order.email, desc: order.email && order_by_reverse }">
+						<span ng-class="{ 
+							order_by_active: order_bys.email.active, 
+							order_by_inactive: ! order_bys.email.active, 
+							asc: order_bys.email.dir == 'asc', 
+							desc: order_bys.email.dir == 'desc' 
+						}">
 							&nbsp;
 						</span>
 				</a>
