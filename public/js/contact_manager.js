@@ -327,10 +327,21 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location ) {
 		}
 	};
 
+	// Handles the logout request
+	$scope.doLogout = function() {
+		console.log( 'doing logout' );
+		$http.get( '/user/logout' )
+			.success( function( data, status, headers, config ) {
+				if( data.loggedOut ) {
+					// Send the user back to the signin page
+					location.href = '/signin.html';
+				}
+			} );
+	}
+
 	// Removes all fields from a contact that we don't want to send to the
 	// server
-	function cleanContact( contact )
-	{
+	function cleanContact( contact ) {
 		delete contact.selected;
 		return contact;
 	};

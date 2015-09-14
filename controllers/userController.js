@@ -110,7 +110,10 @@ module.exports.controller = function( app ) {
 				{
 					// Let the user know the login failed
 					errors.push( 'Unable to login, please try again' );
-					outputResults( res, errors );
+					outputResults( res, {
+						login: 'failed',
+						statusMessage: '<div>' + errors.join( '</div><div>' ) + '</div>'
+					} );
 				}
 				else if( user )
 				{
@@ -119,6 +122,14 @@ module.exports.controller = function( app ) {
 					outputResults( res, {
 						login: 'successful',
 						statusMessage: 'Login successful, please wait while you are redirected'
+					} );
+				}
+				else {
+					// Otherwise, if both err and usr are null, meaning no logins were found
+					errors.push( 'Unable to login, please try again' );
+					outputResults( res, {
+						login: 'failed',
+						statusMessage: errors.join( '. ' )
 					} );
 				}
 			} );
@@ -144,6 +155,18 @@ module.exports.controller = function( app ) {
 				isLoggedIn: 'false'
 			};
 		}
+
+		outputResults( res, returnData );
+	} );
+
+	// Lets the user log out
+	app.get( '/user/logout', function( req, res ) {
+		res.clearCookie( 'user' );
+
+		// Let the frontend know that the cookie was deleted
+		var returnData = {
+			loggedOut: true
+		};
 
 		outputResults( res, returnData );
 	} );
