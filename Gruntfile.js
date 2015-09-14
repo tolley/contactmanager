@@ -19,6 +19,8 @@ module.exports = function( grunt ) {
 
 		cssmin: {
 			options: {
+				aggressiveMerging: false,
+				restructuring: false
 			},
 
 			target: {
