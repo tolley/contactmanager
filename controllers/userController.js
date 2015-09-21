@@ -170,4 +170,13 @@ module.exports.controller = function( app ) {
 
 		outputResults( res, returnData );
 	} );
+
+	// Redirects the user to the signin page from /
+	app.get( '/', function( req, res ) {
+		res.writeHead( 301, {
+			'Location': '/signin.html'
+		} );
+
+		res.end();
+	} );
 }

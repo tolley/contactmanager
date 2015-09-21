@@ -21,7 +21,7 @@ myApp.controller( 'signinController', function( $scope, $http, $location ) {
 	$scope.statusMessage = '';
 
 	// Holds the current state of the display
-	$scope.mode = 'create';
+	$scope.mode = 'signin';
 
 	// The password character limits
 	$scope.passwordMinLength = 8;

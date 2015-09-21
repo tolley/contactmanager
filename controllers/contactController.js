@@ -148,11 +148,9 @@ module.exports.controller = function( app ) {
 					// Loop over each contact in the list, if it's
 					// in the hash table, remove it from the list
 					for( var n = contactList.contacts.length - 1; n >= 0; --n ) {
-						console.log( 'before ', contactList.contacts );
 						if( idHash[ contactList.contacts[n].id ] ) {
 							contactList.contacts.splice( n, 1 );
 						}
-						console.log( 'after ', contactList.contacts );
 					}
 
 					// Save the contact list and return the results to the user
