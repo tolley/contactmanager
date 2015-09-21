@@ -1,0 +1,313 @@
+// Define our colors
+$border-color: #EEE;
+$link-color: #337ab7;
+
+div.contact {
+	& {
+		margin: 5px;
+		border: solid 1px $border-color;
+		width: 300px;
+		height: 125px;
+		overflow: auto;
+		padding: 2px;
+		float: left;
+	}
+
+	&:hover {
+		border: solid 1px #000;
+		box-shadow: 4px 4px 3px #AAA;
+		cursor: pointer;
+	}
+}
+
+header {
+	margin-bottom: 10px;
+}
+
+span.full-menu {
+	span.search {
+		float: right;
+	}
+
+	.display_options {
+		width: 300px;
+	}
+
+	.order-by {
+		font-weight: bold;
+	}
+
+	.display_option select {
+		width: 100px;
+		border: solid 1px #0F0;
+	}
+
+	.display_options option {
+		font-size: 18px;
+	}
+
+	div, 
+	span,
+	a,
+	button {
+		margin: 0px  5px 0px 5px;
+	}
+
+	div.action-container {
+		width: 150px;
+	}
+}
+.propername {
+	text-transform: capitalize;
+}
+
+.contacts_table {
+	th {
+		text-align: left;
+		background-color: $border-color;
+	}
+
+	td {
+		border-bottom: solid 1px $border-color;
+	}
+
+	td:hover {
+		cursor: pointer;
+	}
+
+	tr.selectedContact {
+		background-color: $border-color;
+	}
+}
+
+.crud_links {
+	& {
+		float: right;
+	}
+
+	a {
+		float: right;
+		color: $link-color;
+		cursor: pointer;
+		font-size: 10px;
+		clear: none;
+	}
+}
+
+ul.mobile-menu {
+	& {
+		padding: 0px;
+		margin: 20px 10px 0px 0px;
+		list-style: none;
+		background-color: #f8f8f8;
+	}
+
+	li {
+		border-top: solid 1px $border-color;
+		padding: 0px 0px 5px 5px;
+	}
+
+	div.action-container {
+		width: 83%;
+		float: left;
+	}
+	
+	div.action-container {
+		width: 83%;
+		float: left;
+	}
+
+	button.action-button {
+		float: right;
+	}
+}
+
+form#contact_new {
+	& {
+		border: solid 1px $border-color;
+		padding-top: 5px;
+		padding-bottom: 5px;
+		width: 300px;
+	}
+
+	div.contact_field {
+		& {
+			height: 30px;
+			margin-right: 5px;
+			margin-left: 5px;
+			max-width: 300px;
+		}
+
+		input, select {
+			width: 96%;
+		}
+
+		div.center {
+			text-align: center;
+		}
+	}
+
+	button#create-contact {
+		margin-left: 10px;
+	}
+}
+
+
+div.contact_edit {
+	& {
+		border: solid 1px #000;
+		width: 300px;
+		margin: 2px;
+		max-width: 468px;
+		min-width: 363px;
+	}
+
+	label {
+		width: 30%;
+		margin-left: 2px;
+	}
+
+	div.form-field-container {
+		width: 68%;
+		float: right;
+		margin: 2px;
+	}
+
+	br {
+		clear: both;
+	}
+
+	button#save-button {
+		margin-left: 10px;
+	}
+}
+
+.contacts_table {
+	a {
+		text-decoration: none;
+	}
+
+	.contacts_table a.active {
+	}
+
+	.contacts_table span.order_by_inactive {
+		color: #555;
+	}
+
+	.contacts_table span.order_by_active {
+		color: $link-color;
+	}
+}
+
+#list_sorter {
+	cursor: pointer;
+}
+
+span.asc::before {
+	margin-top: 6px;
+	content: '\25B2';
+}
+
+span.desc::before {
+	margin-top: 6px;
+	content: '\25BC';
+}
+
+br.no_clear {
+	clear: none;
+}
+
+.responseMessage {
+	color: $link-color;
+	width: 100%;
+	text-align: center;
+}
+
+@media (max-width: 480px) {
+	.navbar {
+		color: #555;
+	}
+}
+
+.navbar div.message {
+	max-width: 75%;
+	float: left;
+}
+
+@media (max-width: 480px) {
+	table.contacts_table {
+		font-size: 10px;
+	}
+}
+
+.navbar-toggle {
+	float: right;
+}
+
+.template_switcher_container {
+	width: 100px;
+	float: right;
+}
+
+.order_by_container {
+	width: 110px;
+	float: right;
+}
+
+ul.mobile-menu li.tall {
+	height: 36px;
+}
+
+.mobile-menu .search-container {
+	width: 90%;
+	float: left;
+}
+
+span.clear-search {
+	font-size: 20px;
+	color: $link-color;
+	float: right;
+	cursor: pointer;
+	margin-top: 6px;
+}
+
+/********************************************************
+ *** Signup/login page styles ***************************
+ ********************************************************/
+ div#signin {
+	max-width: 400px;
+	margin-top: 15px;
+}
+
+span.tab {
+	& {
+		padding-left: 20px;
+		padding-right: 20px;
+		cursor: pointer;
+		border: solid 1px #000;
+		border-radius: 5px 5px 0px 0px;
+		width: 200px;
+		display: inline;
+	}
+
+	span.active {
+		font-weight: bold;
+		border-bottom: solid 1px #FFF;
+	}
+}
+
+div.tab-content {
+	& {
+		border: solid 1px #000;
+		width: 400px;
+		margin-left: -15px;
+		margin-top: -1px;
+	}
+
+	div.form-group {
+		margin-top: 5px;
+		padding-left: 5px;
+		padding-right: 5px;
+		width: 400px;
+	}
+}
