@@ -274,36 +274,39 @@ span.clear-search {
 /********************************************************
  *** Signup/login page styles ***************************
  ********************************************************/
- div#signin {
-	max-width: 400px;
-	margin-top: 15px;
-}
 
-span.tab {
-	padding-left: 20px;
-	padding-right: 20px;
-	cursor: pointer;
-	border: solid 1px #000;
-	border-radius: 5px 5px 0px 0px;
-	width: 200px;
-	display: inline;
-}
+ form#signin {
+ 	& {
+		max-width: 400px;
+		margin-top: 15px;
+	}
 
-span.active {
-	font-weight: bold;
-	border-bottom: solid 1px #FFF;
-}
+	span.tab {
+		padding-left: 20px;
+		padding-right: 20px;
+		cursor: pointer;
+		border: solid 1px #000;
+		border-radius: 5px 5px 0px 0px;
+		width: 200px;
+		display: inline;
+	}
 
-div.tab-content {
-	border: solid 1px #000;
-	width: 400px;
-	margin-left: -15px;
-	margin-top: -1px;
-}
+	span.active {
+		font-weight: bold;
+		border-bottom: solid 1px #FFF;
+	}
 
-div.tab-content div.form-group {
-	margin-top: 5px;
-	padding-left: 5px;
-	padding-right: 5px;
-	width: 400px;
+	div.tab-content {
+		border: solid 1px #000;
+		width: 400px;
+		margin-left: -15px;
+		margin-top: -1px;
+	}
+
+	div.tab-content div.form-group {
+		margin-top: 5px;
+		padding-left: 5px;
+		padding-right: 5px;
+		width: 400px;
+	}
 }
