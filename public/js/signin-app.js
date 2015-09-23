@@ -154,6 +154,6 @@ myApp.controller( 'signinController', function( $scope, $http, $location ) {
 	// Sends the user to the main page
 	function goToMainPage()
 	{
-		window.location = '/contactmanager.html';
+		window.location = '/contactmanager';
 	}
 } );
