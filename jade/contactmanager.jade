@@ -1,0 +1,26 @@
+doctype html
+
+html( ng-app='contactListApp' )
+	head
+		meta( charset='utf-8' )
+		meta( name='viewport' )
+
+		title Sample Contact Manager in MEAN
+
+		if isDev
+			script( src='/js/angular.js' )
+			script( src='/js/angular-route.js' )
+			script( src='/js/contact_manager.js' )
+		else
+			script( src='/js/min.js' )
+
+		link( rel='stylesheet' type='text/css' href='/css/bootstrap.css' media='screen, projection' )
+
+		if isDev
+			link( rel='stylesheet' type='text/css' href='/css/contactmanager.css' media='screen, projection' )
+		else
+			link( rel='stylesheet' type='text/css' href='/css/min.css' media='screen, projection' )
+
+	body( ng-controller='contactListCtrl' ng-init='initializeData()' )
+
+		div( ng-view )

@@ -1,7 +1,8 @@
 // Our requires
 var config 			= require( '../config' )
 	,cryptoFuncs	= require( '../modules/cryptoFuncs.js' )
-	,userModel		= require( '../models/user.js' );
+	,userModel		= require( '../models/user.js' )
+	,jade			= require( 'jade' );
 
 module.exports.controller = function( app ) {
 	// Outputs the results to browser and ends the request
@@ -11,6 +12,27 @@ module.exports.controller = function( app ) {
 		res.json( data );
 		res.end();
 	}
+
+	// Handles the main url (spits out the main template that pulls in the rest of the javascript)
+	app.get( '/contactmanager', function( req, res ) {
+		// Build the config object that we will send to our jade template
+		var jadeConfig = { isDev: false }
+		if( config.env === 'dev' ) {
+			jadeConfig.isDev = true;
+		}
+
+		jade.renderFile( 'jade/contactmanager.jade', jadeConfig, function( error, html ) {
+			// If we didn't encounter an error, send the resulting html to the browser
+			if( ! error && html ) {
+				res.write( html );
+			}
+			else {
+				console.log( 'jade error: ', error )
+			}
+
+			res.end();
+		} );
+	} );
 
 	// Handles signup requests
 	app.post( '/signup', function( req, res ) {

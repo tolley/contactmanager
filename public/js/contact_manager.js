@@ -307,7 +307,6 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location ) {
 		}
 
 		if( data.statusMessage && data.statusMessage.length > 0 ) {
-			console.log( data.statusMessage );
 			$scope.responseMessage = data.statusMessage;
 		}
 
@@ -329,7 +328,6 @@ myApp.controller( 'contactListCtrl', function( $scope, $http, $location ) {
 
 	// Handles the logout request
 	$scope.doLogout = function() {
-		console.log( 'doing logout' );
 		$http.get( '/user/logout' )
 			.success( function( data, status, headers, config ) {
 				if( data.loggedOut ) {
