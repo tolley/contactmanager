@@ -1,11 +1,13 @@
 <div class="contact_list">
-	<div class="contact" ng-repeat="contact in contacts | filter:filter_text | orderBy: order_by: order_by_reverse">
+	<div class="contact" 
+			ng-repeat="contact in contacts | filter:state.filter_text | 
+					orderBy: state.order_by_field: state.order_by_desc">
 		<div class="crud_links">
-			<a ng-click="deleteContact( contact )">
+			<a href="javascript:void(0);" ng-click="deleteContact( contact, true )">
 				delete
 			</a>
 			<br class="noclear" />
-			<a ng-click="editContact( contact )">
+			<a href="javascript:void(0);" ng-click="editContact( contact )">
 				edit
 			</a>
 		</div>
@@ -14,7 +16,10 @@
 		<span><a href="mailto:{{contact.email}}">{{contact.email}}</a></span><br />
 		<span class="propername">{{contact.street}}</span><br />
 		<span class="propername">{{contact.street2}}</span><br ng-if="contact.street2" />
-		<span class="propername">{{contact.city + ' ' + contact.state.toUpperCase() + '. ' + contact.zip}}</span><br />
+		<span class="propername">
+			{{contact.city + ' ' + contact.state.toUpperCase() + '. ' + contact.zip}}
+		</span>
+		<br />
 		<span>{{contact.phone}}</span>
 	</div> 
 </div>

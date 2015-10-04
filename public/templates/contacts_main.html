@@ -27,43 +27,46 @@
 				<span class="display_options">
 					Display
 					<div class="template_switcher_container">
-						<select ng-model="template" ng-options="t.name for t in templates" 
+						<select ng-model="state.template" ng-options="t.name for t in state.templates" 
 								ng-change="mobile_menu_visible = false" class="form-control">
 						</select>
 					</div>
 				</span>
 			</li>
-			<li ng-show="template.name == 'list'" class="tall">
+			<li ng-show="state.template.name == 'list'" class="tall">
 				<div class="order_by_container">
-					<select ng-show="template.name == 'list'" ng-model="order_by" ng-change="onSort()"
+					<select ng-show="state.template.name == 'list'" ng-model="state.order_by_field"
+							 ng-change="state.changeSort( state.order_by_field, true )"
 							class="form-control">
-						<option ng-repeat="(key, value) in order_bys" value="{{key}}" ng-selected="key == order_by">
+						<option ng-repeat="(key, value) in data.order_bys" value="{{key}}" 
+								ng-selected="key == data.order_by">
 							{{key}}
 						</option>
 					</select>
 				</div>
-				<span ng-class="{ asc: ! order_by_reverse, desc: order_by_reverse }" id="list_sorter"
-						ng-click="order_by_reverse = !order_by_reverse" style="float: right;">
+				<span ng-class="{ asc: ! state.order_by_desc, desc: state.order_by_desc }" id="list_sorter"
+						ng-click="state.changeSort( state.order_by_field, true )" style="float: right;">
 					&nbsp;
 				</span>
 			</li>
 			<li>
 				<div class="search-container">
-					<input class="form-control" placeholder="Search" type="search" ng-model="filter_text" />
+					<input class="form-control" placeholder="Search" type="search" 
+							ng-model="state.filter_text" />
 				</div>
 
 				<span class="glyphicon glyphicon-ban-circle clear-search" ng-click="clearFilter()">
 				</span>
 			</li>
-			<li ng-show="template.name == 'table'">
+			<li ng-show="state.template.name == 'table'">
 				<div class="action-container">
-					<select ng-model="actions.selected" class="form-control"
-							ng-options="action.value as action.name for action in actions.selectableActions">
+					<select ng-model="state.actions.selected" class="form-control"
+							ng-options="action.value as action.name for action in state.actions.selectableActions">
 						<option value="">Select An Action</option>
 					</select>
 				</div>
 
-				<button ng-show="template.name == 'table'" ng-click="performSelectedAction()" 
+				<button ng-show="state.template.name == 'table'" ng-click="performSelectedAction()" 
 						class="btn btn-default action-button">
 					Go
 				</button>
@@ -78,7 +81,7 @@
 		</span>
 
 		<span class="search">
-			<input placeholder="Search" type="search" ng-model="filter_text" />
+			<input placeholder="Search" type="search" ng-model="state.filter_text" />
 
 
 			<button ng-click="clearFilter()" class="btn-default">
@@ -93,7 +96,8 @@
 		<div class="display_options">
 			<b>Display: </b>
 			<span class="container">
-				<select class="form-control" ng-model="template" ng-options="t.name for t in templates">
+				<select class="form-control" ng-model="state.template" 
+						ng-options="t.name for t in state.templates">
 				</select>
 			</span>
 		</div>
@@ -104,25 +108,32 @@
 		<br />
 
 		<div class="action-container">
-			<select ng-show="template.name == 'table'" ng-model="actions.selected" class="form-control"
-					ng-options="action.value as action.name for action in actions.selectableActions">
+			<select ng-show="state.template.name == 'table'" ng-model="state.actions.selected" 
+					class="form-control"
+					ng-options="action.value as action.name for action in state.actions.selectableActions">
 				<option value="">Select An Action</option>
 			</select>
 		</div>
 
-		<button ng-show="template.name == 'table'" ng-click="performSelectedAction()" class="btn-default">
+		<button ng-show="state.template.name == 'table'" ng-click="performSelectedAction()" 
+				class="btn-default">
 			Go
 		</button>
 
-		<span class="order-by" ng-show="template.name == 'list'">Order By:</span>
-		<select ng-show="template.name == 'list'" ng-model="order_by" ng-change="onSort()">
-			<option ng-repeat="(key, value) in order_bys" value="{{key}}" ng-selected="key == order_by">
+		<span class="order-by" ng-show="state.template.name == 'list'">Order By:</span>
+		<select ng-show="state.template.name == 'list'" ng-model="state.order_by_field" 
+				ng-change="state.changeSort( state.order_by_field )">
+			<option ng-repeat="(key, value) in state.all_order_bys" value="{{key}}" 
+					ng-selected="key == state.order_by_field">
 				{{key}}
 			</option>
 		</select>
 
-		<span ng-show="template.name == 'list'" ng-class="{ asc: ! order_by_reverse, desc: order_by_reverse }" id="list_sorter"
-				ng-click="order_by_reverse = !order_by_reverse">
+		<span ng-show="state.template.name == 'list'" ng-class="{ order_by_active: true,
+														asc: ! state.order_by_desc, 
+														desc: state.order_by_desc }" 
+												id="list_sorter"
+												ng-click="state.changeSort( this.order_by_field, true )">
 			&nbsp;
 		</span>
 
@@ -134,4 +145,4 @@
 
 <br />
 
-<ng-include src="template.url"></ng-include>
+<ng-include src="state.template.url"></ng-include>

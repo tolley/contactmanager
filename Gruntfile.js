@@ -8,7 +8,8 @@ module.exports = function( grunt ) {
 				mangle: false
 			},
 			build: {
-				src: ['public/js/angular.js', 'public/js/angular-route.js', 'public/js/contact_manager.js'],
+				src: ['public/js/angular.js', 'public/js/angular-route.js', 
+						'public/js/contact_manager.js', 'public/js/contact-manager-state.js'],
 				dest: 'public/js/min.js'
 			}
 		},

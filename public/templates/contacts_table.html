@@ -3,14 +3,15 @@
 		<tr class="row">
 			<th class="col-md-2">
 				First Name
-				<a href="" 
-					ng-class="{ active: order_bys.firstname.active, reverse: order_bys.firstname.dir == 'asc' }"
-					ng-click="onSort( 'firstname' )">
+				<a href="javascript:void(0)" 
+					ng-class="{ active: state.all_order_bys.firstname.active, 
+								reverse: state.all_order_bys.firstname.desc }"
+					ng-click="state.changeSort( 'firstname', true )">
 						<span ng-class="{ 
-							order_by_active: order_bys.firstname.active, 
-							order_by_inactive: ! order_bys.firstname.active, 
-							asc: order_bys.firstname.dir == 'asc', 
-							desc: order_bys.firstname.dir == 'desc' 
+							order_by_active: state.all_order_bys.firstname.active, 
+							order_by_inactive: ! state.all_order_bys.firstname.active, 
+							asc: ! state.all_order_bys.firstname.desc, 
+							desc: state.all_order_bys.firstname.desc 
 						}">
 							&nbsp;
 						</span>
@@ -18,14 +19,15 @@
 			</th>
 			<th class="col-md-1">
 				Last Name
-				<a href="" 
-					ng-class="{ active: order_bys.lastname.active, reverse: order_bys.lastname.dir == 'asc' }"
-					ng-click="onSort( 'lastname' )">
+				<a href="javascript:void(0)"
+					ng-class="{ active: state.all_order_bys.lastname.active, 
+								reverse: state.all_order_bys.lastname.desc }"
+					ng-click="state.changeSort( 'lastname', true )">
 						<span ng-class="{ 
-							order_by_active: order_bys.lastname.active, 
-							order_by_inactive: ! order_bys.lastname.active, 
-							asc: order_bys.lastname.dir == 'asc', 
-							desc: order_bys.lastname.dir == 'desc' 
+							order_by_active: state.all_order_bys.lastname.active, 
+							order_by_inactive: ! state.all_order_bys.lastname.active, 
+							asc: ! state.all_order_bys.lastname.desc, 
+							desc: state.all_order_bys.lastname.desc 
 						}">
 							&nbsp;
 						</span>
@@ -36,14 +38,15 @@
 
 			<th class="col-md-1">
 				Email Address
-				<a href="" 
-					ng-class="{ active: order_bys.email.active, reverse: order_bys.email.dir == 'asc' }"
-					ng-click="onSort( 'email' )">
+				<a href="javascript:void(0)"
+					ng-class="{ active: state.all_order_bys.email.active, 
+								reverse: state.all_order_bys.email.desc }"
+					ng-click="state.changeSort( 'email', true )">
 						<span ng-class="{ 
-							order_by_active: order_bys.email.active, 
-							order_by_inactive: ! order_bys.email.active, 
-							asc: order_bys.email.dir == 'asc', 
-							desc: order_bys.email.dir == 'desc' 
+							order_by_active: state.all_order_bys.email.active, 
+							order_by_inactive: ! state.all_order_bys.email.active, 
+							asc: ! state.all_order_bys.email.desc, 
+							desc: state.all_order_bys.email.desc 
 						}">
 							&nbsp;
 						</span>
@@ -56,8 +59,9 @@
 			<th class="col-md-1">Zip</th>
 			<th class="col-md-1">&nbsp;</th>
 		</tr>
-		<tr class="row" ng-repeat="contact in contacts | filter: filter_text | orderBy: order_by: order_by_reverse"
-			ng-class="{selectedContact: selectedContacts.indexOf( contact.id ) > -1 }">
+		<tr class="row" ng-repeat="contact in contacts | filter:state.filter_text | 
+					orderBy: state.order_by_field: state.order_by_desc"
+						ng-class="{selectedContact: selectedContacts.indexOf( contact.id ) > -1 }">
 			<td class="propername col-md-2">{{contact.firstname}}</td>
 			<td class="propername col-md-1">{{contact.lastname}}</td>
 			<td class="col-md-1">{{contact.phone}}</td>

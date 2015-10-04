@@ -2,6 +2,27 @@
 $border-color: #EEE;
 $link-color: #337ab7;
 
+// Mixins
+@mixin sort_arrows() { 
+	span.asc::before {
+		margin-top: 6px;
+		content: '\25B2';
+	}
+
+	span.desc::before {
+		margin-top: 6px;
+		content: '\25BC';
+	}
+
+	span.order_by_inactive {
+		color: #555;
+	}
+
+	span.order_by_active {
+		color: #00f;
+	}
+}
+
 div.contact {
 	& {
 		margin: 5px;
@@ -59,25 +80,6 @@ span.full-menu {
 }
 .propername {
 	text-transform: capitalize;
-}
-
-.contacts_table {
-	th {
-		text-align: left;
-		background-color: $border-color;
-	}
-
-	td {
-		border-bottom: solid 1px $border-color;
-	}
-
-	td:hover {
-		cursor: pointer;
-	}
-
-	tr.selectedContact {
-		background-color: $border-color;
-	}
 }
 
 .crud_links {
@@ -183,34 +185,37 @@ div.contact_edit {
 }
 
 .contacts_table {
-	a {
+	@include sort_arrows();
+
+	th a {
 		text-decoration: none;
+		outline: 0;
 	}
 
-	.contacts_table a.active {
+	th {
+		text-align: left;
+		background-color: $border-color;
 	}
 
-	.contacts_table span.order_by_inactive {
-		color: #555;
+	td {
+		border-bottom: solid 1px $border-color;
 	}
 
-	.contacts_table span.order_by_active {
-		color: $link-color;
+	td:hover {
+		cursor: pointer;
 	}
+
+	tr.selectedContact {
+		background-color: $border-color;
+	}
+}
+
+header {
+	@include sort_arrows();
 }
 
 #list_sorter {
 	cursor: pointer;
-}
-
-span.asc::before {
-	margin-top: 6px;
-	content: '\25B2';
-}
-
-span.desc::before {
-	margin-top: 6px;
-	content: '\25BC';
 }
 
 br.no_clear {
@@ -271,6 +276,12 @@ span.clear-search {
 	margin-top: 6px;
 }
 
+/* This rule is used on both the signup page and the table view sorter */
+span.active {
+	font-weight: bold;
+	border-bottom: solid 1px #FFF;
+}
+
 /********************************************************
  *** Signup/login page styles ***************************
  ********************************************************/
@@ -289,11 +300,6 @@ span.clear-search {
 		border-radius: 5px 5px 0px 0px;
 		width: 200px;
 		display: inline;
-	}
-
-	span.active {
-		font-weight: bold;
-		border-bottom: solid 1px #FFF;
 	}
 
 	div.tab-content {

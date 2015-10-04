@@ -36,16 +36,6 @@ span.full-menu div.action-container {
 .propername {
   text-transform: capitalize; }
 
-.contacts_table th {
-  text-align: left;
-  background-color: #EEE; }
-.contacts_table td {
-  border-bottom: solid 1px #EEE; }
-.contacts_table td:hover {
-  cursor: pointer; }
-.contacts_table tr.selectedContact {
-  background-color: #EEE; }
-
 .crud_links {
   float: right; }
 .crud_links a {
@@ -107,23 +97,42 @@ div.contact_edit br {
 div.contact_edit button#save-button {
   margin-left: 10px; }
 
-.contacts_table a {
-  text-decoration: none; }
-.contacts_table .contacts_table span.order_by_inactive {
+.contacts_table span.asc::before {
+  margin-top: 6px;
+  content: '\25B2'; }
+.contacts_table span.desc::before {
+  margin-top: 6px;
+  content: '\25BC'; }
+.contacts_table span.order_by_inactive {
   color: #555; }
-.contacts_table .contacts_table span.order_by_active {
-  color: #337ab7; }
+.contacts_table span.order_by_active {
+  color: #00f; }
+.contacts_table th a {
+  text-decoration: none;
+  outline: 0; }
+.contacts_table th {
+  text-align: left;
+  background-color: #EEE; }
+.contacts_table td {
+  border-bottom: solid 1px #EEE; }
+.contacts_table td:hover {
+  cursor: pointer; }
+.contacts_table tr.selectedContact {
+  background-color: #EEE; }
+
+header span.asc::before {
+  margin-top: 6px;
+  content: '\25B2'; }
+header span.desc::before {
+  margin-top: 6px;
+  content: '\25BC'; }
+header span.order_by_inactive {
+  color: #555; }
+header span.order_by_active {
+  color: #00f; }
 
 #list_sorter {
   cursor: pointer; }
-
-span.asc::before {
-  margin-top: 6px;
-  content: '\25B2'; }
-
-span.desc::before {
-  margin-top: 6px;
-  content: '\25BC'; }
 
 br.no_clear {
   clear: none; }
@@ -168,6 +177,11 @@ span.clear-search {
   cursor: pointer;
   margin-top: 6px; }
 
+/* This rule is used on both the signup page and the table view sorter */
+span.active {
+  font-weight: bold;
+  border-bottom: solid 1px #FFF; }
+
 /********************************************************
  *** Signup/login page styles ***************************
  ********************************************************/
@@ -182,9 +196,6 @@ div#signin span.tab {
   border-radius: 5px 5px 0px 0px;
   width: 200px;
   display: inline; }
-div#signin span.active {
-  font-weight: bold;
-  border-bottom: solid 1px #FFF; }
 div#signin div.tab-content {
   border: solid 1px #000;
   width: 400px;
