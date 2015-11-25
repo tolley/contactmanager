@@ -5,6 +5,9 @@
 angular.module( 'contactListApp' )
 	.factory( 'contactMangerStateService', [ function() {
 		var state = {
+			// To Do: GET the contact list here add it to the state object
+			// Will need to modify the controller and all templates for this
+
 			changeSort: function( field, bToggleDesc ) {
 				// Make sure we have a field.  This method is called when we change the sort
 				// order which may not pass a field

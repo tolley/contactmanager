@@ -19,7 +19,9 @@ app.use( express.static( './public' ) );
 app.use( bodyParser.urlencoded( { extended: false } ) );
 app.use( bodyParser.json( {} ) );
 app.use( cookieParser( config.signedCookieSecret, {} ) );
-app.use( '/contacts', verifyUser() );
+
+// Make sure a user is logged in for all /contacts/* routes
+app.use( '/contacts', verifyUser );
 
 // Include/initialize our controllers
 require( './controllers/userController.js' ).controller( app );

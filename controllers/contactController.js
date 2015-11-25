@@ -28,7 +28,13 @@ module.exports.controller = function( app ) {
 					}
 					else {
 						returnData.status = 'success';
-						returnData.contacts = contactList.contacts;
+
+						if( contactList && contactList.contacts ) {
+							returnData.contacts = contactList.contacts;
+						}
+						else {
+							returnData.contacts = [];
+						}
 					}
 
 					outputResults( res, returnData );

@@ -1,5 +1,7 @@
 // Define our colors
 $border-color: #EEE;
+$background-color: #FFF;
+$font-color: #000;
 $link-color: #337ab7;
 
 // Mixins
@@ -315,4 +317,22 @@ span.active {
 		padding-right: 5px;
 		width: 400px;
 	}
+}
+
+/********************************************************
+ *** General styles *************************************
+ ********************************************************/
+body {
+	background-color: $background-color;
+	font-size: 14px;
+	color: $font-color !important;
+	font-family: "Helvetica Neue", ​Helvetica, ​Arial,​ sans-serif;
+}
+
+a {
+	color: $link-color;
+}
+
+div {
+	
 }

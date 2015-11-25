@@ -1,3 +1,4 @@
+@charset "UTF-8";
 div.contact {
   margin: 5px;
   border: solid 1px #EEE;
@@ -206,5 +207,17 @@ div#signin div.tab-content div.form-group {
   padding-left: 5px;
   padding-right: 5px;
   width: 400px; }
+
+/********************************************************
+ *** General styles *************************************
+ ********************************************************/
+body {
+  background-color: #FFF;
+  font-size: 14px;
+  color: #000 !important;
+  font-family: "Helvetica Neue", ​Helvetica, ​Arial,​ sans-serif; }
+
+a {
+  color: #337ab7; }
 
 /*# sourceMappingURL=contactmanager.css.map */

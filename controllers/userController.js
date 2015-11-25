@@ -2,7 +2,12 @@
 var config 			= require( '../config' )
 	,cryptoFuncs	= require( '../modules/cryptoFuncs.js' )
 	,userModel		= require( '../models/user.js' )
+	,verifyUser		= require( '../modules/verifyUserLoggedIn' )
+	,contactModels	= require( '../models/contact.js' )
+	,async			= require( 'async' )
 	,jade			= require( 'jade' );
+
+var contactListModel = contactModels.contactListModel;
 
 module.exports.controller = function( app ) {
 	// Outputs the results to browser and ends the request
@@ -82,6 +87,7 @@ module.exports.controller = function( app ) {
 					if( results.errors.length == 0 )
 					{
 						var returnData = {
+							status: 'success',
 							statusMessage: 'User successfully created, please login'
 						};
 					}
@@ -92,6 +98,7 @@ module.exports.controller = function( app ) {
 							errorMessages += results.errors[i] + ' ';
 
 						var returnData = {
+							status: 'failure',
 							errorMessage: errorMessages
 						};
 					}
@@ -194,11 +201,56 @@ module.exports.controller = function( app ) {
 	} );
 
 	// Redirects the user to the signin page from /
-	app.get( '/', function( req, res ) {
+	app.get( '/user', function( req, res ) {
 		res.writeHead( 301, {
 			'Location': '/signin.html'
 		} );
 
 		res.end();
+	} );
+
+	// Logs the current user out and ddeletes them (this is mainly for my unit tests right now)
+	app.delete( '/user', verifyUser, function( req, res ) {
+		// The data that will be sent back to the user after deletion
+		var returnData = {
+			status: 'success',
+			statusMessage: 'User deleted successfully'
+		};
+
+		// Delete the user's contacts and main document (row)
+		var asyncTasks = [];
+
+		// Delete the user document
+		asyncTasks.push( function( callback ) {
+			userModel.remove( { _id: req.loggedUser.id }, function( err ) {
+				if( err ) {
+					returnData.status = 'failure';
+					returnData.statusMessage =  err;
+				}
+
+				callback();
+			} );
+		} );
+
+		// Delete the user's contact list document
+		asyncTasks.push( function( callback ) {
+			contactListModel.remove( { ownerId: req.loggedUser.id }, function( err ) {
+				if( err ) {
+					returnData.status = 'failure';
+					returnData.statusMessage = err;
+				}
+
+				callback();
+			} );
+		} );
+
+		async.parallel( asyncTasks, function() {
+			// If we where able to delete the logged in user successfully, delete their cookies
+			if( returnData.status == 'success' ) {
+				res.clearCookie( 'user' );
+			}
+
+			outputResults( res, returnData );
+		} );
 	} );
 }
