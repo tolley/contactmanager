@@ -11,19 +11,21 @@
     "body-parser": "*",
     "crypto": "*",
     "jade": "*",
-    "jasmine": "2.3.2",
-    "jasmine-node": "1.14.5",
-    "angular-mocks": "1.4.7",
-    "grunt": "*",
-    "grunt-contrib-jshint": "~0.10.0",
-    "grunt-contrib-uglify": "*",
-    "grunt-contrib-clean": "~0.6.0",
-    "grunt-contrib-cssmin": "*",
     "promise": "~7.0.4",
     "async": "1.5.0"
   },
   "devDependencies": {
     "grunt-contrib-cssmin": "~0.13.0",
-    "jade": "~1.11.0"
+    "jade": "~1.11.0",
+    "gulp": "~3.9.0",
+    "gulp-sass": "~2.1.0",
+    "gulp-concat": "~2.6.0",
+    "gulp-minify-css": "~1.2.1",
+    "gulp-minify": "0.0.5",
+    "gulp-jasmine": "~2.2.1",
+    "gulp-jasmine-node": "~1.0.3",
+    "jasmine": "2.3.2",
+    "jasmine-node": "1.14.5",
+    "angular-mocks": "1.4.7",
   }
 }
