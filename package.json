@@ -10,13 +10,12 @@
     "cookie-parser": "*",
     "body-parser": "*",
     "crypto": "*",
-    "jade": "*",
+    "jade": "~1.11.0",
     "promise": "~7.0.4",
     "async": "1.5.0"
   },
   "devDependencies": {
     "grunt-contrib-cssmin": "~0.13.0",
-    "jade": "~1.11.0",
     "gulp": "~3.9.0",
     "gulp-sass": "~2.1.0",
     "gulp-concat": "~2.6.0",
