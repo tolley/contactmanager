@@ -5,10 +5,24 @@ var concat = require( 'gulp-concat');
 var minifyCSS = require( 'gulp-minify-css' );
 var minifyJS = require( 'gulp-minify' );
 var jasmineNode = require( 'gulp-jasmine-node' );
+var watch = require( 'gulp-watch' );
+
+// The list of all js files that we care about
+var jsFiles = [
+	'./public/js/angular.js'
+	,'./public/js/angular-route.js'
+	,'./public/js/contact_manager.js'
+	,'./public/js/contact-manager-state.js'
+];
+
+// The list of all css files that we care about
+var cssFiles = [
+	'./public/css/contactmanager.scss'
+];
 
 // Process the scss file and creates min.css
 gulp.task( 'sass', function() {
-	return gulp.src( './public/css/contactmanager.scss' )
+	return gulp.src( cssFiles)
 			.pipe( sass() )
 			.pipe( concat( 'min.css' ) )
 			.pipe( minifyCSS() )
@@ -18,9 +32,8 @@ gulp.task( 'sass', function() {
 
 // Minify our javascript
 gulp.task( 'minjs', function() {
-	return gulp.src( './public/js/*.js' )
+	return gulp.src( jsFiles )
 		.pipe( minifyJS( {
-			ignoreFiles: [ 'min.js', 'signin-app.js' ],
 			mangle: false
 		} ) )
 		.pipe( concat( 'min.js' ) )
@@ -34,6 +47,13 @@ gulp.task( 'server-test', function() {
 		.pipe( jasmineNode( {
 			timeout: 10000
 		} ) );
+} );
+
+
+// Set up our watch task to reminify the css and js files
+gulp.task( 'watch', function() {
+	gulp.watch( jsFiles, ['minjs'] );
+	gulp.watch( cssFiles, ['sass'] );
 } );
 
 
