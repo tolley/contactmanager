@@ -54,7 +54,7 @@ describe( 'contact manager server', function() {
 		}, 'login should return', 1000 );
 
 		runs( function() {
-			expect( responseBody.login ).toBe( 'failed' );
+			expect( responseBody.status ).toBe( 'failed' );
 		} );
 	} );
 
@@ -136,14 +136,14 @@ describe( 'contact manager server', function() {
 		}, 'login should return', 1000 );
 
 		runs( function() {
-			expect( responseBody.login ).toBe( 'successful' );
+			expect( responseBody.status ).toBe( 'success' );
 		} );
 	} );
 
 
 	it( 'should create a contact', function() {
 		var options = {
-			url: url + '/contacts/create',
+			url: url + '/contacts',
 			form: newContactData
 		};
 
@@ -211,7 +211,7 @@ describe( 'contact manager server', function() {
 
 		runs( function() {
 			request( {
-					url: url + '/contacts/save',
+					url: url + '/contacts',
 					method: 'PUT',
 					json: serverContactList
 				}, 

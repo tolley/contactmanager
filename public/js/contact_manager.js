@@ -53,7 +53,7 @@ myApp.controller( 'contactListCtrl', [ '$scope', '$http', '$location', 'contactM
 			if( isValid )
 			{
 				// Send the data to the server to be saved
-				$http.post( '/contacts/create', $scope.newcontact )
+				$http.post( '/contacts', $scope.newcontact )
 					.success( function( data, status, headers, config ) {
 						// Remove the details of the new contact from the new contact object
 						// so we can reuse it
@@ -65,7 +65,7 @@ myApp.controller( 'contactListCtrl', [ '$scope', '$http', '$location', 'contactM
 						// If we got a success status back, reload the contact information
 						if( data.status === 'success' )
 						{
-							$http.get( '/contacts/all' )
+							$http.get( '/contacts' )
 								.success( function( data, status, headers, config ) { 
 									$scope.handleJSONResponse( data );
 
@@ -149,7 +149,7 @@ myApp.controller( 'contactListCtrl', [ '$scope', '$http', '$location', 'contactM
 		$scope.saveEdits = function()
 		{
 			// Send each of the contacts that have been edited to the server to be saved
-			$http.put( '/contacts/save', $scope.contactsUnderEdit )
+			$http.put( '/contacts', $scope.contactsUnderEdit )
 				.success( function( data, status, headers, config ) {
 					// Send the reponse data to the generic method that will handle it
 					$scope.handleJSONResponse( data );

@@ -32,7 +32,7 @@ module.exports.controller = function( app ) {
 				res.write( html );
 			}
 			else {
-				console.log( 'jade error: ', error )
+				res.write( 'error rendering page, please try again' );
 			}
 
 			res.end();
@@ -149,7 +149,7 @@ module.exports.controller = function( app ) {
 					// Set the logged in cookie and redirect the user to contact manager main page
 					res.cookie( 'user', cryptoFuncs.encrypt( user.id ), { signed: true } );
 					outputResults( res, {
-						login: 'successful',
+						status: 'success',
 						statusMessage: 'Login successful, please wait while you are redirected'
 					} );
 				}
@@ -157,7 +157,7 @@ module.exports.controller = function( app ) {
 					// Otherwise, if both err and usr are null, meaning no logins were found
 					errors.push( 'Unable to login, please try again' );
 					outputResults( res, {
-						login: 'failed',
+						status: 'failed',
 						statusMessage: errors.join( '. ' )
 					} );
 				}
@@ -201,7 +201,7 @@ module.exports.controller = function( app ) {
 	} );
 
 	// Redirects the user to the signin page from /
-	app.get( '/user', function( req, res ) {
+	app.get( '/', function( req, res ) {
 		res.writeHead( 301, {
 			'Location': '/signin.html'
 		} );

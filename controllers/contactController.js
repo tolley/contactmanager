@@ -42,7 +42,7 @@ module.exports.controller = function( app ) {
 	} );
 
 	// Called to create a new contact
-	app.post( '/contacts/create', function( req, res ) {
+	app.post( '/contacts', function( req, res ) {
 		contactListModel.update( { ownerId: req.loggedUser.id }, 
 			{ $push: {
 				contacts: req.body,
@@ -67,7 +67,7 @@ module.exports.controller = function( app ) {
 	} );
 
 	// Update contact(s)
-	app.put( '/contacts/save', function( req, res ) {
+	app.put( '/contacts', function( req, res ) {
 		// Save the changes to each of the edited contacts
 		if( req.body && req.body.length > 0 ) {
 			// Pull the list of contacts owned by this user
@@ -181,17 +181,8 @@ module.exports.controller = function( app ) {
 						statusMessage: 'Unable to delete contacts'
 					} );
 				}
-			} );
-
-
-/*		// Do an update with a pull
-		contactListModel.update( { ownerId: req.loggedUser.id },
-			{ $pull: { 'contacts.$._id': req.param( 'id' ) } },
-			function( err, other ) {
-				console.log( 'err = ', err, ' other = ', other );
-				res.end();
 			}
+
 		);
-*/
 	} );
 }

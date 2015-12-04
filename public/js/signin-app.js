@@ -136,7 +136,7 @@ myApp.controller( 'signinController', function( $scope, $http, $location ) {
 				if( data.errorMessage )
 					$scope.errorMessage = data.errorMessage;
 
-				if( data.login === 'successful' )
+				if( data.status === 'success' )
 					goToMainPage();
 			} )
 			.error( function( data, status, headers, config ){
