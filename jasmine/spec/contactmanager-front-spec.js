@@ -31,7 +31,7 @@ describe( 'ContactListCtrl', function() {
     $controller( 'contactListCtrl', { $scope: scope } );
     $httpBackend = _$httpBackend_;
 
-    $httpBackend.expectGET( '/contacts/all' )
+    $httpBackend.expectGET( '/contacts' )
                 .respond( 200, { 'status': 'success', 'contacts': contactList } );
 
     $httpBackend.expectGET( 'data/states.json' )
@@ -74,7 +74,7 @@ describe( 'ContactListCtrl', function() {
 
     // Set up a POST request so we can validate the data, and add the contact to the
     // "backend" list
-    $httpBackend.when( 'POST', '/contacts/create', function( postData ) {
+    $httpBackend.when( 'POST', '/contacts', function( postData ) {
       var data = JSON.parse( postData );
 
       // Add the id that the backend is supposed to create then the insert happens
@@ -93,7 +93,7 @@ describe( 'ContactListCtrl', function() {
 
     // Once the new contact is created, another call to get all contacts should be issued
     // by the controller
-    $httpBackend.expectGET( '/contacts/all' )
+    $httpBackend.expectGET( '/contacts' )
                 .respond( 200, { 'status': 'success', 'contacts': contactList } ); 
 
     scope.newcontact = newContact;
@@ -112,7 +112,7 @@ describe( 'ContactListCtrl', function() {
     $httpBackend.flush();
 
     // Set up the PUT request that will save the contact
-    $httpBackend.whenPUT( '/contacts/save', function( data ) {
+    $httpBackend.whenPUT( '/contacts', function( data ) {
       var putData = JSON.parse( data );
 
       expect( putData[0].firstname ).toBe( 'edit' );
@@ -127,7 +127,7 @@ describe( 'ContactListCtrl', function() {
 
     // Once the edits have been saved, the controller should automatically reload 
     // the list of contacts from the "backend"
-    $httpBackend.expectGET( '/contacts/all' )
+    $httpBackend.expectGET( '/contacts' )
                 .respond( 200, { 'status': 'success', 'contacts': contactList } );
 
     // Tell the scope that we want to edit the only contact in our list

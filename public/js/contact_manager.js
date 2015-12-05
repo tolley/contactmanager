@@ -25,7 +25,7 @@ myApp.controller( 'contactListCtrl', [ '$scope', '$http', '$location', 'contactM
 			$scope.contacts = [];
 
 			// Load the contact list from the server
-			$http.get( '/contacts/all' )
+			$http.get( '/contacts' )
 				.success( $scope.handleJSONResponse );
 
 			// Load the list of states from the server
@@ -157,7 +157,7 @@ myApp.controller( 'contactListCtrl', [ '$scope', '$http', '$location', 'contactM
 					if( data.status === 'success' )
 					{
 						// Send the user back to the list page and reload all the contact data
-						$http.get( '/contacts/all' )
+						$http.get( '/contacts' )
 								.success( function( data, status, headers, config ) { 
 									$scope.handleJSONResponse( data );
 

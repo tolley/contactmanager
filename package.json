@@ -26,6 +26,8 @@
     "jasmine": "2.3.2",
     "jasmine-node": "1.14.5",
     "angular-mocks": "1.4.7",
-    "gulp-watch": "~4.3.5"
+    "gulp-watch": "~4.3.5",
+    "nodemon": "~1.8.1",
+    "gulp-nodemon": "~2.0.4"
   }
 }
