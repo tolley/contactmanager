@@ -63,7 +63,7 @@ describe( 'contact manager server', function() {
 		var responseBody = false;
 
 		runs( function() {
-			request.get( { url: url + '/contacts/all' }, 
+			request.get( { url: url + '/contacts' }, 
 				function( error, response, body ) {
 					if( ! error ) {
 						responseBody = JSON.parse( body );
@@ -133,7 +133,7 @@ describe( 'contact manager server', function() {
 
 		waitsFor( function() {
 			return typeof responseBody == 'object';
-		}, 'login should return', 1000 );
+		}, 'login should return', 2000 );
 
 		runs( function() {
 			expect( responseBody.status ).toBe( 'success' );
@@ -171,7 +171,7 @@ describe( 'contact manager server', function() {
 		var responseBody = false;
 
 		runs( function() {
-			request.get( { url: url + '/contacts/all' }, 
+			request.get( { url: url + '/contacts' }, 
 				function( error, response, body ) {
 					if( ! error ) {
 						responseBody = JSON.parse( body );
