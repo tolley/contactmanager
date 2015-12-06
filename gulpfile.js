@@ -4,6 +4,7 @@ var sass = require( 'gulp-sass' );
 var concat = require( 'gulp-concat');
 var minifyCSS = require( 'gulp-minify-css' );
 var minifyJS = require( 'gulp-minify' );
+var uglify = require( 'gulp-uglify' );
 var jasmineNode = require( 'gulp-jasmine-node' );
 var watch = require( 'gulp-watch' );
 var nodemon = require( 'gulp-nodemon' );
@@ -34,10 +35,8 @@ gulp.task( 'sass', function() {
 // Minify our javascript
 gulp.task( 'minjs', function() {
 	return gulp.src( clientJSFiles )
-		.pipe( minifyJS( {
-			mangle: false
-		} ) )
 		.pipe( concat( 'min.js' ) )
+		.pipe( uglify( { mangle: false } ) )
 		.pipe( gulp.dest( './public/js/' ) );
 } );
 
