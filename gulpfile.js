@@ -70,7 +70,7 @@ gulp.task( 'watch-server', function() {
 	return nodemon( {
 		script: 'server.js',
 		ext: 'js jade',
-		ignore: [ './public/*', 'gulpfile.js' ]
+		ignore: [ 'public/*', 'gulpfile.js' ]
 	} );
 } );
 
@@ -79,4 +79,4 @@ gulp.task( 'watch-server', function() {
 gulp.task( 'default', ['sass', 'minjs'] );
 
 // Set up our development task
-gulp.task( 'dev', [ 'watch-js', 'watch-css', 'watch-server' ] );
+gulp.task( 'dev', [ 'watch-server', 'watch-js', 'watch-css' ] );
