@@ -6,6 +6,7 @@ var minifyCSS = require( 'gulp-minify-css' );
 var minifyJS = require( 'gulp-minify' );
 var jasmineNode = require( 'gulp-jasmine-node' );
 var watch = require( 'gulp-watch' );
+var nodemon = require( 'gulp-nodemon' );
 
 // The list of all js files that we care about
 var jsFiles = [
@@ -51,9 +52,15 @@ gulp.task( 'server-test', function() {
 
 
 // Set up our watch task to reminify the css and js files
-gulp.task( 'watch', function() {
+gulp.task( 'dev', function() {
 	gulp.watch( jsFiles, ['minjs'] );
 	gulp.watch( cssFiles, ['sass'] );
+
+	nodemon( {
+		script: 'server.js',
+		ext: 'js jade',
+		ignore: [ './public/*', 'gulpfile.js' ]
+	} );
 } );
 
 
