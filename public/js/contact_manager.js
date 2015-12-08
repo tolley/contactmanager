@@ -1,6 +1,6 @@
 "use strict"
 
-// Declare our module
+// Declare our module 
 var myApp = angular.module( 'contactListApp', ['ngRoute'] );
 
 // Add our controller to our module
@@ -18,29 +18,48 @@ myApp.controller( 'contactListCtrl', [ '$scope', '$http', '$location', 'contactM
 		// The message that will display above each page
 		$scope.header_message = 'Create, edit, and manage your contact information';
 
+		// Takes the user to the outage page. error is the error message describing
+		// the reason for the outage page
+		$scope.handleFailedPromise = function( error ) {
+			// Set the status text for the outage page
+			$scope.errorText = error.statusText;
+
+			// error.statusText is set to 'Internal Server Error'
+			$location.path( '/outage' );
+		};
+
+		// GETs a list of contacts from the server
+		$scope.getContactsList = function() {
+			$http.get( '/contacts' ).then( 
+				function( response ) {
+					$scope.handleJSONResponse( response.data );
+				},
+				$scope.handleFailedPromise );
+		};
+
 		// A function called to load the relevant data onto the scope.  It only executes once
 		// when the page is loaded
 		$scope.initializeData = function() {
-			// An array to hold all of the contacts that are pulled from the server
+			// An arra yto hold all of the contacts that are pulled from the server
 			$scope.contacts = [];
 
 			// Load the contact list from the server
-			$http.get( '/contacts' )
-				.success( $scope.handleJSONResponse );
+			$scope.getContactsList();
 
 			// Load the list of states from the server
-			$http.get( 'data/states.json' ).success( function( data )
-			{
-				$scope.states = data;
-			} );
+			$http.get( 'data/states.json' ).then( 
+				function( response )
+				{
+					$scope.states = response.data;
+				},
+				$scope.handleFailedPromise );
 
 			// An array to keep track of which contacts are being edited.
 			$scope.contactsUnderEdit = [];
 		};
 
 		// The method called when the filter "clear" button is clicked
-		$scope.clearFilter = function()
-		{
+		$scope.clearFilter = function() {
 			$scope.state.filter_text = '';
 		};
 
@@ -50,33 +69,25 @@ myApp.controller( 'contactListCtrl', [ '$scope', '$http', '$location', 'contactM
 		// Called to add a new contact
 		$scope.createContact = function( isValid ) {
 			// If the form inputs pass our validation
-			if( isValid )
-			{
+			if( isValid ) {
 				// Send the data to the server to be saved
 				$http.post( '/contacts', $scope.newcontact )
-					.success( function( data, status, headers, config ) {
+					.then( function( response ) {
 						// Remove the details of the new contact from the new contact object
 						// so we can reuse it
 						$scope.newcontact = {};
 
 						// Send the reponse data to the generic method that will handle that
-						$scope.handleJSONResponse( data );
+						$scope.handleJSONResponse( response.data );
 
 						// If we got a success status back, reload the contact information
-						if( data.status === 'success' )
-						{
-							$http.get( '/contacts' )
-								.success( function( data, status, headers, config ) { 
-									$scope.handleJSONResponse( data );
+						if( response.data.status === 'success' ) {
+							$scope.getContactsList();
 
-									// Send the user back to the list page
-									$location.path( '' );
-								} );
-							// To Do: Handle .error case
+							// Send the user back to the main page
+							$location.path( '' );
 						}
-					} )
-					.error( function( data, status, headers, config ) {
-					} );
+					}, $scope.handleFailedPromise );
 			}
 		};
 
@@ -91,44 +102,36 @@ myApp.controller( 'contactListCtrl', [ '$scope', '$http', '$location', 'contactM
 		};
 
 		// Called to cancel the adding of a new contact
-		$scope.cancelCreateContact = function()
-		{
+		$scope.cancelCreateContact = function() {
 			$scope.newcontact = {};
 			$location.path( '' );
 		};
 
 		// Called when the delete contact link is clicked
-		$scope.deleteContact = function( contact )
-		{
+		$scope.deleteContact = function( contact ) {
 			if( ! contact ) {
 				return false;
 			}
 
-			if( confirm( "Are you sure you want to delete this contact?") )
-			{
+			if( confirm( "Are you sure you want to delete this contact?" ) ) {
 				$http.delete( '/contacts/' + contact._id )
-					.success( function( data, status, headers, config ) {
+					.then( function( response ) { 
 						// Find the selected contact and remove it from the array of contacts
-						for( var n in $scope.contacts )
-						{
-							if( $scope.contacts[n]._id === contact._id )
-							{
+						for( var n in $scope.contacts ) {
+							if( $scope.contacts[n]._id === contact._id ) {
 								$scope.contacts.splice( n, 1 );
 							}
 
 						}
 
-						$scope.handleJSONResponse( data );
-					} )
-					.error( function( data, status, headers, config ) {
-						$scope.handleJSONResponse( data );
-					} );
+						$scope.handleJSONResponse( response.data );
+					},
+					$scope.handleFailedPromise );
 			}
 		};
 
 		// Called when the user clicks on the edit link
-		$scope.editContact = function( contact )
-		{
+		$scope.editContact = function( contact ) {
 			if( ! contact )
 				return false;
 
@@ -146,26 +149,19 @@ myApp.controller( 'contactListCtrl', [ '$scope', '$http', '$location', 'contactM
 		};
 
 		// Called when the user clicks save on the edit contacts section
-		$scope.saveEdits = function()
-		{
+		$scope.saveEdits = function() {
 			// Send each of the contacts that have been edited to the server to be saved
 			$http.put( '/contacts', $scope.contactsUnderEdit )
-				.success( function( data, status, headers, config ) {
-					// Send the reponse data to the generic method that will handle it
-					$scope.handleJSONResponse( data );
+				.then( function( response ) {
+					$scope.handleJSONResponse( response.data );
 
-					if( data.status === 'success' )
-					{
+					if( response.data.status === 'success' ) {
 						// Send the user back to the list page and reload all the contact data
-						$http.get( '/contacts' )
-								.success( function( data, status, headers, config ) { 
-									$scope.handleJSONResponse( data );
-
-									// Send the user back to the list page
-									$location.path( '' );
-								} );
+						$scope.getContactsList();
+						$location.path( '' );
 					}
-				} );
+				},
+				$scope.handleFailedPromise );
 		};
 
 		// Called when the user clicks Cancel while editing contacts
@@ -177,11 +173,9 @@ myApp.controller( 'contactListCtrl', [ '$scope', '$http', '$location', 'contactM
 		};
 
 		// Called when the user clicks on the go button on the table view
-		$scope.performSelectedAction = function()
-		{
+		$scope.performSelectedAction = function() {
 			// Switch based on the selected action
-			switch( $scope.state.actions.selected )
-			{
+			switch( $scope.state.actions.selected ) {
 				case 'delete':
 					// Build the url, which is comma separated list of contact ids
 					var ids = [];
@@ -196,7 +190,7 @@ myApp.controller( 'contactListCtrl', [ '$scope', '$http', '$location', 'contactM
 						// Make the user confirm that they want to delete the selected contacts
 						if( confirm( 'Are you sure you want to delete the selected contacts?' ) ){
 							$http.delete( '/contacts/' + ids.join() )
-								.success( function( data, status, headers, config ) {
+								.then( function( response ) {
 									// Find the selected contacts and remove them from the array of contacts
 									for( var n = $scope.contacts.length - 1; n >= 0; --n ) {
 										if( $scope.contacts[n].selected ) {
@@ -204,11 +198,9 @@ myApp.controller( 'contactListCtrl', [ '$scope', '$http', '$location', 'contactM
 										}
 									}
 
-									$scope.handleJSONResponse( data );
-								} )
-								.error( function( data, status, headers, config ) {
-									$scope.handleJSONResponse( data );
-								} );
+									$scope.handleJSONResponse( response.data );	
+								},
+								$scope.handleFailedPromise );
 						}
 					}
 					break;
@@ -249,7 +241,7 @@ myApp.controller( 'contactListCtrl', [ '$scope', '$http', '$location', 'contactM
 
 			// If we have a contact list, place it on the scope for the user to 
 			// interact with
-			if( data.contacts ) {
+			if( data.contacts && data.status == 'success' ) {
 				// Empty all of the stored contacts from the scope
 				// If we just set contacts = to a new array, that will destroy
 				// angular's events attached to it and the view won't update
@@ -266,12 +258,13 @@ myApp.controller( 'contactListCtrl', [ '$scope', '$http', '$location', 'contactM
 		// Handles the logout request
 		$scope.doLogout = function() {
 			$http.get( '/user/logout' )
-				.success( function( data, status, headers, config ) {
-					if( data.loggedOut ) {
+				.then( function( response ) {
+					if( response.data.loggedOut ) {
 						// Send the user back to the signin page
 						location.href = '/signin.html';
 					}
-				} );
+				},
+				$scope.handleFailedPromise );
 		}
 
 		// Removes all fields from a contact that we don't want to send to the
@@ -293,6 +286,11 @@ myApp.config( function( $routeProvider )
 
 	$routeProvider.when( '/edit', {
 		templateUrl: 'templates/contact_edit.html',
+		controller: 'contactListCtrl'
+	} );
+
+	$routeProvider.when( '/outage', {
+		templateUrl: 'templates/outage.html',
 		controller: 'contactListCtrl'
 	} );
 

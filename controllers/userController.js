@@ -138,10 +138,9 @@ module.exports.controller = function( app ) {
 				if( err )
 				{
 					// Let the user know the login failed
-					errors.push( 'Unable to login, please try again' );
 					outputResults( res, {
 						login: 'failed',
-						statusMessage: '<div>' + errors.join( '</div><div>' ) + '</div>'
+						statusMessage: errors.join( '. ' )
 					} );
 				}
 				else if( user )
@@ -166,7 +165,10 @@ module.exports.controller = function( app ) {
 		else
 		{
 			// Send the errors to the user
-			outputResults( res, errors );
+			outputResults( res, {
+				login: 'failed',
+				statusMessage: errors.join( '. ' )
+			} );
 		}
 	} );
 

@@ -16,29 +16,29 @@ module.exports.controller = function( app ) {
 	}
 
 	// Called to pull the complete list of contacts for the logged in user
-	app.get( '/contacts/all', function( req, res ) {
+	app.get( '/contacts', function( req, res ) {
 		contactListModel.findOne( { ownerId: req.loggedUser.id }, 
-				function( err, contactList ) {
-					var returnData = {};
+			function( err, contactList ) {
+				var returnData = {};
 
-					if( err )
-					{
-						returnData.status = 'error';
-						returnData.message = 'Error getting contacts';
+				if( err )
+				{
+					returnData.status = 'error';
+					returnData.message = 'Error getting contacts';
+				}
+				else {
+					returnData.status = 'success';
+
+					if( contactList && contactList.contacts ) {
+						returnData.contacts = contactList.contacts;
 					}
 					else {
-						returnData.status = 'success';
-
-						if( contactList && contactList.contacts ) {
-							returnData.contacts = contactList.contacts;
-						}
-						else {
-							returnData.contacts = [];
-						}
+						returnData.contacts = [];
 					}
+				}
 
-					outputResults( res, returnData );
-				} );
+				outputResults( res, returnData );
+			} );
 	} );
 
 	// Called to create a new contact

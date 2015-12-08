@@ -91,22 +91,22 @@ myApp.controller( 'signinController', function( $scope, $http, $location ) {
 
 		// Send our create user data to the server
 		$http.post( '/signup', $scope.newuser )
-			.success( function( data, status, headers, config ){
+			.then( function( response ) {
 				// Show any error or status messages that exist
 				if( data.statusMessage )
-					$scope.statusMessage = data.statusMessage;
+					$scope.statusMessage = response.data.statusMessage;
 
-				if( data.errorMessage )
+				if( response.data.errorMessage )
 				{
-					$scope.errorMessage = data.errorMessage;
+					$scope.errorMessage = response.data.errorMessage;
 				}
 				else
 				{
 					$scope.mode = 'signin';
 				}
-			} )
-			.error( function( data, status, headers, config ) {
-				$scope.errorMessage = 'Error signing in.';
+			},
+			function( error ) {
+				$scope.errorMessage = error.statusText;
 			} );
 	}
 
@@ -129,19 +129,21 @@ myApp.controller( 'signinController', function( $scope, $http, $location ) {
 
 		// Send our login data to the server to log the user in
 		$http.post( '/login', $scope.login )
-			.success( function( data, status, headers, config ){
-				if( data.statusMessage )
-					$scope.statusMessage = data.statusMessage;
+			.then( function( response ) {
+				if( response.data.statusMessage )
+					$scope.statusMessage = response.data.statusMessage;
 
-				if( data.errorMessage )
-					$scope.errorMessage = data.errorMessage;
+				if( response.data.errorMessage )
+					$scope.errorMessage = response.data.errorMessage;
 
-				if( data.status === 'success' )
+				if( response.data.status === 'success' )
 					goToMainPage();
-			} )
-			.error( function( data, status, headers, config ){
-				if( data.errorMessage )
+			},
+			function( error ) {
+				if( response.data.errorMessage )
 					$scope.errorMessage = data.errorMessage;
+				else
+					$scope.errorMessage = error.statusText;
 			} );
 	};
 
