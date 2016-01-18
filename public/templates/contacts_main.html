@@ -1,148 +1,123 @@
-<header>
-	<div class="navbar navbar-default navbar-fixed-top hidden-lg hidden-md hidden-sm" role="navigation">
-		<button type="button" class="navbar-toggle" ng-click="mobile_menu_visible = ! mobile_menu_visible">
-			<span class="sr-only">Toggle Navigation</span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-		</button>
-
-		<div class="message">
-			{{header_message}}
+<nav class="navbar navbar-fixed-top" role="navigation" id="header-container">
+	<div class="container-fluid" id="nav-top-bar">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<span class="message">{{header_message}}</span>
 		</div>
-		<br />
-
-		<ul class="mobile-menu hidden-lg hidden-md form-group" ng-show="mobile_menu_visible">
+	</div>
+	<div class="nav navbar-nav navbar-right collapse" id="myNavbar">
+		<ul class="nav navbar-nav header-menu">
 			<li>
-				<a href="#/new">
-					Add Contact
-				</a>
+				<div class="header-menu-item">
+					Contacts Display Format
+				</div>
 			</li>
 			<li>
-				<a href="javascript:void(0)" ng-click="doLogout()">
-					Logout
-				</a>
+				<div class="header-menu-item">
+					<select	ng-model="state.template" ng-options="t.name for t in state.templates" 
+						ng-change="mobile_menu_visible = false" class="form-control">
+					</select>
+				</div>
 			</li>
-			<li class="tall">
-				<span class="display_options">
-					Display
-					<div class="template_switcher_container">
-						<select ng-model="state.template" ng-options="t.name for t in state.templates" 
-								ng-change="mobile_menu_visible = false" class="form-control">
+			<li class="separator">
+				&nbsp;
+			</li>
+			<li ng-show="state.template.name == 'list'">
+				<div class="header-menu-item">
+					Order Contacts By
+				</div>
+			</li>
+			<li ng-show="state.template.name == 'list'">
+				<div class="header-menu-item">
+					<div id="list-view-order-by-container" class="header-menu-item">
+						<select ng-model="state.order_by_field"
+								ng-change="state.changeSort( state.order_by_field, true )"
+								class="form-control">
+							<option ng-repeat="(key, value) in state.all_order_bys" value="{{key}}" 
+									ng-selected="key == data.order_by">
+								{{key}}
+							</option>
 						</select>
 					</div>
-				</span>
-			</li>
-			<li ng-show="state.template.name == 'list'" class="tall">
-				<div class="order_by_container">
-					<select ng-show="state.template.name == 'list'" ng-model="state.order_by_field"
-							 ng-change="state.changeSort( state.order_by_field, true )"
-							class="form-control">
-						<option ng-repeat="(key, value) in data.order_bys" value="{{key}}" 
-								ng-selected="key == data.order_by">
-							{{key}}
-						</option>
-					</select>
+					<div id="list-view-order-by-order">
+						<span ng-class="{ asc: ! state.order_by_desc, desc: state.order_by_desc }"
+								ng-click="state.changeSort( state.order_by_field, true )">
+						</span>
+					</div>
 				</div>
-				<span ng-class="{ asc: ! state.order_by_desc, desc: state.order_by_desc }" id="list_sorter"
-						ng-click="state.changeSort( state.order_by_field, true )" style="float: right;">
-					&nbsp;
-				</span>
 			</li>
-			<li>
-				<div class="search-container">
-					<input class="form-control" placeholder="Search" type="search" 
-							ng-model="state.filter_text" />
-				</div>
-
-				<span class="glyphicon glyphicon-ban-circle clear-search" ng-click="clearFilter()">
-				</span>
+			<li class="separator">
+				&nbsp;
 			</li>
 			<li ng-show="state.template.name == 'table'">
-				<div class="action-container">
-					<select ng-model="state.actions.selected" class="form-control"
-							ng-options="action.value as action.name for action in state.actions.selectableActions">
-						<option value="">Select An Action</option>
-					</select>
+				<div class="header-menu-item">
+					Select an action for selected contacts
 				</div>
-
-				<button ng-show="state.template.name == 'table'" ng-click="performSelectedAction()" 
-						class="btn btn-default action-button">
-					Go
-				</button>
+			</li>
+			<li ng-show="state.template.name == 'table'">
+				<div class="header-menu-item">
+					<div id="action-select-container">
+						<select ng-model="state.actions.selected" class="form-control"
+								ng-options="action.value as action.name for action in state.actions.	selectableActions">
+							<option value="">Select An Action</option>
+						</select>
+					</div>
+					<div id="action-execute-container">
+						<button ng-show="state.template.name == 'table'" ng-click="performSelectedAction()" 
+								class="btn btn-default action-button">
+							Go
+						</button>
+					</div>
+				</div>
+			</li>
+			<li class="separator" ng-show="state.template.name == 'table'">
+				&nbsp;
+			</li>
+			<li>
+				<div class="header-menu-item">
+					Filter Contacts
+				</div>
+			</li>
+			<li>
+				<div class="header-menu-item">
+					<div id="search-field-container">
+						<input type="search" placeholder="Filter contacts" class="form-control"
+								ng-model="state.filter_text" />
+					</div>
+					<div id="search-clear">
+						<span class="glyphicon glyphicon-remove" ng-click="clearFilter()"></span>
+					</div>
+				</div>
+			</li>
+			<li class="separator">
+				&nbsp;
+			</li>
+			<li>
+				<div class="header-menu-item">
+					<a href="#/new">
+						Add Contact
+						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+					</a>
+				</div>
+			</li>
+			<li>
+				<div class="header-menu-item">
+					<a href="javascript:void(0)" ng-click="doLogout()">
+						Logout
+						<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+					</a>
+				</div>
 			</li>
 		</ul>
 	</div>
-	<br class="hidden-lg hidden-md" />
+</nav>
 
-	<span class="hidden-xs full-menu form-group">
-		<span>
-			Create, edit, and manage your contact information
-		</span>
+<div id="bg">
+	<ng-include src="state.template.url"></ng-include>
+</div>
 
-		<span class="search">
-			<input placeholder="Search" type="search" ng-model="state.filter_text" />
-
-
-			<button ng-click="clearFilter()" class="btn-default">
-				Clear
-			</button>
-		</span>
-
-		<a href="javascript:void(0)" ng-click="doLogout()">
-			Logout
-		</a>
-
-		<div class="display_options">
-			<b>Display: </b>
-			<span class="container">
-				<select class="form-control" ng-model="state.template" 
-						ng-options="t.name for t in state.templates">
-				</select>
-			</span>
-		</div>
-
-		<a href="#/new">
-			Add Contact
-		</a>
-		<br />
-
-		<div class="action-container">
-			<select ng-show="state.template.name == 'table'" ng-model="state.actions.selected" 
-					class="form-control"
-					ng-options="action.value as action.name for action in state.actions.selectableActions">
-				<option value="">Select An Action</option>
-			</select>
-		</div>
-
-		<button ng-show="state.template.name == 'table'" ng-click="performSelectedAction()" 
-				class="btn-default">
-			Go
-		</button>
-
-		<span class="order-by" ng-show="state.template.name == 'list'">Order By:</span>
-		<select ng-show="state.template.name == 'list'" ng-model="state.order_by_field" 
-				ng-change="state.changeSort( state.order_by_field )">
-			<option ng-repeat="(key, value) in state.all_order_bys" value="{{key}}" 
-					ng-selected="key == state.order_by_field">
-				{{key}}
-			</option>
-		</select>
-
-		<span ng-show="state.template.name == 'list'" ng-class="{ order_by_active: true,
-														asc: ! state.order_by_desc, 
-														desc: state.order_by_desc }" 
-												id="list_sorter"
-												ng-click="state.changeSort( this.order_by_field, true )">
-			&nbsp;
-		</span>
-
-		<div ng-show="responseMessage" class="responseMessage">
-			{{responseMessage}}
-		</div>
-	</span>
-</header>
-
-<br />
-
-<ng-include src="state.template.url"></ng-include>
+<br style="clear: both;" />

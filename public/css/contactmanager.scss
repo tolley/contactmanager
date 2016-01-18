@@ -1,19 +1,29 @@
 // Define our colors
-$border-color: #EEE;
-$background-color: #FFF;
+$border-color: #eee;
+$background-color: #fff;
 $font-color: #000;
 $link-color: #337ab7;
+$nav-bar-background-color: #222222;
+$nav-bar-color: #cccccc;
+$signin-background: #ffcf93; // Manilla folder color
+
+// Gradient colors for the main background
+$gradient-top: #ffcf93;
+$gradient-bottom: #bf9c70;
+$non-gradient-background-color: #ffdbae;
 
 // Mixins
 @mixin sort_arrows() { 
 	span.asc::before {
 		margin-top: 6px;
 		content: '\25B2';
+		cursor: pointer;
 	}
 
 	span.desc::before {
 		margin-top: 6px;
 		content: '\25BC';
+		cursor: pointer;
 	}
 
 	span.order_by_inactive {
@@ -21,65 +31,90 @@ $link-color: #337ab7;
 	}
 
 	span.order_by_active {
-		color: #00f;
+
 	}
 }
 
-div.contact {
+/********************************************************
+ *** Signup/login page styles ***************************
+ ********************************************************/
+
+body#signin-create {
 	& {
-		margin: 5px;
-		border: solid 1px $border-color;
-		width: 300px;
-		height: 125px;
-		overflow: auto;
-		padding: 2px;
-		float: left;
+		background-color: #c9c9c9;
+		background-image: url( '/images/desktop.jpeg' );
+		background-size: cover;
+		background-repeat: no-repeat;
+	}
+}
+
+section#signin {
+	& {
+		max-width: 400px;
+		margin-top: 25%;
+		margin-left: auto;
+		margin-right: auto;
 	}
 
-	&:hover {
-		border: solid 1px #000;
-		box-shadow: 4px 4px 3px #AAA;
+	span.tab.active {
+		color: #222;
+		background-color: $signin-background;
+		border-bottom-color: $signin-background;
+	}
+
+	span.tab {
+		padding-left: 20px;
+		padding-right: 20px;
 		cursor: pointer;
+		border: solid 2px #000;
+		border-radius: 5px 5px 0px 0px;
+		border-bottom: solid 1px $signin-background;
+		width: 200px;
+		display: inline;
+		color: #aaa;
+		background-color: $signin-background;
+	}
+
+	div.tab-content {
+		border: solid 2px #000;
+		width: 400px;
+		height: 300px;
+		margin-left: -15px;
+		margin-top: -1px;
+		background-color: $signin-background;
+	}
+
+	div.tab-content div.form-group {
+		margin-top: 5px;
+		padding-left: 5px;
+		padding-right: 5px;
+		width: 400px;
 	}
 }
 
-header {
-	margin-bottom: 10px;
-}
+div.contact_list {
 
-span.full-menu {
-	span.search {
-		float: right;
-	}
+	div.contact {
+		& {
+			margin: 5px;
+			width: 300px;
+			height: 125px;
+			overflow: auto;
+			padding: 2px;
+			float: left;
+			background-color: #fff;
+			background-image: url( '/images/paper.jpg' );
+			background-size: cover;
+		}
 
-	.display_options {
-		width: 300px;
-	}
-
-	.order-by {
-		font-weight: bold;
-	}
-
-	.display_option select {
-		width: 100px;
-		border: solid 1px #0F0;
-	}
-
-	.display_options option {
-		font-size: 18px;
-	}
-
-	div, 
-	span,
-	a,
-	button {
-		margin: 0px  5px 0px 5px;
-	}
-
-	div.action-container {
-		width: 150px;
+		&:hover {
+			border: solid 1px #000;
+			box-shadow: 4px 4px 3px #333;
+			cursor: pointer;
+		}
 	}
 }
+
 .propername {
 	text-transform: capitalize;
 }
@@ -98,96 +133,209 @@ span.full-menu {
 	}
 }
 
-ul.mobile-menu {
-	& {
-		padding: 0px;
-		margin: 20px 10px 0px 0px;
-		list-style: none;
-		background-color: #f8f8f8;
+// The complete header (bar plus menu)
+nav#header-container {
+	div#nav-top-bar {
+		background-color: $nav-bar-background-color;
+		border-color: #080808;
 	}
 
-	li {
-		border-top: solid 1px $border-color;
-		padding: 0px 0px 5px 5px;
-	}
-
-	div.action-container {
-		width: 83%;
-		float: left;
-	}
-	
-	div.action-container {
-		width: 83%;
-		float: left;
-	}
-
-	button.action-button {
-		float: right;
-	}
-}
-
-form#contact_new {
-	& {
-		border: solid 1px $border-color;
-		padding-top: 5px;
-		padding-bottom: 5px;
-		width: 300px;
-	}
-
-	div.contact_field {
+	div.navbar-header {
 		& {
-			height: 30px;
-			margin-right: 5px;
-			margin-left: 5px;
-			max-width: 300px;
+			float: none;
 		}
 
-		input, select {
-			width: 96%;
+		button {
+			& {
+				border-color: #aaa;
+			}
+
+			span.icon-bar {
+				background-color: #FFFFFF;
+				border-radius: 1px;
+				display: block;
+				height: 2px;
+				width: 22px;
+			}
 		}
 
-		div.center {
-			text-align: center;
+		span.message {
+			color: $nav-bar-color;
+			font-size: 24px;
+			margin-top: 5px;
 		}
 	}
 
-	button#create-contact {
-		margin-left: 10px;
+	button.navbar-toggle {
+		display: block;
+		float: right;
+	}
+
+	div#myNavbar {
+		& {
+			float: right;
+			width: 30%;
+			min-width: 300px;
+			padding: 0px;
+			margin: 0px;
+			color: #CCC;
+		}
+
+		a {
+			color: $nav-bar-color;
+			text-decoration: underline;
+			font-size: 14px;
+			font-weight: bold;
+		}
+
+		ul.header-menu {
+			& {
+				padding: 0px;
+				margin: 0px;
+				width: 100%;
+			}
+
+			li {
+				background-color: $nav-bar-background-color;
+				padding: 5px;
+				width: 100%;
+			}
+
+			li.separator {
+				border-bottom: solid 1px #888;
+				height: 1px;
+				margin: 0px;
+				padding: 0px;
+			}
+		}
+
+		div.header-menu-item  {
+			padding: 0px;
+			margin: 0px;
+		}
+
+		div#list-view-order-by-container {
+			display: inline-block;
+			width: 90%;
+		}
+
+		div#list-view-order-by-order {
+			& {
+				float: right;
+			}
+
+			@include sort_arrows();
+		}
+
+		div#action-select-container {
+			display: inline-block;
+			width: 83%;
+		}
+
+		div#action-execute-container {
+			float: right;
+		}
+
+		div#search-field-container {
+			& {
+				display: inline-block;
+				width: 90%;
+			}
+
+			input {
+				color: #000;
+			}
+		}
+
+		div#search-clear {
+			float: right;
+			cursor: pointer;
+		}
+	}
+}
+div#contact_new_wrapper {
+	& {
+		text-align: center;
+	}
+
+	form#contact_new {
+		& {
+			width: 400px;
+			margin: 2px auto 10px auto;
+			padding: 10px 6px 6px 10px;
+			max-width: 468px;
+			min-width: 363px;
+			background-image: url( '/images/paper.jpg' );
+			box-shadow: 4px 4px 3px #333;
+		}
+
+		div.contact_field {
+			& {
+				height: 30px;
+				margin-right: 5px;
+				margin-left: 5px;
+				max-width: 100%;
+			}
+
+			input, select {
+				width: 96%;
+			}
+
+			div.center {
+				text-align: center;
+			}
+		}
+
+		button#create-contact {
+			margin-left: 10px;
+		}
 	}
 }
 
-
-div.contact_edit {
+div#contact_edit_wrapper {
 	& {
-		border: solid 1px #000;
-		width: 300px;
-		margin: 2px;
-		max-width: 468px;
-		min-width: 363px;
+		text-align: center;
 	}
 
-	label {
-		width: 30%;
-		margin-left: 2px;
-	}
+	div.contact_edit {
+		& {
+			width: 400px;
+			margin: 2px auto 10px auto;
+			padding: 10px 6px 6px 10px;
+			max-width: 468px;
+			min-width: 363px;
+			background-image: url( '/images/paper.jpg' );
+			box-shadow: 4px 4px 3px #333;
+		}
 
-	div.form-field-container {
-		width: 68%;
-		float: right;
-		margin: 2px;
-	}
+		label {
+			width: 30%;
+			margin-left: 2px;
+			text-align: left;
+		}
 
-	br {
-		clear: both;
-	}
+		div.form-field-container {
+			width: 68%;
+			float: right;
+			margin: 2px;
+		}
 
-	button#save-button {
-		margin-left: 10px;
+		br {
+			clear: both;
+		}
+
+		button#save-button {
+			margin-left: 10px;
+		}
 	}
 }
 
 .contacts_table {
 	@include sort_arrows();
+
+	& {
+		width: 100%;
+	}
 
 	th a {
 		text-decoration: none;
@@ -201,6 +349,7 @@ div.contact_edit {
 
 	td {
 		border-bottom: solid 1px $border-color;
+		background-color: #FFF;
 	}
 
 	td:hover {
@@ -210,14 +359,6 @@ div.contact_edit {
 	tr.selectedContact {
 		background-color: $border-color;
 	}
-}
-
-header {
-	@include sort_arrows();
-}
-
-#list_sorter {
-	cursor: pointer;
 }
 
 br.no_clear {
@@ -236,94 +377,37 @@ br.no_clear {
 	}
 }
 
-.navbar div.message {
-	max-width: 75%;
-	float: left;
-}
-
 @media (max-width: 480px) {
 	table.contacts_table {
 		font-size: 10px;
 	}
 }
 
-.navbar-toggle {
-	float: right;
-}
-
-.template_switcher_container {
-	width: 100px;
-	float: right;
-}
-
-.order_by_container {
-	width: 110px;
-	float: right;
-}
-
 ul.mobile-menu li.tall {
 	height: 36px;
 }
 
-.mobile-menu .search-container {
-	width: 90%;
-	float: left;
-}
-
-span.clear-search {
-	font-size: 20px;
-	color: $link-color;
-	float: right;
-	cursor: pointer;
-	margin-top: 6px;
-}
-
-/* This rule is used on both the signup page and the table view sorter */
+// This rule is used on both the signup page and the table view sorter
 span.active {
 	font-weight: bold;
 	border-bottom: solid 1px #FFF;
 }
 
 /********************************************************
- *** Signup/login page styles ***************************
- ********************************************************/
-
- div#signin {
- 	& {
-		max-width: 400px;
-		margin-top: 15px;
-	}
-
-	span.tab {
-		padding-left: 20px;
-		padding-right: 20px;
-		cursor: pointer;
-		border: solid 1px #000;
-		border-radius: 5px 5px 0px 0px;
-		width: 200px;
-		display: inline;
-	}
-
-	div.tab-content {
-		border: solid 1px #000;
-		width: 400px;
-		margin-left: -15px;
-		margin-top: -1px;
-	}
-
-	div.tab-content div.form-group {
-		margin-top: 5px;
-		padding-left: 5px;
-		padding-right: 5px;
-		width: 400px;
-	}
-}
-
-/********************************************************
  *** General styles *************************************
  ********************************************************/
-body {
-	background-color: $background-color;
+html.main,body.dashboard {
+	margin: 0px;
+	padding: 0px;
+	height: 100%;
+}
+
+body.dashboard {
+	background: $non-gradient-background-color; // For browsers that do not support gradients
+	background: -webkit-linear-gradient( $gradient-top, $gradient-bottom ); // For Safari >= 5.1
+	background: -o-linear-gradient( $gradient-top, $gradient-bottom ); // For Opera >= 11.1
+	background: -moz-linear-gradient( $gradient-top, $gradient-bottom ); // For Firefox >= 3.6
+	background: linear-gradient( $gradient-top, $gradient-bottom ); // Standard syntax
 	font-size: 14px;
 	color: $font-color !important;
 	font-family: "Helvetica Neue", ​Helvetica, ​Arial,​ sans-serif;
@@ -333,6 +417,6 @@ a {
 	color: $link-color;
 }
 
-div {
-	
+div#bg {
+	padding-top: 50px;
 }

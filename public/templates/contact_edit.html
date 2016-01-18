@@ -1,80 +1,79 @@
-<header>
-	{{header_message}}
-</header>
-<div class="contact_edit form" ng-repeat="contact in contactsUnderEdit" style="width: 90%;">
-	<div class="form-group">
-		<label class="control-label">First Name:</label>
-		<div class="form-field-container">
-			<input type="text" class="form-control" ng-model="contact.firstname" value="contact.firstname" />
+<div id="contact_edit_wrapper">
+	<div class="contact_edit form" ng-repeat="contact in contactsUnderEdit">
+		<div class="form-group">
+			<label class="control-label">First Name:</label>
+			<div class="form-field-container">
+				<input type="text" class="form-control" ng-model="contact.firstname" value="contact.firstname" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label">Last Name:</label>
+			<div class="form-field-container">
+				<input type="text" class="form-control" ng-model="contact.lastname" value="contact.lastname" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label">Email Address:</label>
+			<div class="form-field-container">
+				<input type="text" class="form-control" ng-model="contact.email" value="contact.email" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label">Phone:</label>
+			<div class="form-field-container">
+				<input type="text" class="form-control" ng-model="contact.phone" value="contact.phone"/>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label">Street Address:</label>
+			<div class="form-field-container">
+				<input type="text" class="form-control" ng-model="contact.street" value="contact.street" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label">Street2:</label>
+			<div class="form-field-container">
+				<input type="text" class="form-control" ng-model="contact.street2" value="contact.street2" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label">City:</label>
+			<div class="form-field-container">
+				<input type="text" class="form-control" ng-model="contact.city" value="contact.city" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label">State:</label>
+			<div class="form-field-container">
+				<select class="form-control" ng-model="contact.state">
+					<option ng-repeat="stateObj in states" value="{{stateObj.value}}" ng-selected="stateObj.value == contact.state.toUpperCase()">
+						{{stateObj.name}}
+					</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label">Zip:</label>
+			<div class="form-field-container">
+				<input type="text" class="form-control" ng-model="contact.zip" value="contact.zip" />
+			</div>
 		</div>
 	</div>
 
-	<div class="form-group">
-		<label class="control-label">Last Name:</label>
-		<div class="form-field-container">
-			<input type="text" class="form-control" ng-model="contact.lastname" value="contact.lastname" />
-		</div>
-	</div>
+	<br />
 
-	<div class="form-group">
-		<label class="control-label">Email Address:</label>
-		<div class="form-field-container">
-			<input type="text" class="form-control" ng-model="contact.email" value="contact.email" />
-		</div>
-	</div>
+	<button ng-click="saveEdits()" class="btn btn-default" id="save-button">
+		Save
+	</button>
 
-	<div class="form-group">
-		<label class="control-label">Phone:</label>
-		<div class="form-field-container">
-			<input type="text" class="form-control" ng-model="contact.phone" value="contact.phone"/>
-		</div>
-	</div>
-
-	<div class="form-group">
-		<label class="control-label">Street Address:</label>
-		<div class="form-field-container">
-			<input type="text" class="form-control" ng-model="contact.street" value="contact.street" />
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="control-label">Street2:</label>
-		<div class="form-field-container">
-			<input type="text" class="form-control" ng-model="contact.street2" value="contact.street2" />
-		</div>
-	</div>
-
-	<div class="form-group">
-		<label class="control-label">City:</label>
-		<div class="form-field-container">
-			<input type="text" class="form-control" ng-model="contact.city" value="contact.city" />
-		</div>
-	</div>
-
-	<div class="form-group">
-		<label class="control-label">State:</label>
-		<div class="form-field-container">
-			<select class="form-control" ng-model="contact.state">
-				<option ng-repeat="stateObj in states" value="{{stateObj.value}}" ng-selected="stateObj.value == contact.state.toUpperCase()">
-					{{stateObj.name}}
-				</option>
-			</select>
-		</div>
-	</div>
-
-	<div class="form-group">
-		<label class="control-label">Zip:</label>
-		<div class="form-field-container">
-			<input type="text" class="form-control" ng-model="contact.zip" value="contact.zip" />
-		</div>
-	</div>
+	<button ng-click="cancelEdit()" class="btn btn-danger" id="cancel-edit">
+		Cancel
+	</button>
 </div>
-
-<br />
-
-<button ng-click="saveEdits()" class="btn btn-default" id="save-button">
-	Save
-</button>
-
-<button ng-click="cancelEdit()" class="btn btn-danger" id="cancel-edit">
-	Cancel
-</button>

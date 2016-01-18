@@ -13,6 +13,7 @@ var nodemon = require( 'gulp-nodemon' );
 var clientJSFiles = [
 	'./public/js/angular.js'
 	,'./public/js/angular-route.js'
+	,'./public/js/signin-app.js'
 	,'./public/js/contact_manager.js'
 	,'./public/js/contact-manager-state.js'
 ];
@@ -62,7 +63,6 @@ gulp.task( 'watch-css', function() {
 	return gulp.watch( cssFiles, ['sass'] );
 } );
 
-
 // Watch the server side js files and restart the server when one
 // is modified
 gulp.task( 'watch-server', function() {
@@ -76,6 +76,7 @@ gulp.task( 'watch-server', function() {
 
 // Set up our default task
 gulp.task( 'default', ['sass', 'minjs'] );
+
 
 // Set up our development task
 gulp.task( 'dev', [ 'watch-server', 'watch-js', 'watch-css' ] );

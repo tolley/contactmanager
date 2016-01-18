@@ -7,17 +7,15 @@
 	
 	<title>Sign in or create an account</title>
 	
-	<script src="js/angular.js"></script>
-	<script src="js/angular-route.js"></script>
-	<script src="js/signin-app.js"></script>
+	<script src="/js/min.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css" media="screen, projection">
 	<link rel="stylesheet" type="text/css" href="css/min.css" media="screen, projection">
 </head>
 
-<body ng-controller="signinController">
+<body ng-controller="signinController" id="signin-create">
 
-<div id="signin" class="container form">
+<section id="signin" class="container form">
 	<div class="row">
 		<span class="tab {{mode == 'create'? 'active': ''}}" 
 			ng-click="mode = 'create'; statusMessage = ''; errorMessage = '';">
@@ -57,18 +55,18 @@
 				</div>
 			</form>
 		</div>
+		<div class="row message">
+			<span class="col-xs-12">
+				{{statusMessage}}
+			</span>
+		</div>
+		<div class="row error">
+			<span class="col-xs-12">
+				{{errorMessage}}
+			</span>
+		</div>
 	</div>
-	<div class="row message">
-		<span class="col-xs-12">
-			{{statusMessage}}
-		</span>
-	</div>
-	<div class="row error">
-		<span class="col-xs-12">
-			{{errorMessage}}
-		</span>
-	</div>
-</div>
+</section>
 
 </body>
 
