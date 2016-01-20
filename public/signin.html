@@ -15,58 +15,62 @@
 
 <body ng-controller="signinController" id="signin-create">
 
-<section id="signin" class="container form">
-	<div class="row">
-		<span class="tab {{mode == 'create'? 'active': ''}}" 
-			ng-click="mode = 'create'; statusMessage = ''; errorMessage = '';">
-			Create
-		</span>
-		<span class="tab {{mode == 'signin'? 'active': ''}}" 
-			ng-click="mode = 'signin'; statusMessage = ''; errorMessage = '';">
-			Log in
-		</span>
-	</div>
+<div class="signin-create-container">
 
-	<div class="tab-content">
-		<div class="row form-group" ng-hide="mode != 'signin'">
-			<form ng-submit="doSignin()">
-				<div class="col-xs-12">
-					<input type="text" class="form-control" ng-model="login.name" placeholder="User Name" />
-					<br />
-					<input type="password" class="form-control" ng-model="login.password" placeholder="Password" />
-					<br />
-					<input type="submit" class="btn btn-primary" value="Login In" />
-				</div>
-			</form>
-		</div>
-		<div class="row form-group" ng-hide="mode != 'create'">
-			<form ng-submit="doCreateUser()">
-				<div class="col-xs-12">
-					<input type="text" class="form-control" ng-model="newuser.name" 
-							placeholder="Desired User Name" />
-					<br />
-					<input type="password" class="form-control" ng-model="newuser.password" 
-							placeholder="Password" />
-					<br />
-					<input type="password" class="form-control" ng-model="newuser.repeat_password" 
-							placeholder="Repeat Password" />
-					<br />
-					<input type="submit" class="btn btn-primary" value="Create Account" />
-				</div>
-			</form>
-		</div>
-		<div class="row message">
-			<span class="col-xs-12">
-				{{statusMessage}}
+	<section id="signin" class="container form">
+		<div class="row">
+			<span class="tab {{mode == 'create'? 'active': ''}}" 
+				ng-click="mode = 'create'; statusMessage = ''; errorMessage = '';">
+				Create
+			</span>
+			<span class="tab {{mode == 'signin'? 'active': ''}}" 
+				ng-click="mode = 'signin'; statusMessage = ''; errorMessage = '';">
+				Log in
 			</span>
 		</div>
-		<div class="row error">
-			<span class="col-xs-12">
-				{{errorMessage}}
-			</span>
+
+		<div class="tab-content">
+			<div class="row form-group" ng-hide="mode != 'signin'">
+				<form ng-submit="doSignin()">
+					<div class="col-xs-12">
+						<input type="text" class="form-control" ng-model="login.name" placeholder="User Name" />
+						<br />
+						<input type="password" class="form-control" ng-model="login.password" placeholder="Password" />
+						<br />
+						<input type="submit" class="btn btn-primary" value="Login In" />
+					</div>
+				</form>
+			</div>
+			<div class="row form-group" ng-hide="mode != 'create'">
+				<form ng-submit="doCreateUser()">
+					<div class="col-xs-12">
+						<input type="text" class="form-control" ng-model="newuser.name" 
+								placeholder="Desired User Name" />
+						<br />
+						<input type="password" class="form-control" ng-model="newuser.password" 
+								placeholder="Password" />
+						<br />
+						<input type="password" class="form-control" ng-model="newuser.repeat_password" 
+								placeholder="Repeat Password" />
+						<br />
+						<input type="submit" class="btn btn-primary" value="Create Account" />
+					</div>
+				</form>
+			</div>
+			<div class="row message">
+				<span class="col-xs-12">
+					{{statusMessage}}
+				</span>
+			</div>
+			<div class="row error">
+				<span class="col-xs-12">
+					{{errorMessage}}
+				</span>
+			</div>
 		</div>
-	</div>
-</section>
+	</section>
+
+</div>
 
 </body>
 

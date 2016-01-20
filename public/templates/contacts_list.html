@@ -1,7 +1,6 @@
-<div class="contact_list">
-	<div class="contact" 
-			ng-repeat="contact in contacts | filter:state.filter_text | 
-					orderBy: state.order_by_field: state.order_by_desc">
+<div class="contact_list" class="col-xs-12">
+	<div class="contact" ng-repeat="contact in contacts | filter:state.filter_text | 
+			orderBy: state.order_by_field: state.order_by_desc" ng-cloak>
 		<div class="crud_links">
 			<a href="javascript:void(0);" ng-click="deleteContact( contact, true )">
 				delete

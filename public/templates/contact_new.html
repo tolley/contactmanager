@@ -1,17 +1,16 @@
 <div id="contact_new_wrapper">
-	<h3>
-		Enter new contact information
-	</h3>
-
 	<form role="form" id="contact_new" name="newContactForm" 
 			ng-submit="createContact( newContactForm.$valid )" novalidate>
+		<h3>
+			Enter new contact information
+		</h3>
 		<div class="contact_field form-group">
 			<input type="text" placeholder="First Name" name="firstname" ng-model="newcontact.firstname" required
 				ng-maxlength="10" class="form-control" />
 			<br />
 		</div>
 		<p ng-show="newContactForm.firstname.$invalid && ! newContactForm.firstname.$pristine"
-					class="" >
+					class="">
 			You must enter a first name and it can be no longer than 500 characters (counting spaces)
 		</p>
 

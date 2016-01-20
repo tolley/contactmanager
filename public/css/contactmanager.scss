@@ -43,6 +43,7 @@ body#signin-create {
 	& {
 		background-color: #c9c9c9;
 		background-image: url( '/images/desktop.jpeg' );
+		background-position: center center;
 		background-size: cover;
 		background-repeat: no-repeat;
 	}
@@ -51,9 +52,11 @@ body#signin-create {
 section#signin {
 	& {
 		max-width: 400px;
-		margin-top: 25%;
 		margin-left: auto;
 		margin-right: auto;
+		position: relative;
+		top: 75%;
+		transform: translateY( 60% );
 	}
 
 	span.tab.active {
@@ -294,6 +297,7 @@ div#contact_new_wrapper {
 
 div#contact_edit_wrapper {
 	& {
+		padding-top: 20px;
 		text-align: center;
 	}
 
@@ -353,7 +357,7 @@ div#contact_edit_wrapper {
 	}
 
 	td:hover {
-		cursor: pointer;
+//		cursor: pointer;
 	}
 
 	tr.selectedContact {
@@ -369,12 +373,6 @@ br.no_clear {
 	color: $link-color;
 	width: 100%;
 	text-align: center;
-}
-
-@media (max-width: 480px) {
-	.navbar {
-		color: #555;
-	}
 }
 
 @media (max-width: 480px) {
@@ -396,7 +394,7 @@ span.active {
 /********************************************************
  *** General styles *************************************
  ********************************************************/
-html.main,body.dashboard {
+html,body.dashboard {
 	margin: 0px;
 	padding: 0px;
 	height: 100%;
