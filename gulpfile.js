@@ -12,7 +12,7 @@ var nodemon = require( 'gulp-nodemon' );
 // The list of all js files that we care about
 var clientJSFiles = [
 	'./public/js/angular.js'
-	,'./public/js/angular-route.js'
+	,'./public/js/angular-ui-router.js'
 	,'./public/js/signin-app.js'
 	,'./public/js/contact_manager.js'
 	,'./public/js/contact-manager-state.js'

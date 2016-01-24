@@ -37,6 +37,12 @@ describe( 'ContactListCtrl', function() {
     $httpBackend.expectGET( 'data/states.json' )
                 .respond( 200, [ {"value": "AL","name": "Alabama"}, {"value": "AK","name": "Alaska"} ] );
 
+    $httpBackend.expectGET( 'templates/contacts_main.html' )
+                .respond( 200, '' );
+
+    $httpBackend.expectGET( 'templates/contacts_list.html' )
+                .respond( 200, '' );
+
     // Reset the contact list stored on the "backend"
     contactList = getInitialContactList();
   } ) );
@@ -110,6 +116,9 @@ describe( 'ContactListCtrl', function() {
     // Make sure the contacts are loaded before we try to edit one
     scope.initializeData();
     $httpBackend.flush();
+
+    $httpBackend.expectGET( 'templates/contacts_edit.html' )
+                .respond( 200, '' );
 
     // Set up the PUT request that will save the contact
     $httpBackend.whenPUT( '/contacts', function( data ) {

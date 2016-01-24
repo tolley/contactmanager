@@ -1,19 +1,12 @@
 "use strict"
 
 // Declare our module 
-var myApp = angular.module( 'contactListApp', ['ngRoute'] );
+var myApp = angular.module( 'contactListApp', ['ui.router'] );
 
 // Add our controller to our module
-myApp.controller( 'contactListCtrl', [ '$scope', '$http', '$location', 'contactMangerStateService',
-	function( $scope, $http, $location, state ) {
+myApp.controller( 'contactListCtrl', [ '$scope', '$http', '$state', 'contactMangerStateService',
+	function( $scope, $http, $state, state ) {
 		$scope.state = state;
-
-		// The header template for all pages
-		$scope.header_template_url = "/templates/contacts_header.html";
-
-		// A flag to keep track of whether the menu is open or closed
-		// Note: This menu is only for mobile mode (reduced width)
-		$scope.mobile_menu_visible = false;
 
 		// The message that will display above each page
 		$scope.header_message = 'Create, edit, and manage your contact information';
@@ -25,7 +18,7 @@ myApp.controller( 'contactListCtrl', [ '$scope', '$http', '$location', 'contactM
 			$scope.errorText = error.statusText;
 
 			// error.statusText is set to 'Internal Server Error'
-			$location.path( '/outage' );
+			$state.transitionTo( 'outage' );
 		};
 
 		// GETs a list of contacts from the server
@@ -58,6 +51,11 @@ myApp.controller( 'contactListCtrl', [ '$scope', '$http', '$location', 'contactM
 			$scope.contactsUnderEdit = [];
 		};
 
+		// Shows the approapiate view based on the states in the ui router config
+		$scope.transitionTo = function( state ) {
+			$state.transitionTo( state );
+		}
+
 		// The method called when the filter "clear" button is clicked
 		$scope.clearFilter = function() {
 			$scope.state.filter_text = '';
@@ -85,7 +83,7 @@ myApp.controller( 'contactListCtrl', [ '$scope', '$http', '$location', 'contactM
 							$scope.getContactsList();
 
 							// Send the user back to the main page
-							$location.path( '' );
+							$state.transitionTo( $scope.state.view );
 						}
 					}, $scope.handleFailedPromise );
 			}
@@ -98,13 +96,7 @@ myApp.controller( 'contactListCtrl', [ '$scope', '$http', '$location', 'contactM
 			$scope.newcontact = {};
 
 			// Send the user back to the listing page
-			$location.path( '' );
-		};
-
-		// Called to cancel the adding of a new contact
-		$scope.cancelCreateContact = function() {
-			$scope.newcontact = {};
-			$location.path( '' );
+			$state.transitionTo( $scope.state.view );
 		};
 
 		// Called when the delete contact link is clicked
@@ -145,7 +137,7 @@ myApp.controller( 'contactListCtrl', [ '$scope', '$http', '$location', 'contactM
 			$scope.contactsUnderEdit.push( contact );
 
 			// Send the user to the edit page
-			$location.path( '/edit' );
+			$state.transitionTo( 'edit' );
 		};
 
 		// Called when the user clicks save on the edit contacts section
@@ -158,7 +150,7 @@ myApp.controller( 'contactListCtrl', [ '$scope', '$http', '$location', 'contactM
 					if( response.data.status === 'success' ) {
 						// Send the user back to the list page and reload all the contact data
 						$scope.getContactsList();
-						$location.path( '' );
+						$state.transitionTo( state.view );
 					}
 				},
 				$scope.handleFailedPromise );
@@ -169,7 +161,7 @@ myApp.controller( 'contactListCtrl', [ '$scope', '$http', '$location', 'contactM
 			// Empty the list of contacts that are being edited
 			$scope.contactsUnderEdit.splice( 0, $scope.contactsUnderEdit.length );
 
-			$location.path( '' );
+			$state.transitionTo( state.view );
 		};
 
 		// Called when the user clicks on the go button on the table view
@@ -221,7 +213,7 @@ myApp.controller( 'contactListCtrl', [ '$scope', '$http', '$location', 'contactM
 					// If there are contacts to be edited, send the user to the edit page
 					if( $scope.contactsUnderEdit.length > 0 )
 					{
-						$location.path( '/edit' );
+						$state.transitionTo( 'edit' );
 						return;
 					}
 					break;
@@ -277,26 +269,45 @@ myApp.controller( 'contactListCtrl', [ '$scope', '$http', '$location', 'contactM
 ] ); // End controller definition
 
 // Create the routes for this app
-myApp.config( function( $routeProvider )
-{
-	$routeProvider.when( '/new', {
-		templateUrl: 'templates/contact_new.html',
-		controller: 'contactListCtrl'
-	} );
+myApp.config( [ '$stateProvider', '$urlRouterProvider', 
+	function( $stateProvider, $urlRouterProvider ) {
+		// The default route, shows the sortable, filterable contact list
+		$urlRouterProvider.otherwise( '/main' );
 
-	$routeProvider.when( '/edit', {
-		templateUrl: 'templates/contact_edit.html',
-		controller: 'contactListCtrl'
-	} );
-
-	$routeProvider.when( '/outage', {
-		templateUrl: 'templates/outage.html',
-		controller: 'contactListCtrl'
-	} );
-
-	// The default route, shows the sortable, filterable contact list
-	$routeProvider.otherwise( {
-		templateUrl: 'templates/contacts_main.html',
-		controller: 'contactListCtrl'
-	} );
-} );
+		// Define all of the apps routes
+		$stateProvider
+			.state( 'home_list', {
+				url: '/main',
+				views: {
+					'': {
+						templateUrl: 'templates/contacts_main.html'
+					},
+					'contactsDisplay@home_list': {
+						templateUrl: 'templates/contacts_list.html'
+					}
+				}
+			} )
+			.state( 'home_table', {
+				url: '/main/table',
+				views: {
+					'': {
+						templateUrl: 'templates/contacts_main.html'
+					},
+					'contactsDisplay@home_table': {
+						templateUrl: 'templates/contacts_table.html'
+					}
+				}
+			} )
+			.state( 'edit', {
+				url: '/edit',
+				templateUrl: 'templates/contacts_edit.html'
+			} )
+			.state( 'new', {
+				url: '/new',
+				templateUrl: 'templates/contacts_new.html'
+			} )
+			.state( 'outage', {
+				url: '/outage',
+				templateUrl: 'templates/outage.html'
+			} );
+} ] );

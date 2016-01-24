@@ -54,15 +54,15 @@ angular.module( 'contactListApp' )
 				}
 			},
 
-			templates: [
-				{ name: 'list', url: 'templates/contacts_list.html' },
-				{ name: 'table', url: 'templates/contacts_table.html' }
+			views: [
+				{ name: 'list', state: 'home_list' },
+				{ name: 'table', state: 'home_table' }
 			],
 
-			// The currently selected template.  The initialization refers back to
-			// the templates variable, so we have to do it outside of the object
+			// The currently selected view.  The initialization refers back to
+			// the views variable, so we have to do it outside of the object
 			// declaration
-			template: null,
+			view: null,
 
 			// The text used to filter the contact results
 			filter_text: '',
@@ -77,7 +77,7 @@ angular.module( 'contactListApp' )
 			}
 		};
 
-		state.template = state.templates[0];
+		state.view = state.views[0].state;
 
 		return state;
 	}

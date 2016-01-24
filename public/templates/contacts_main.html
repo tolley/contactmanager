@@ -18,20 +18,22 @@
 			</li>
 			<li>
 				<div class="header-menu-item">
-					<select	ng-model="state.template" ng-options="t.name for t in state.templates" 
-						ng-change="mobile_menu_visible = false" class="form-control">
+					<select	ng-model="state.view" 
+							ng-options="v.state as v.name for v in state.views"
+							ng-change="transitionTo( state.view )"
+							class="form-control">
 					</select>
 				</div>
 			</li>
 			<li class="separator">
 				&nbsp;
 			</li>
-			<li ng-show="state.template.name == 'list'">
+			<li ng-show="state.view == 'home_list'">
 				<div class="header-menu-item">
 					Order Contacts By
 				</div>
 			</li>
-			<li ng-show="state.template.name == 'list'">
+			<li ng-show="state.view == 'home_list'">
 				<div class="header-menu-item">
 					<div id="list-view-order-by-container" class="header-menu-item">
 						<select ng-model="state.order_by_field"
@@ -53,12 +55,12 @@
 			<li class="separator">
 				&nbsp;
 			</li>
-			<li ng-show="state.template.name == 'table'">
+			<li ng-show="state.view == 'home_table'">
 				<div class="header-menu-item">
 					Select an action for selected contacts
 				</div>
 			</li>
-			<li ng-show="state.template.name == 'table'">
+			<li ng-show="state.view == 'home_table'">
 				<div class="header-menu-item">
 					<div id="action-select-container">
 						<select ng-model="state.actions.selected" class="form-control"
@@ -67,7 +69,7 @@
 						</select>
 					</div>
 					<div id="action-execute-container">
-						<button ng-show="state.template.name == 'table'" ng-click="performSelectedAction()" 
+						<button ng-show="state.view == 'home_table'" ng-click="performSelectedAction()" 
 								class="btn btn-default action-button">
 							Go
 						</button>
@@ -117,9 +119,7 @@
 </nav>
 
 <div class="container-fluid">
-	<div id="bg" class="row">
-		<ng-include src="state.template.url"></ng-include>
-	</div>
+	<div id="bg" class="row" ui-view="contactsDisplay"></div>
 </div>
 
 <br style="clear: both;" />
