@@ -15,20 +15,9 @@
 
 <body ng-controller="signinController" id="signin-create">
 
-<div class="signin-create-container">
+<div id="signin-create-container">
 
 	<section id="signin" class="container form">
-		<div class="row">
-			<span class="tab {{mode == 'create'? 'active': ''}}" 
-				ng-click="mode = 'create'; statusMessage = ''; errorMessage = '';">
-				Create
-			</span>
-			<span class="tab {{mode == 'signin'? 'active': ''}}" 
-				ng-click="mode = 'signin'; statusMessage = ''; errorMessage = '';">
-				Log in
-			</span>
-		</div>
-
 		<div class="tab-content">
 			<div class="row form-group" ng-hide="mode != 'signin'">
 				<form ng-submit="doSignin()">
@@ -37,7 +26,6 @@
 						<br />
 						<input type="password" class="form-control" ng-model="login.password" placeholder="Password" />
 						<br />
-						<input type="submit" class="btn btn-primary" value="Login In" />
 					</div>
 				</form>
 			</div>
@@ -53,16 +41,31 @@
 						<input type="password" class="form-control" ng-model="newuser.repeat_password" 
 								placeholder="Repeat Password" />
 						<br />
-						<input type="submit" class="btn btn-primary" value="Create Account" />
 					</div>
 				</form>
 			</div>
-			<div class="row message">
+			<div class="row">
+				<span class="tab col-xs-4" ng-hide="mode == 'create'"
+					ng-click="mode = 'create'; statusMessage = ''; errorMessage = '';">
+					Create
+				</span>
+				<span class="tab col-xs-4" ng-hide="mode == 'signin'"
+					ng-click="mode = 'signin'; statusMessage = ''; errorMessage = '';">
+					Log in
+				</span>
+				<span class="col-xs-4">
+					<input ng-hide="mode != 'create'" type="submit" ng-click="doCreateUser()"
+							class="btn btn-primary" value="Create Account" />
+					<input ng-hide="mode != 'signin'" type="submit" ng-click="doSignin()"
+							class="btn btn-primary" value="Log In" />
+				</span>
+			</div>
+			<div class="row message" ng-show="statusMessage.length > 0">
 				<span class="col-xs-12">
 					{{statusMessage}}
 				</span>
 			</div>
-			<div class="row error">
+			<div class="row error" ng-show="errorMessage.length > 0">
 				<span class="col-xs-12">
 					{{errorMessage}}
 				</span>

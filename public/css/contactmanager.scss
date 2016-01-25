@@ -5,7 +5,9 @@ $font-color: #000;
 $link-color: #337ab7;
 $nav-bar-background-color: #222222;
 $nav-bar-color: #cccccc;
-$signin-background: #ffcf93; // Manilla folder color
+$signin-background: transparent;
+
+// #ffcf93; // Manilla folder color
 
 // Gradient colors for the main background
 $gradient-top: #ffcf93;
@@ -69,29 +71,46 @@ section#signin {
 		padding-left: 20px;
 		padding-right: 20px;
 		cursor: pointer;
-		border: solid 2px #000;
-		border-radius: 5px 5px 0px 0px;
-		border-bottom: solid 1px $signin-background;
 		width: 200px;
 		display: inline;
-		color: #aaa;
+		text-decoration: underline;
+		color: #00e;
+		font-weight: bold;
 		background-color: $signin-background;
+		text-align: center;
 	}
 
 	div.tab-content {
-		border: solid 2px #000;
-		width: 400px;
-		height: 300px;
-		margin-left: -15px;
-		margin-top: -1px;
-		background-color: $signin-background;
-	}
+		& {
+			width: 400px;
+			height: 300px;
+			margin-left: -15px;
+			margin-top: -1px;
+			background-color: $signin-background;
+		}
 
-	div.tab-content div.form-group {
-		margin-top: 5px;
-		padding-left: 5px;
-		padding-right: 5px;
-		width: 400px;
+		div.error {
+			width: 90%;
+			background-color: #eee;
+			color: #F00;
+			font-size: 16px;
+			margin: 5px 5px 0px 2px;
+		}
+
+		div.message {
+			width: 90%;
+			background-color: #eee;
+			color: #00F;
+			font-size: 16px;
+			margin: 5px 5px 0px 2px;
+		}
+
+		div.form-group {
+			margin-top: 5px;
+			padding-left: 5px;
+			padding-right: 5px;
+			width: 400px;
+		}
 	}
 }
 
