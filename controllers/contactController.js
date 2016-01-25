@@ -111,7 +111,7 @@ module.exports.controller = function( app ) {
 							}
 							else {
 								results.status = 'error';
-								results.statusMessage = 'Error updating contact information';
+								results.statusMessage = err.toString();
 							}
 
 							outputResults( res, results );
@@ -144,7 +144,7 @@ module.exports.controller = function( app ) {
 				if( err ) {
 					outputResults( res, { 
 						status: 'error',
-						statusMessage: 'Unable to delete contacts'
+						statusMessage: err.toString()
 					} );
 					return;
 				}
@@ -165,7 +165,7 @@ module.exports.controller = function( app ) {
 
 						if( err ) {
 							results.status = 'error';
-							results.statusMessage = 'Unable to delete contacts';
+							results.statusMessage = toString();
 						}
 						else {
 							results.status = 'success';

@@ -93,7 +93,7 @@ myApp.controller( 'signinController', function( $scope, $http, $location ) {
 		$http.post( '/signup', $scope.newuser )
 			.then( function( response ) {
 				// Show any error or status messages that exist
-				if( data.statusMessage )
+				if( response.data.statusMessage )
 					$scope.statusMessage = response.data.statusMessage;
 
 				if( response.data.errorMessage )

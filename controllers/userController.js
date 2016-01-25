@@ -11,8 +11,7 @@ var contactListModel = contactModels.contactListModel;
 
 module.exports.controller = function( app ) {
 	// Outputs the results to browser and ends the request
-	function outputResults( res, data )
-	{
+	function outputResults( res, data ) {
 		res.setHeader( 'Content-Type', 'application/json' );
 		res.json( data );
 		res.end();
@@ -41,32 +40,18 @@ module.exports.controller = function( app ) {
 
 	// Handles signup requests
 	app.post( '/signup', function( req, res ) {
-		// An object to store our result messages (errors)
-		var results = {
-			errors: []
-			,newuser: false
-		};
-
 		// Create and save a new user
 		var newUser = new userModel( req.body );
 
 		newUser.save( function( err ) {
-			if( err )
-			{
-				// Check to see if we got the duplicate user error
-				if( err.errmsg.indexOf( 'duplicate key' ) !== 0 )
-				{
-					results.errors.push( 'That user name already exists.' +
-											' Please login or choose a different name' );
-				}
-				else
-				{
-					results.errors.push( 'Error creating user, please try again' );
-				}
-			}
-			else
-			{
-				contactModels = require( '../models/contact.js' );
+			if( err ) {
+				// Send the error to the user along with a failure status
+				outputResults( res, {
+					status: 'failure'
+					,errorMessage: err.toString()
+				} );
+			} else {
+				var contactModels = require( '../models/contact.js' );
 
 				var contactListModel = contactModels.contactListModel;
 
@@ -78,32 +63,20 @@ module.exports.controller = function( app ) {
 				} );
 
 				contactListModel.create( contactList, function( err, contactList ) {
-					if( err )
-					{
-						results.errors.push( 'Error creating contact list' );
+					if( err ) {
+						outputResults( res, {
+							status: 'failure'
+							,errorMessage: err.toString()
+						} );
 					}
-
-					// If there are no errors and if a user object exists
-					if( results.errors.length == 0 )
-					{
-						var returnData = {
-							status: 'success',
-							statusMessage: 'User successfully created, please login'
-						};
+					else {
+						// Otherwise, there where no errors and we need to tell the 
+						// user to login
+						outputResults( res, {
+							status: 'success'
+							,statusMessage: 'Successfully created new user, please login'
+						} );
 					}
-					else
-					{
-						var errorMessages = '';
-						for( var i in results.errors )
-							errorMessages += results.errors[i] + ' ';
-
-						var returnData = {
-							status: 'failure',
-							errorMessage: errorMessages
-						};
-					}
-
-					outputResults( res, returnData );
 				} );
 			}
 		} );
@@ -140,7 +113,7 @@ module.exports.controller = function( app ) {
 					// Let the user know the login failed
 					outputResults( res, {
 						login: 'failed',
-						statusMessage: errors.join( '. ' )
+						errorMessage: err.toString()
 					} );
 				}
 				else if( user )
