@@ -1,7 +1,8 @@
 // Our requires
 var config 			= require( '../config' )
 	,userModel		= require( '../models/user.js' )
-	,contactModels	= require( '../models/contact.js' );
+	,contactModels	= require( '../models/contact.js' )
+	,verifyUser		= require( '../modules/verifyUserLoggedIn' );
 
 var contactModel = contactModels.contactModel;
 var contactListModel = contactModels.contactListModel;
@@ -16,7 +17,7 @@ module.exports.controller = function( app ) {
 	}
 
 	// Called to pull the complete list of contacts for the logged in user
-	app.get( '/contacts', function( req, res ) {
+	app.get( '/contacts', verifyUser, function( req, res ) {
 		contactListModel.findOne( { ownerId: req.loggedUser.id }, 
 			function( err, contactList ) {
 				var returnData = {};
@@ -42,7 +43,7 @@ module.exports.controller = function( app ) {
 	} );
 
 	// Called to create a new contact
-	app.post( '/contacts', function( req, res ) {
+	app.post( '/contacts', verifyUser, function( req, res ) {
 		contactListModel.update( { ownerId: req.loggedUser.id }, 
 			{ $push: {
 				contacts: req.body,
@@ -67,7 +68,7 @@ module.exports.controller = function( app ) {
 	} );
 
 	// Update contact(s)
-	app.put( '/contacts', function( req, res ) {
+	app.put( '/contacts', verifyUser, function( req, res ) {
 		// Save the changes to each of the edited contacts
 		if( req.body && req.body.length > 0 ) {
 			// Pull the list of contacts owned by this user
@@ -127,7 +128,7 @@ module.exports.controller = function( app ) {
 	} );
 
 	// Delete a contact from the user's contact list
-	app.delete( '/contacts/:id?', function( req, res ) {
+	app.delete( '/contacts/:id?', verifyUser, function( req, res ) {
 		// Split the id by , to separate out multiple contact ids
 		var ids = req.params.id.split( ',' );
 
